@@ -1,0 +1,210 @@
+import Image from "next/image";
+import Link from "next/link";
+import { getUploadedImage } from "@/lib/getImage";
+
+const IMG_LOMTHONG = getUploadedImage("blog-lomthong", "/images/blog-lomthong.png");
+const IMG_CHECK_GOLD = getUploadedImage("blog-check-gold", "/images/blog-check-gold.png");
+const IMG_INSPECTION = getUploadedImage("inspection", "/images/inspection.png");
+const IMG_GOLD_PRICE = getUploadedImage("blog-gold-price", "/images/blog-gold-price.png");
+
+/* ============================================
+   ข้อมูลบทความทั้งหมด
+   เพิ่มบทความใหม่ได้ที่นี่
+   ============================================ */
+const articles = [
+  {
+    slug: "rap-sue-thong-pattaya",
+    title: "รับซื้อทองพัทยา ร้านไหนดี ให้ราคาสูง จ่ายเงินสดทันที",
+    excerpt:
+      "กำลังมองหาร้านรับซื้อทองในพัทยา ชลบุรี บางละมุง? แนะนำวิธีเลือกร้านรับซื้อทองที่ให้ราคาสูงสุด โปร่งใส จ่ายเงินสดทันที",
+    image: IMG_LOMTHONG,
+    imageAlt: "รับซื้อทองพัทยา ร้านไหนดี ราคาสูง",
+    date: "20 มิถุนายน 2569",
+    readTime: "6 นาที",
+    category: "แนะนำร้าน",
+  },
+  {
+    slug: "thong-kao-pattaya-khay-thi-nai",
+    title: "มีทองเก่า ทองหัก ขายที่ไหนดี? แนะนำร้านรับซื้อทองเก่าพัทยาและชลบุรี",
+    excerpt:
+      "ทองเก่า ทองหัก ทองชำรุด อย่าทิ้ง! ยังมีมูลค่า แนะนำวิธีขายทองเก่าในพัทยาให้ได้ราคาดีที่สุด เปรียบเทียบขายคืน vs หลอมทอง",
+    image: IMG_CHECK_GOLD,
+    imageAlt: "ขายทองเก่าพัทยา ทองหักขายที่ไหนดี",
+    date: "1 กรกฎาคม 2569",
+    readTime: "7 นาที",
+    category: "เคล็ดลับ",
+  },
+  {
+    slug: "borikar-truat-thong-free-pattaya",
+    title: "ตรวจสอบทองฟรี พัทยา! เช็คเปอร์เซ็นต์ทอง ชั่งน้ำหนัก ไม่เสียค่าใช้จ่าย",
+    excerpt:
+      "บริการตรวจสอบทองฟรีในพัทยาและชลบุรี ใช้เครื่อง XRF ตรวจเปอร์เซ็นต์ทอง ชั่งน้ำหนัก ไม่เสียค่าใช้จ่าย ครอบคลุมพัทยา บางละมุง ศรีราชา",
+    image: IMG_INSPECTION,
+    imageAlt: "ตรวจสอบทองฟรี พัทยา เช็คทองแท้",
+    date: "10 พฤษภาคม 2569",
+    readTime: "5 นาที",
+    category: "บริการ",
+  },
+  {
+    slug: "lomthong-pattaya-best-price",
+    title: "หลอมทองพัทยาที่ไหนดี? เลือกร้านหลอมทองให้ได้ราคาเต็ม ไม่โดนกดราคา",
+    excerpt:
+      "กำลังมองหาร้านหลอมทองพัทยาที่เชื่อถือได้? แนะนำวิธีเลือกร้านหลอมทองให้ได้ราคาสูงสุด ไม่กดราคา ตรวจสอบต่อหน้า",
+    image: IMG_LOMTHONG,
+    imageAlt: "หลอมทองพัทยาที่ไหนดี ได้ราคาเต็ม",
+    date: "5 เมษายน 2569",
+    readTime: "5 นาที",
+    category: "ความรู้เรื่องทอง",
+  },
+  {
+    slug: "lomthong-process-pattaya",
+    title: "เจาะลึกขั้นตอน หลอมทองพัทยา มาตรฐานช่างทองมืออาชีพ ปลอดภัย 100%",
+    excerpt:
+      "พาดูขั้นตอนการหลอมทองพัทยาแบบเจาะลึก มั่นใจ ปลอดภัย ได้น้ำหนักเต็ม 100% ตั้งแต่การชั่งน้ำหนักจนหลอมเสร็จ",
+    image: IMG_INSPECTION,
+    imageAlt: "ขั้นตอนหลอมทอง โดยช่างทองพัทยา",
+    date: "15 พฤษภาคม 2569",
+    readTime: "6 นาที",
+    category: "ความรู้เรื่องทอง",
+  },
+  {
+    slug: "lomthong-khao-jai-ngai",
+    title: "หลอมทองคืออะไร? ทำไมคนพัทยาถึงนิยมหลอมทอง",
+    excerpt:
+      "หลายคนอาจเคยได้ยินคำว่า 'หลอมทอง' แต่ไม่แน่ใจว่ามันคืออะไร และทำไมถึงได้ราคาดีกว่าขายทองเป็นชิ้น บทความนี้จะอธิบายทุกอย่างให้เข้าใจง่ายๆ",
+    image: IMG_LOMTHONG,
+    imageAlt: "หลอมทองคืออะไร บริการหลอมทองพัทยา",
+    date: "15 มกราคม 2569",
+    readTime: "5 นาที",
+    category: "ความรู้เรื่องทอง",
+  },
+  {
+    slug: "check-real-gold",
+    title: "วิธีตรวจสอบทองแท้ด้วยตัวเอง 5 วิธี ก่อนนำไปหลอมหรือขาย",
+    excerpt:
+      "ก่อนนำทองไปขายหรือหลอม ควรรู้วิธีตรวจสอบเบื้องต้นด้วยตัวเอง เพื่อป้องกันการถูกหลอก บทความนี้รวม 5 วิธีง่ายๆ ที่ทำได้ที่บ้าน",
+    image: IMG_CHECK_GOLD,
+    imageAlt: "วิธีตรวจสอบทองแท้ ก่อนนำไปหลอมทอง",
+    date: "22 กุมภาพันธ์ 2569",
+    readTime: "7 นาที",
+    category: "เคล็ดลับ",
+  },
+  {
+    slug: "gold-price-trend",
+    title: "ราคาทองวันนี้ 2569 แนวโน้มราคาทอง ควรซื้อหรือขายดี?",
+    excerpt:
+      "วิเคราะห์แนวโน้มราคาทองคำในปี 2569 ปัจจัยที่มีผลต่อราคา และคำแนะนำว่าควรซื้อหรือขายทองในช่วงนี้ รวมถึงเคล็ดลับการเลือกร้านทองที่ให้ราคาดี",
+    image: IMG_GOLD_PRICE,
+    imageAlt: "ราคาทอง 2569 แนวโน้มราคาทองคำ",
+    date: "10 มีนาคม 2569",
+    readTime: "6 นาที",
+    category: "วิเคราะห์ตลาด",
+  },
+];
+
+export const metadata = {
+  title: "บทความ | ความรู้เรื่องทอง หลอมทอง รับซื้อทอง ราคาทอง พัทยา ชลบุรี",
+  description:
+    "รวมบทความให้ความรู้เรื่องทองคำ การหลอมทอง รับซื้อทองพัทยา ขายทองเก่า ตรวจสอบทองฟรี แนวโน้มราคาทอง และเคล็ดลับดีๆ จาก หลอมทองพัทยา บริการครอบคลุมพัทยา ชลบุรี บางละมุง ศรีราชา",
+  // สำคัญ: ต้องกำหนด canonical ของหน้านี้เอง ไม่งั้นจะสืบทอด canonical ของหน้าแรกจาก root layout มาแทน
+  alternates: {
+    canonical: "/blog",
+  },
+  keywords: [
+    "บทความเรื่องทอง",
+    "หลอมทองพัทยา",
+    "รับซื้อทองพัทยา",
+    "ขายทองเก่าพัทยา",
+    "ตรวจสอบทองฟรี พัทยา",
+    "ร้านรับซื้อทอง ชลบุรี",
+    "ร้านทอง บางละมุง",
+    "หลอมทอง ศรีราชา",
+    "วิธีตรวจสอบทองแท้",
+    "ราคาทอง 2569",
+    "ความรู้เรื่องทองคำ",
+  ],
+  openGraph: {
+    title: "บทความ | หลอมทองพัทยา",
+    description:
+      "รวมบทความให้ความรู้เรื่องทองคำ การหลอมทอง วิธีตรวจสอบทองแท้ แนวโน้มราคาทอง",
+    type: "website",
+  },
+};
+
+export default function BlogPage() {
+  return (
+    <>
+      {/* Blog Hero Banner */}
+      <section className="blog-hero">
+        <div className="blog-hero-overlay"></div>
+        <div className="container">
+          <div className="blog-hero-content">
+            <span className="section-label">บทความ</span>
+            <h1 className="blog-hero-title">
+              ความรู้เรื่อง<span className="gold-text">ทองคำ</span>
+            </h1>
+            <p className="blog-hero-subtitle">
+              รวมบทความให้ความรู้เกี่ยวกับทองคำ การหลอมทอง
+              เคล็ดลับดีๆ และแนวโน้มราคาทอง จากผู้เชี่ยวชาญ หลอมทองพัทยา
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Cards Grid */}
+      <section className="section section-dark">
+        <div className="container">
+          <div className="blog-grid">
+            {articles.map((article) => (
+              <Link
+                href={`/blog/${article.slug}`}
+                key={article.slug}
+                className="blog-card"
+              >
+                <div className="blog-card-image">
+                  <Image
+                    src={getUploadedImage(`blog-${article.slug}`, article.image)}
+                    alt={article.imageAlt}
+                    width={600}
+                    height={400}
+                    style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                  />
+                  <span className="blog-card-category">{article.category}</span>
+                </div>
+                <div className="blog-card-body">
+                  <div className="blog-card-meta">
+                    <span>📅 {article.date}</span>
+                    <span>⏱️ อ่าน {article.readTime}</span>
+                  </div>
+                  <h2 className="blog-card-title">{article.title}</h2>
+                  <p className="blog-card-excerpt">{article.excerpt}</p>
+                  <span className="blog-card-link">
+                    อ่านเพิ่มเติม →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA Section */}
+          <div className="blog-cta">
+            <h3>
+              สนใจบริการ<span className="gold">หลอมทองพัทยา</span>?
+            </h3>
+            <p>
+              ติดต่อเราวันนี้เพื่อรับคำปรึกษาฟรี ให้ราคายุติธรรม จ่ายเงินทันที
+            </p>
+            <div className="blog-cta-actions">
+              <Link href="/#contact" className="btn btn-primary">
+                ติดต่อเรา
+              </Link>
+              <Link href="/" className="btn btn-outline">
+                กลับหน้าแรก
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

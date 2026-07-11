@@ -1,0 +1,3 @@
+module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},568,(a,b,c)=>{let d=Error("Could not parse module '[project]/app/blog/borikar-truat-thong-free-pattaya/page.js'\n\nfailed to convert rope into string\n\nCaused by:\n- incomplete utf-8 byte sequence from index 39664");throw d.code="MODULE_UNPARSABLE",d},29193,a=>{a.n(a.i(568))},26758,a=>{a.v("/_next/static/media/favicon.2vob68tjqpejf.ico"+(globalThis.NEXT_CLIENT_ASSET_SUFFIX||""))},38872,a=>{"use strict";let b={src:a.i(26758).default,width:256,height:256};a.s(["default",0,b])}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__1o9vb_x._.js.map
