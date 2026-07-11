@@ -54,7 +54,8 @@ export default function StoreLocation() {
             แวะมาที่ร้าน <span className="gold">หลอมทองพัทยา</span> ทั้ง 2 สาขา
           </h2>
           <p className="section-subtitle">
-            มีหน้าร้านจริง 2 สาขาในพัทยา จอดรถสะดวก เดินทางง่าย ตรวจทองต่อหน้าคุณทุกขั้นตอน
+            มีหน้าร้านจริง 2 สาขาในพัทยา จอดรถสะดวก เดินทางง่าย{" "}
+            <span style={{ whiteSpace: "nowrap" }}>ตรวจทองต่อหน้าคุณทุกขั้นตอน</span>
           </p>
           <div className="gold-divider"></div>
         </div>
