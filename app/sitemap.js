@@ -1,4 +1,5 @@
 import { servicesData } from "../data/services";
+import { BRANCHES } from "../data/branches";
 
 export default function sitemap() {
   const baseUrl = "https://www.xn--72c5ab1amkp1ctc0co.com"; // ← แก้เป็น URL จริงของคุณ
@@ -8,6 +9,13 @@ export default function sitemap() {
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.8,
+  }));
+
+  const branchPages = BRANCHES.map((b) => ({
+    url: `${baseUrl}/branch/${b.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.9,
   }));
 
   return [
@@ -29,6 +37,7 @@ export default function sitemap() {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    ...branchPages,
     ...servicePages,
     {
       url: `${baseUrl}/blog/rap-sue-thong-pattaya`,

@@ -1,10 +1,8 @@
+import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
+import { BRANCHES } from '@/data/branches';
 
-const MAP_EMBED = CONTACT.mapEmbedUrl; // แผนที่ฝังจากพิกัดจริงของร้าน
-const MAP_DIRECTIONS = CONTACT.googleMapsUrl; // ลิงก์หมุด/นำทางจริง
-
-/* ไอคอน badge วงกลม — จัดกึ่งกลางด้วย inline style ล้วน + ไอคอนทึบ path อยู่กลาง viewBox
-   (ไม่พึ่ง CSS ภายนอก จึงไม่มีปัญหาแคชหรือเบี้ยว) */
+/* ไอคอน badge วงกลม — จัดกึ่งกลางด้วย inline style ล้วน + ไอคอนทึบ path อยู่กลาง viewBox */
 const IconBadge = ({ children }) => (
   <span
     aria-hidden="true"
@@ -53,74 +51,81 @@ export default function StoreLocation() {
         <div className="section-header animate-on-scroll">
           <span className="section-label">ที่ตั้งร้าน</span>
           <h2 className="section-title">
-            แวะมาที่ร้าน <span className="gold">หลอมทองพัทยา</span>
+            แวะมาที่ร้าน <span className="gold">หลอมทองพัทยา</span> ทั้ง 2 สาขา
           </h2>
           <p className="section-subtitle">
-            ร้านตัวจริง มีหน้าร้านชัดเจนในพัทยา จอดรถสะดวก เดินทางง่าย ตรวจทองต่อหน้าคุณทุกขั้นตอน
+            มีหน้าร้านจริง 2 สาขาในพัทยา จอดรถสะดวก เดินทางง่าย ตรวจทองต่อหน้าคุณทุกขั้นตอน
           </p>
           <div className="gold-divider"></div>
         </div>
 
-        <div className="store-grid animate-on-scroll">
-          {/* Map */}
-          <div className="store-map">
-            <iframe
-              src={MAP_EMBED}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="แผนที่ร้านหลอมทองพัทยา"
-            ></iframe>
-          </div>
+        {BRANCHES.map((b) => (
+          <div key={b.slug} className="store-branch animate-on-scroll">
+            <div className="store-grid">
+              {/* Map */}
+              <div className="store-map">
+                <iframe
+                  src={b.mapEmbedUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`แผนที่ ${b.name}`}
+                ></iframe>
+              </div>
 
-          {/* Info card */}
-          <div className="store-info">
-            <h3>ร้านหลอมทองพัทยา</h3>
+              {/* Info card */}
+              <div className="store-info">
+                <h3>
+                  {b.shortName}
+                  <span className="store-review-badge">★ Google รีวิว {b.reviews}</span>
+                </h3>
 
-            <ul className="store-details">
-              <li>
-                <IconPin />
-                <div>
-                  <b>ที่อยู่</b>
-                  <span>ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150</span>
-                </div>
-              </li>
-              <li>
-                <IconClock />
-                <div>
-                  <b>เวลาทำการ</b>
-                  <span>เปิดทุกวัน 10:00 - 20:00 น.</span>
-                </div>
-              </li>
-              <li>
-                <IconPhone />
-                <div>
-                  <b>โทรศัพท์</b>
-                  <a href={CONTACT.phoneHref} aria-label="โทรหาเรา">{CONTACT.phoneDisplay}</a>
-                </div>
-              </li>
-              <li>
-                <IconChat />
-                <div>
-                  <b>LINE</b>
-                  <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer">{CONTACT.lineId}</a>
-                </div>
-              </li>
-            </ul>
+                <ul className="store-details">
+                  <li>
+                    <IconPin />
+                    <div>
+                      <b>ที่อยู่</b>
+                      <span>{b.address}</span>
+                    </div>
+                  </li>
+                  <li>
+                    <IconClock />
+                    <div>
+                      <b>เวลาทำการ</b>
+                      <span>{b.hours}</span>
+                    </div>
+                  </li>
+                  <li>
+                    <IconPhone />
+                    <div>
+                      <b>โทรศัพท์</b>
+                      <a href={CONTACT.phoneHref} aria-label="โทรหาเรา">{CONTACT.phoneDisplay}</a>
+                    </div>
+                  </li>
+                  <li>
+                    <IconChat />
+                    <div>
+                      <b>LINE</b>
+                      <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer">{CONTACT.lineId}</a>
+                    </div>
+                  </li>
+                </ul>
 
-            <div className="store-actions">
-              <a href={MAP_DIRECTIONS} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                🧭 นำทางด้วย Google Maps
-              </a>
-              <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                💬 แอดไลน์สอบถาม
-              </a>
+                <div className="store-actions">
+                  <a href={b.mapUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                    🧭 นำทางมาสาขานี้
+                  </a>
+                  <Link href={`/branch/${b.slug}`} className="btn btn-outline">
+                    ดูรายละเอียดสาขา
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );
