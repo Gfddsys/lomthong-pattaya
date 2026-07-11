@@ -8,9 +8,9 @@ import { CONTACT } from "@/data/contact";
 const SITE_NAME = "หลอมทองพัทยา";
 const SITE_DESCRIPTION =
   "รับหลอมทองพัทยา รับซื้อทองเก่า ทองชำรุด ทองหัก เครื่องประดับ โดยช่างผู้ชำนาญ ให้ราคายุติธรรม ตรวจสอบฟรี บริการถึงที่ - หลอมทองพัทยา";
-const SITE_URL = "https://www.xn--72c5ab1amkp1ctc0co.com"; // ← แก้เป็น URL จริงของคุณ
-const SITE_PHONE = "098-765-4321"; // ← แก้เป็นเบอร์โทรจริงของร้าน
-const SITE_ADDRESS = "123/45 หมู่ 6 ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150"; // ← แก้เป็นที่อยู่จริงของร้าน
+const SITE_URL = "https://www.xn--72c5ab1amkp1ctc0co.com"; // หลอมทองพัทยา.com ในรูป punycode (มาตรฐานอินเทอร์เน็ตบังคับใช้รูปนี้)
+const SITE_PHONE = CONTACT.phoneDisplay; // เบอร์จริงจาก data/contact.js
+const SITE_ADDRESS = "ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150";
 // วางรูปจริงไว้ที่ public/images/uploads/hero/ เพื่อแทนที่รูปตัวอย่าง (ไม่ต้องเปลี่ยนชื่อไฟล์)
 const HERO_IMAGE = getUploadedImage("hero", "/images/hero.png");
 
@@ -94,8 +94,8 @@ const schemaData = {
       telephone: SITE_PHONE,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "123/45 หมู่ 6", // ← แก้เป็นที่อยู่จริงของร้าน
-        addressLocality: "พัทยา",
+        streetAddress: "ถ.พัทยาใต้ ต.หนองปรือ",
+        addressLocality: "บางละมุง",
         addressRegion: "ชลบุรี",
         postalCode: "20150",
         addressCountry: "TH",
@@ -118,8 +118,8 @@ const schemaData = {
           "Saturday",
           "Sunday",
         ],
-        opens: "09:00",
-        closes: "18:00",
+        opens: "10:00",
+        closes: "20:00",
       },
       // ดึงจาก data/contact.js เพื่อให้ตรงกับ Navbar/Footer ทุกจุด (สำคัญต่อ Local SEO)
       sameAs: [CONTACT.facebookUrl, CONTACT.lineUrl],
