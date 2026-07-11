@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
 import { BRANCHES } from '@/data/branches';
+import MapEmbed from '@/components/MapEmbed';
 
 /* ไอคอน badge วงกลม — จัดกึ่งกลางด้วย inline style ล้วน + ไอคอนทึบ path อยู่กลาง viewBox */
 const IconBadge = ({ children }) => (
@@ -65,16 +66,11 @@ export default function StoreLocation() {
             <div className="store-grid">
               {/* Map */}
               <div className="store-map">
-                <iframe
+                <MapEmbed
                   src={b.mapEmbedUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
                   title={`แผนที่ ${b.name}`}
-                ></iframe>
+                  label={`ดูแผนที่ ${b.shortName}`}
+                />
               </div>
 
               {/* Info card */}

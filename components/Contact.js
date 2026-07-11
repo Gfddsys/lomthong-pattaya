@@ -1,4 +1,5 @@
 import { CONTACT } from "@/data/contact";
+import MapEmbed from "@/components/MapEmbed";
 
 export default function Contact() {
   return (
@@ -93,16 +94,11 @@ export default function Contact() {
 
           {/* Right: Google Maps (พิกัดจริงของร้าน) */}
           <div className="contact-map">
-            <iframe
+            <MapEmbed
               src={CONTACT.mapEmbedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
               title="แผนที่ร้านหลอมทองพัทยา ศรีราชา ชลบุรี"
-            ></iframe>
+              label="ดูแผนที่ร้าน"
+            />
           </div>
         </div>
       </div>
