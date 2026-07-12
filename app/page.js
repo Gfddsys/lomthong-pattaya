@@ -12,6 +12,11 @@ import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import { getUploadedImage } from "@/lib/getImage";
 
+// canonical ของหน้าแรก (title/description ยังใช้ค่า default จาก root layout)
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   const logoSrc = getUploadedImage("logo", "/images/logo.jpg");
   return (

@@ -60,8 +60,7 @@ export default async function ServicePage({ params }) {
     "name": service.title,
     "description": service.metaDescription,
     "provider": {
-      "@type": "LocalBusiness",
-      "name": "หลอมทองพัทยา"
+      "@id": "https://www.xn--72c5ab1amkp1ctc0co.com/#business"
     }
   };
 

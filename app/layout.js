@@ -1,6 +1,15 @@
 import "./globals.css";
+import { Prompt } from "next/font/google";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
+
+// ฟอนต์ Prompt แบบ self-host (next/font) — ตัดการโหลดจาก Google Fonts ออก เร็วขึ้น ไม่มี layout shift
+const prompt = Prompt({
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-prompt",
+});
 
 /* ============================================
    ข้อมูล SEO หลัก - แก้ไขได้ที่นี่
@@ -71,9 +80,8 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // canonical ของหน้าแรกย้ายไปประกาศที่ app/page.js เอง
+  // (กันหน้าอื่นที่ลืมประกาศ canonical แล้ว inherit "/" จาก root โดยไม่ตั้งใจ = §2.3 metadata merge trap)
   verification: {
     // google: "YOUR_GOOGLE_VERIFICATION_CODE", // ← ใส่ Google Search Console Verification Code
   },
@@ -153,7 +161,7 @@ import ScrollAnimation from "@/components/ScrollAnimation";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="th">
+    <html lang="th" className={prompt.variable}>
       <head>
         {/* Schema Markup for Google */}
         <script
