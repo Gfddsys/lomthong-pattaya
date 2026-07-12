@@ -12,7 +12,7 @@ export const CONTACT = {
   phoneHref: "tel:0928839799", // ← เบอร์โทรจริง (ไม่มีขีด)
   lineId: "@hengsiri", // ← TODO: ยืนยัน LINE ID จริง
   lineUrl: "https://line.me/ti/p/~@hengsiri", // ← TODO: ยืนยันลิงก์ LINE จริง
-  facebookUrl: "https://www.facebook.com/hengsirinernplubwan", // ← TODO: ยืนยันลิงก์ Facebook จริง
+  facebookUrl: "https://www.facebook.com/hengsiripattaya", // เพจ Facebook จริงของร้าน
   googleReviewUrl: "https://maps.app.goo.gl/HbUrUHzEVS9H6z4G7", // ลิงก์รีวิวจริงบน Google
   googleMapsUrl: "https://maps.app.goo.gl/U9Z2BXarqugMs9UL6", // ลิงก์หมุดร้านบน Google Maps (เปิด/นำทาง)
   // แผนที่ฝัง (embed) ค้นด้วยชื่อร้านจริง เพื่อโชว์หมุด+ชื่อร้านชัดเจน — ไม่ต้องใช้ API key
