@@ -63,6 +63,7 @@ export default function Footer() {
               <li><Link href="/services/jewelry-buying" className="footer-link">รับซื้อเครื่องประดับ</Link></li>
               <li><Link href="/services/watch-buying" className="footer-link">รับซื้อนาฬิกาแบรนด์เนม</Link></li>
               <li><Link href="/services/gold-checking" className="footer-link">ตรวจสอบทองฟรี</Link></li>
+              <li><Link href="/services/silver-buying" className="footer-link">รับซื้อเครื่องเงิน</Link></li>
               <li><Link href="/services/online-valuation" className="footer-link">ประเมินราคาออนไลน์</Link></li>
             </ul>
           </div>

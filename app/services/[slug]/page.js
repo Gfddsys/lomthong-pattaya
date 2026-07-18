@@ -13,6 +13,7 @@ const SERVICE_IMAGE_SLOT = {
   "gold-checking": "service-gold-checking",
   "watch-buying": "watch",
   "online-valuation": "valuation",
+  "silver-buying": "silver",
 };
 
 // Generate Metadata for SEO
@@ -90,6 +91,17 @@ export default async function ServicePage({ params }) {
     ],
   };
 
+  // FAQPage schema (แสดงเมื่อบริการนั้นมี FAQ)
+  const faqLd = service.faq && service.faq.length ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": service.faq.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  } : null;
+
   return (
     <>
       <script
@@ -100,6 +112,12 @@ export default async function ServicePage({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
       <div className="page-header" style={{ padding: '6rem 0 3rem 0', background: 'var(--color-dark-2)', textAlign: 'center', borderBottom: '1px solid #eaeaea' }}>
         <div className="container">
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{service.icon}</div>
@@ -140,6 +158,13 @@ export default async function ServicePage({ params }) {
                 {service.fullDescription}
               </p>
 
+              {service.sections && service.sections.map((s, i) => (
+                <div key={i} style={{ marginBottom: '1.5rem' }}>
+                  <h3 style={{ color: 'var(--color-primary-dark)', marginBottom: '0.6rem', fontSize: '1.2rem' }}>{s.h}</h3>
+                  <p style={{ lineHeight: '1.8', color: 'var(--color-text)' }}>{s.p}</p>
+                </div>
+              ))}
+
               <div style={{ background: '#fcfcfc', border: '1px solid #eaeaea', borderRadius: '0.5rem', padding: '2rem', textAlign: 'center' }}>
                 <h3 style={{ color: 'var(--color-gold-dark)', marginBottom: '1rem' }}>สนใจบริการนี้?</h3>
                 <p style={{ marginBottom: '1.5rem', color: 'var(--color-text-muted)' }}>ติดต่อเราเพื่อสอบถามข้อมูลเพิ่มเติมหรือประเมินราคาเบื้องต้นได้ทันที</p>
@@ -165,6 +190,18 @@ export default async function ServicePage({ params }) {
             </div>
           </div>
         </div>
+
+        {service.faq && service.faq.length > 0 && (
+          <div style={{ marginTop: '3rem', maxWidth: '760px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <h2 style={{ color: 'var(--color-primary-dark)', marginBottom: '1.5rem', fontSize: '1.8rem', textAlign: 'center' }}>คำถามที่พบบ่อย</h2>
+            {service.faq.map((f, i) => (
+              <div key={i} style={{ borderBottom: '1px solid #eaeaea', padding: '1.2rem 0' }}>
+                <h3 style={{ color: 'var(--color-gold-dark)', marginBottom: '0.5rem', fontSize: '1.1rem' }}>{f.q}</h3>
+                <p style={{ lineHeight: '1.8', color: 'var(--color-text)' }}>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

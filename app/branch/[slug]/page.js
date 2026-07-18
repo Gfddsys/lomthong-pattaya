@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const b = getBranch(slug);
   if (!b) return {};
-  const title = `${b.name} | รับหลอมทอง รับซื้อทอง ${b.shortName}`;
+  const title = `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
   const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน 10:00-20:00 น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,
@@ -77,7 +77,7 @@ export default async function BranchPage({ params }) {
       </nav>
 
       <header className="blog-article-header">
-        <h1>{b.name}</h1>
+        <h1>ร้านทอง {b.area} — รับซื้อทอง หลอมทอง</h1>
         <div className="blog-article-meta">
           <span>📍 {b.shortName}</span>
           <span>⭐ Google รีวิว {b.reviews}</span>

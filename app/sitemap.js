@@ -43,6 +43,30 @@ export default function sitemap() {
     ...branchPages,
     ...servicePages,
     {
+      url: `${baseUrl}/blog/khai-thong-mai-mee-bai-set`,
+      lastModified: LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/wi-thi-kamnuan-rakha-khai-thong-kao`,
+      lastModified: LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/thong-khat-thong-hak-rap-sue-mai`,
+      lastModified: LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/khai-thong-thi-nai-rakha-sung-pattaya`,
+      lastModified: LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/rap-sue-thong-pattaya`,
       lastModified: LASTMOD,
       changeFrequency: "monthly",
