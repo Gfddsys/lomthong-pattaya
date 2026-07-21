@@ -36,6 +36,14 @@ export default function Navbar() {
       <div className="container">
         {/* Brand */}
         <a href="/" className="navbar-brand" aria-label="หลอมทองพัทยา - กลับหน้าแรก">
+          <img
+            src="/images/uploads/logo/logo-nav.png"
+            alt="หลอมทองพัทยา"
+            width={48}
+            height={48}
+            className="navbar-brand-logo"
+            style={{ height: '48px', width: '48px', borderRadius: '10px', display: 'block', objectFit: 'cover' }}
+          />
           <div className="navbar-brand-text">
             <span className="navbar-brand-name">หลอมทองพัทยา</span>
           </div>
