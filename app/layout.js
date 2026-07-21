@@ -22,6 +22,8 @@ const SITE_PHONE = CONTACT.phoneDisplay; // เบอร์จริงจาก
 const SITE_ADDRESS = "ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150";
 // วางรูปจริงไว้ที่ public/images/uploads/hero/ เพื่อแทนที่รูปตัวอย่าง (ไม่ต้องเปลี่ยนชื่อไฟล์)
 const HERO_IMAGE = getUploadedImage("hero", "/images/hero.png");
+// รูปตัวแทนเว็บสำหรับพรีวิวตอนแชร์ (Google / Facebook / LINE) — ขนาด 1200x630 ตามมาตรฐาน og:image
+const OG_IMAGE = "/images/og-cover.jpg";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,10 +58,10 @@ export const metadata = {
     description: SITE_DESCRIPTION,
     images: [
       {
-        url: HERO_IMAGE,
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "หลอมทองพัทยา",
+        alt: "หลอมทองพัทยา - เฮงศิริ รับซื้อทอง หลอมทอง พัทยา",
       },
     ],
   },
@@ -67,7 +69,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "หลอมทองพัทยา | รับซื้อทอง หลอมทอง",
     description: SITE_DESCRIPTION,
-    images: [HERO_IMAGE],
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,
@@ -113,7 +115,7 @@ const schemaData = {
         latitude: 12.9187667, // พิกัดจริงของร้าน (Google Maps)
         longitude: 100.8927284,
       },
-      image: `${SITE_URL}${HERO_IMAGE}`,
+      image: `${SITE_URL}${OG_IMAGE}`,
       priceRange: "฿",
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
