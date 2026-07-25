@@ -7,17 +7,20 @@
           "interval": [
             {
               "field": "cronExpression",
-              "expression": "0 9 * * 1"
+              "expression": "0 9 */3 * *"
             }
           ]
         }
       },
       "id": "trigger-schedule",
-      "name": "ทุกวันจันทร์ 9 โมง",
+      "name": "ทุก 3 วัน 9 โมง",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [-660, 300],
-      "notes": "แก้เวลาได้ที่นี่ — ค่าเริ่มต้น: สัปดาห์ละ 1 บทความ (ปลอดภัยที่สุดสำหรับ SEO)"
+      "position": [
+        -660,
+        300
+      ],
+      "notes": "ทุก 3 วัน เวลา 9 โมงเช้า (~10 บทความ/เดือน) — แก้ cron ได้ที่ช่อง Expression"
     },
     {
       "parameters": {
@@ -49,7 +52,10 @@
       "name": "ตั้งค่า GitHub",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-460, 300],
+      "position": [
+        -460,
+        300
+      ],
       "notes": "⚠️ แก้ 3 ค่านี้ก่อนใช้งาน: ชื่อ GitHub / ชื่อ repo / branch"
     },
     {
@@ -69,7 +75,10 @@
       "name": "ดึงรายชื่อบทความที่มีแล้ว",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [-260, 300],
+      "position": [
+        -260,
+        300
+      ],
       "notes": "อ่านโฟลเดอร์ content/articles บน GitHub เพื่อกันเขียนหัวข้อซ้ำ"
     },
     {
@@ -80,7 +89,10 @@
       "name": "รวมหัวข้อที่เขียนไปแล้ว",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-60, 300]
+      "position": [
+        -60,
+        300
+      ]
     },
     {
       "parameters": {
@@ -97,13 +109,16 @@
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
-      "position": [200, 520],
+      "position": [
+        200,
+        520
+      ],
       "notes": "เปลี่ยนเป็น Gemini / Claude ได้ แค่ลากโมเดลอื่นมาต่อแทน"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=คุณเป็นนักเขียนคอนเทนต์ SEO ให้ร้านรับซื้อทองและหลอมทองในพัทยา จังหวัดชลบุรี\n\n=== ข้อมูลร้าน (ใช้เป็นข้อเท็จจริงเท่านั้น ห้ามแต่งเพิ่ม) ===\nชื่อ: หลอมทองพัทยา (แบรนด์หน้าร้าน \"เฮงศิริ\")\nบริการ: หลอมทอง, รับซื้อทองเก่า, ทองหัก, ทองชำรุด, ทองเค 9K 14K 18K, ทองอิตาลี, เศษทอง, ผงทอง, กรอบพระทองคำ, เครื่องประดับ, เครื่องเงิน, นาฬิกาแบรนด์เนม\nจุดเด่น: ตรวจเปอร์เซ็นต์ด้วยเครื่อง XRF ต่อหน้าลูกค้าฟรี, อ้างอิงราคาสมาคมค้าทองคำ, ไม่กดราคา, จ่ายเงินสดทันที, ขายได้แม้ไม่มีใบเสร็จ\nพื้นที่: พัทยาใต้, เนินพลับหวาน, พัทยากลาง, พัทยาเหนือ, จอมเทียน, นาเกลือ, บางละมุง, ศรีราชา, ชลบุรี\nสาขา: 2 สาขา เปิดทุกวัน 10:00-20:00 น.\nโทร: 092-883-9799\n\n=== บทความที่มีอยู่แล้ว (ห้ามเขียนซ้ำหรือคล้ายกัน) ===\n- {{ $json.existingTopicsText }}\nslug ที่ใช้ไปแล้ว: {{ $json.existingSlugsText }}\n\n=== งานของคุณ ===\nเลือกหัวข้อใหม่ 1 หัวข้อที่ยังไม่มี แล้วเขียนบทความให้ครบ โดยยึดหลัก:\n1. ต้องเป็นคำที่ \"คนกำลังจะขายทอง\" ค้นหาจริง ไม่ใช่คำฮิตทั่วไป\n2. 1 บทความ = 1 เจตนาค้นหา\n3. ภาษาไทยธรรมชาติ เหมือนเจ้าของร้านอธิบายให้ลูกค้าฟัง ไม่ใช่ภาษาโฆษณา\n4. ย่อหน้าสั้น 2-4 บรรทัด (คนอ่านบนมือถือ)\n5. ห้ามแต่งตัวเลขที่ตรวจสอบไม่ได้ เช่น จำนวนลูกค้า ปีที่ก่อตั้ง รางวัล\n6. ห้ามอ้างประสบการณ์ส่วนตัวที่ไม่มีจริง เช่น \"จากประสบการณ์ 20 ปีของเรา\"\n7. ห้ามใช้สำนวน AI เช่น \"ในยุคดิจิทัล\" \"อย่างไรก็ตาม\" \"ทั้งนี้และทั้งนั้น\"\n8. ใส่ **ดอกจันคู่** ครอบคำที่ต้องการเน้นตัวหนา\n\n=== รูปแบบผลลัพธ์ ===\nตอบเป็น JSON ล้วนอย่างเดียว ห้ามมีข้อความอื่นนอก JSON ห้ามใส่ ```json\n\n{\n  \"slug\": \"ภาษาอังกฤษพิมพ์เล็ก-คั่นขีด-ห้ามภาษาไทย\",\n  \"title\": \"หัวข้อไม่เกิน 60 ตัวอักษร มีคีย์เวิร์ดหลัก\",\n  \"description\": \"meta description 150-160 ตัวอักษร\",\n  \"excerpt\": \"ข้อความในการ์ด 2 บรรทัด\",\n  \"keywords\": [\"คีย์เวิร์ดหลัก\", \"คีย์เวิร์ด พัทยา\", \"คีย์เวิร์ด ชลบุรี\"],\n  \"date\": \"{{ $json.today }}\",\n  \"category\": \"ความรู้\",\n  \"imageAlt\": \"คำอธิบายรูปปกที่มีคีย์เวิร์ด\",\n  \"fallbackImage\": \"/images/blog-lomthong.png\",\n  \"breadcrumb\": \"ชื่อสั้นๆ\",\n  \"sections\": [\n    { \"type\": \"summary\", \"items\": [\"คำตอบสั้น 1\", \"คำตอบสั้น 2\", \"คำตอบสั้น 3\", \"คำตอบสั้น 4\"] },\n    { \"type\": \"p\", \"text\": \"ย่อหน้าเปิด\" },\n    { \"type\": \"h2\", \"text\": \"หัวข้อใหญ่\" },\n    { \"type\": \"p\", \"text\": \"เนื้อหา\" },\n    { \"type\": \"ul\", \"items\": [\"ข้อ 1\", \"ข้อ 2\"] },\n    { \"type\": \"ol\", \"items\": [\"ขั้น 1\", \"ขั้น 2\"] },\n    { \"type\": \"quote\", \"text\": \"ประโยคเน้น\" }\n  ],\n  \"faq\": [\n    { \"q\": \"คำถามแบบที่คนพิมพ์ค้น Google\", \"a\": \"คำตอบ 2-3 ประโยค\" }\n  ],\n  \"ctaTitle\": \"หัวข้อชวนติดต่อ\",\n  \"ctaText\": \"**หลอมทองพัทยา** ...\",\n  \"ctaLink\": \"/services/gold-buying\",\n  \"ctaLinkText\": \"ดูบริการรับซื้อทอง\"\n}\n\nข้อกำหนดเพิ่มเติม:\n- sections ต้องมี 15-25 บล็อก และเริ่มด้วย summary เสมอ\n- ใช้ type ได้เฉพาะ: summary, h2, h3, p, ul, ol, quote เท่านั้น\n- faq ต้องมี 3-4 ข้อ\n- fallbackImage เลือกได้เฉพาะ: /images/blog-lomthong.png หรือ /images/blog-check-gold.png หรือ /images/blog-gold-price.png หรือ /images/inspection.png",
+        "text": "=คุณเป็นนักเขียนคอนเทนต์ SEO ให้ร้านรับซื้อทองและหลอมทองในพัทยา จังหวัดชลบุรี\n\n=== ข้อมูลร้าน (ใช้เป็นข้อเท็จจริงเท่านั้น ห้ามแต่งเพิ่ม) ===\nชื่อ: หลอมทองพัทยา (แบรนด์หน้าร้าน \"เฮงศิริ\")\nบริการ: หลอมทอง, รับซื้อทองเก่า, ทองหัก, ทองชำรุด, ทองเค 9K 14K 18K, ทองอิตาลี, เศษทอง, ผงทอง, กรอบพระทองคำ, เครื่องประดับ, เครื่องเงิน, นาฬิกาแบรนด์เนม\nจุดเด่น: ตรวจเปอร์เซ็นต์ด้วยเครื่อง XRF ต่อหน้าลูกค้าฟรี, อ้างอิงราคาสมาคมค้าทองคำ, ไม่กดราคา, จ่ายเงินสดทันที, ขายได้แม้ไม่มีใบเสร็จ\nพื้นที่: พัทยาใต้, เนินพลับหวาน, พัทยากลาง, พัทยาเหนือ, จอมเทียน, นาเกลือ, บางละมุง, ศรีราชา, ชลบุรี\nสาขา: 2 สาขา เปิดทุกวัน 10:00-20:00 น.\nโทร: 092-883-9799\n\n=== บทความที่มีอยู่แล้ว (ห้ามเขียนซ้ำหรือคล้ายกัน) ===\n- {{ $json.existingTopicsText }}\nslug ที่ใช้ไปแล้ว: {{ $json.existingSlugsText }}\n\n=== งานของคุณ ===\nเลือกหัวข้อใหม่ 1 หัวข้อที่ยังไม่มี แล้วเขียนบทความให้ครบ โดยยึดหลัก:\n1. ต้องเป็นคำที่ \"คนกำลังจะขายทอง\" ค้นหาจริง ไม่ใช่คำฮิตทั่วไป\n2. 1 บทความ = 1 เจตนาค้นหา\n3. ภาษาไทยธรรมชาติ เหมือนเจ้าของร้านอธิบายให้ลูกค้าฟัง ไม่ใช่ภาษาโฆษณา\n4. ย่อหน้าสั้น 2-4 บรรทัด (คนอ่านบนมือถือ)\n5. ห้ามแต่งตัวเลขที่ตรวจสอบไม่ได้ เช่น จำนวนลูกค้า ปีที่ก่อตั้ง รางวัล\n6. ห้ามอ้างประสบการณ์ส่วนตัวที่ไม่มีจริง เช่น \"จากประสบการณ์ 20 ปีของเรา\"\n7. ห้ามใช้สำนวน AI เช่น \"ในยุคดิจิทัล\" \"อย่างไรก็ตาม\" \"ทั้งนี้และทั้งนั้น\"\n8. ใส่ **ดอกจันคู่** ครอบคำที่ต้องการเน้นตัวหนา\n\n=== รูปแบบผลลัพธ์ ===\nตอบเป็น JSON ล้วนอย่างเดียว ห้ามมีข้อความอื่นนอก JSON ห้ามใส่ ```json\n\n{\n  \"slug\": \"ภาษาอังกฤษพิมพ์เล็ก-คั่นขีด-ห้ามภาษาไทย\",\n  \"title\": \"หัวข้อไม่เกิน 60 ตัวอักษร มีคีย์เวิร์ดหลัก\",\n  \"description\": \"meta description 150-160 ตัวอักษร\",\n  \"excerpt\": \"ข้อความในการ์ด 2 บรรทัด\",\n  \"keywords\": [\"คีย์เวิร์ดหลัก\", \"คีย์เวิร์ด พัทยา\", \"คีย์เวิร์ด ชลบุรี\"],\n  \"date\": \"{{ $json.today }}\",\n  \"category\": \"ความรู้\",\n  \"imageAlt\": \"คำอธิบายรูปปกที่มีคีย์เวิร์ด\",\n  \"coverTheme\": \"เลือก 1 หมวดจากรายการด้านล่าง\",\n  \"breadcrumb\": \"ชื่อสั้นๆ\",\n  \"sections\": [\n    { \"type\": \"summary\", \"items\": [\"คำตอบสั้น 1\", \"คำตอบสั้น 2\", \"คำตอบสั้น 3\", \"คำตอบสั้น 4\"] },\n    { \"type\": \"p\", \"text\": \"ย่อหน้าเปิด\" },\n    { \"type\": \"h2\", \"text\": \"หัวข้อใหญ่\" },\n    { \"type\": \"p\", \"text\": \"เนื้อหา\" },\n    { \"type\": \"ul\", \"items\": [\"ข้อ 1\", \"ข้อ 2\"] },\n    { \"type\": \"ol\", \"items\": [\"ขั้น 1\", \"ขั้น 2\"] },\n    { \"type\": \"quote\", \"text\": \"ประโยคเน้น\" }\n  ],\n  \"faq\": [\n    { \"q\": \"คำถามแบบที่คนพิมพ์ค้น Google\", \"a\": \"คำตอบ 2-3 ประโยค\" }\n  ],\n  \"ctaTitle\": \"หัวข้อชวนติดต่อ\",\n  \"ctaText\": \"**หลอมทองพัทยา** ...\",\n  \"ctaLink\": \"/services/gold-buying\",\n  \"ctaLinkText\": \"ดูบริการรับซื้อทอง\"\n}\n\nข้อกำหนดเพิ่มเติม:\n- sections ต้องมี 15-25 บล็อก และเริ่มด้วย summary เสมอ\n- ใช้ type ได้เฉพาะ: summary, h2, h3, p, ul, ol, quote เท่านั้น\n- faq ต้องมี 3-4 ข้อ\n- coverTheme ต้องเลือกจากหมวดนี้เท่านั้น โดยเลือกหมวดที่ตรงกับเนื้อหาบทความมากที่สุด\n  - lomthong — บทความเรื่องหลอมทอง เตาหลอม ขั้นตอนหลอม\n  - truat-thong — บทความเรื่องตรวจเปอร์เซ็นต์ทอง เครื่อง XRF ทองแท้ปลอม ทองเค\n  - rap-sue-thong — บทความเรื่องรับซื้อทอง ขายทอง เครื่องประดับ (ใช้เป็นค่ากลางถ้าไม่แน่ใจ)\n  - thong-kao — บทความเรื่องทองเก่า ทองหัก ทองชำรุด ราคาทอง\n  - ran-thong — บทความเรื่องร้าน สาขา พื้นที่ ขายที่ไหน\n  - krob-phra — บทความเรื่องกรอบพระทองคำ พระเครื่อง\n  - nalika — บทความเรื่องนาฬิกาแบรนด์เนม\n  - brandname — บทความเรื่องกระเป๋า ของแบรนด์เนม",
         "hasOutputParser": false,
         "options": {}
       },
@@ -111,17 +126,23 @@
       "name": "AI เขียนบทความ",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.5,
-      "position": [160, 300]
+      "position": [
+        160,
+        300
+      ]
     },
     {
       "parameters": {
-        "jsCode": "// ============================================================\n// ด่านตรวจก่อนขึ้นเว็บ — กัน AI ส่งของเสียขึ้นไปทำเว็บพัง\n// ============================================================\nconst cfg = $('รวมหัวข้อที่เขียนไปแล้ว').first().json;\nconst raw = $input.first().json;\n\n// 1) ดึงข้อความจาก AI (รองรับหลายรูปแบบ output)\nlet text = raw.text ?? raw.output ?? raw.response ?? raw.data ?? '';\nif (typeof text !== 'string') text = JSON.stringify(text);\n\n// 2) ตัด ```json ``` ที่ AI ชอบใส่มา\ntext = text.trim()\n  .replace(/^```(?:json)?\\s*/i, '')\n  .replace(/```\\s*$/, '')\n  .trim();\n\n// 3) เผื่อมีข้อความนำหน้า — ตัดเอาเฉพาะก้อน JSON\nconst first = text.indexOf('{');\nconst last = text.lastIndexOf('}');\nif (first === -1 || last === -1) {\n  throw new Error('AI ไม่ได้ส่ง JSON กลับมา — ได้: ' + text.slice(0, 200));\n}\ntext = text.slice(first, last + 1);\n\n// 4) แปลงเป็น object\nlet a;\ntry {\n  a = JSON.parse(text);\n} catch (e) {\n  throw new Error('JSON ที่ AI ส่งมาผิดรูปแบบ: ' + e.message);\n}\n\n// 5) ตรวจฟิลด์ที่ขาดไม่ได้\nfor (const k of ['slug','title','description','sections']) {\n  if (!a[k]) throw new Error('ขาดฟิลด์: ' + k);\n}\n\n// 6) slug ต้องเป็น a-z 0-9 - เท่านั้น\nif (!/^[a-z0-9-]+$/.test(a.slug)) {\n  throw new Error('slug ผิดรูปแบบ: ' + a.slug);\n}\n\n// 7) ห้ามซ้ำกับที่มีอยู่แล้ว\nif ((cfg.existingSlugs || []).includes(a.slug)) {\n  throw new Error('slug ซ้ำกับบทความเดิม: ' + a.slug);\n}\n\n// 8) sections ต้องถูกชนิด และมีเนื้อหาพอ\nconst ALLOWED = ['summary','h2','h3','p','ul','ol','quote'];\nif (!Array.isArray(a.sections) || a.sections.length < 8) {\n  throw new Error('sections สั้นเกินไป (' + (a.sections||[]).length + ' บล็อก)');\n}\nfor (const s of a.sections) {\n  if (!ALLOWED.includes(s?.type)) throw new Error('section type ไม่รองรับ: ' + s?.type);\n  if (typeof s.text !== 'string' && !Array.isArray(s.items)) {\n    throw new Error('section ไม่มีเนื้อหา: ' + s.type);\n  }\n}\n\n// 9) รูปสำรองต้องเป็นไฟล์ที่มีจริง\nconst OK_IMG = ['/images/blog-lomthong.png','/images/blog-check-gold.png','/images/blog-gold-price.png','/images/inspection.png'];\nif (!OK_IMG.includes(a.fallbackImage)) a.fallbackImage = '/images/blog-lomthong.png';\n\n// 10) บังคับวันที่เป็นวันนี้เสมอ\na.date = cfg.today;\n\n// 11) โหมดเผยแพร่:\n//     true  = ขึ้นเว็บทันที\n//     false = ขึ้นเป็นร่าง (ไม่แสดงบนเว็บ) ต้องมาแก้เป็น true เอง\na.published = true;\n\nconst content = JSON.stringify(a, null, 2);\n\nreturn [{\n  json: {\n    ...cfg,\n    slug: a.slug,\n    title: a.title,\n    filePath: 'content/articles/' + a.slug + '.json',\n    commitMessage: 'บทความใหม่: ' + a.title,\n    fileContentBase64: Buffer.from(content, 'utf8').toString('base64'),\n  }\n}];"
+        "jsCode": "// ============================================================\n// ด่านตรวจก่อนขึ้นเว็บ — กัน AI ส่งของเสียขึ้นไปทำเว็บพัง\n// ============================================================\nconst cfg = $('รวมหัวข้อที่เขียนไปแล้ว').first().json;\nconst raw = $input.first().json;\n\n// 1) ดึงข้อความจาก AI (รองรับหลายรูปแบบ output)\nlet text = raw.text ?? raw.output ?? raw.response ?? raw.data ?? '';\nif (typeof text !== 'string') text = JSON.stringify(text);\n\n// 2) ตัด ```json ``` ที่ AI ชอบใส่มา\ntext = text.trim()\n  .replace(/^```(?:json)?\\s*/i, '')\n  .replace(/```\\s*$/, '')\n  .trim();\n\n// 3) เผื่อมีข้อความนำหน้า — ตัดเอาเฉพาะก้อน JSON\nconst first = text.indexOf('{');\nconst last = text.lastIndexOf('}');\nif (first === -1 || last === -1) {\n  throw new Error('AI ไม่ได้ส่ง JSON กลับมา — ได้: ' + text.slice(0, 200));\n}\ntext = text.slice(first, last + 1);\n\n// 4) แปลงเป็น object\nlet a;\ntry {\n  a = JSON.parse(text);\n} catch (e) {\n  throw new Error('JSON ที่ AI ส่งมาผิดรูปแบบ: ' + e.message);\n}\n\n// 5) ตรวจฟิลด์ที่ขาดไม่ได้\nfor (const k of ['slug','title','description','sections']) {\n  if (!a[k]) throw new Error('ขาดฟิลด์: ' + k);\n}\n\n// 6) slug ต้องเป็น a-z 0-9 - เท่านั้น\nif (!/^[a-z0-9-]+$/.test(a.slug)) {\n  throw new Error('slug ผิดรูปแบบ: ' + a.slug);\n}\n\n// 7) ห้ามซ้ำกับที่มีอยู่แล้ว\nif ((cfg.existingSlugs || []).includes(a.slug)) {\n  throw new Error('slug ซ้ำกับบทความเดิม: ' + a.slug);\n}\n\n// 8) sections ต้องถูกชนิด และมีเนื้อหาพอ\nconst ALLOWED = ['summary','h2','h3','p','ul','ol','quote'];\nif (!Array.isArray(a.sections) || a.sections.length < 8) {\n  throw new Error('sections สั้นเกินไป (' + (a.sections||[]).length + ' บล็อก)');\n}\nfor (const s of a.sections) {\n  if (!ALLOWED.includes(s?.type)) throw new Error('section type ไม่รองรับ: ' + s?.type);\n  if (typeof s.text !== 'string' && !Array.isArray(s.items)) {\n    throw new Error('section ไม่มีเนื้อหา: ' + s.type);\n  }\n}\n\n// 9) หมวดรูปต้องเป็นหมวดที่มีจริง (ระบบจะสลับรูปในหมวดให้เอง)\nconst OK_THEME = ['lomthong','truat-thong','rap-sue-thong','thong-kao','ran-thong','krob-phra','nalika','brandname'];\nif (!OK_THEME.includes(a.coverTheme)) a.coverTheme = 'rap-sue-thong';\ndelete a.fallbackImage; // ไม่ต้องระบุ path เอง ให้เว็บเลือกจากคลังรูป\n\n// 10) บังคับวันที่เป็นวันนี้เสมอ\na.date = cfg.today;\n\n// 11) โหมดเผยแพร่:\n//     true  = ขึ้นเว็บทันที\n//     false = ขึ้นเป็นร่าง (ไม่แสดงบนเว็บ) ต้องมาแก้เป็น true เอง\na.published = true;\n\nconst content = JSON.stringify(a, null, 2);\n\nreturn [{\n  json: {\n    ...cfg,\n    slug: a.slug,\n    title: a.title,\n    filePath: 'content/articles/' + a.slug + '.json',\n    commitMessage: 'บทความใหม่: ' + a.title,\n    fileContentBase64: Buffer.from(content, 'utf8').toString('base64'),\n  }\n}];"
       },
       "id": "code-validate",
       "name": "ตรวจสอบก่อนขึ้นเว็บ",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [500, 300],
+      "position": [
+        500,
+        300
+      ],
       "notes": "ด่านสำคัญ — ถ้า AI ส่งของเสียมา flow จะหยุดตรงนี้ เว็บไม่พัง"
     },
     {
@@ -139,7 +160,10 @@
       "name": "ส่งบทความขึ้น GitHub",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [740, 300],
+      "position": [
+        740,
+        300
+      ],
       "notes": "commit ไฟล์ JSON 1 ไฟล์ → Vercel deploy อัตโนมัติ → บทความขึ้นเว็บ"
     },
     {
@@ -150,37 +174,108 @@
       "name": "สรุปผล",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [960, 300]
+      "position": [
+        960,
+        300
+      ]
     }
   ],
   "connections": {
-    "ทุกวันจันทร์ 9 โมง": {
-      "main": [[{ "node": "ตั้งค่า GitHub", "type": "main", "index": 0 }]]
-    },
     "ตั้งค่า GitHub": {
-      "main": [[{ "node": "ดึงรายชื่อบทความที่มีแล้ว", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "ดึงรายชื่อบทความที่มีแล้ว",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "ดึงรายชื่อบทความที่มีแล้ว": {
-      "main": [[{ "node": "รวมหัวข้อที่เขียนไปแล้ว", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "รวมหัวข้อที่เขียนไปแล้ว",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "รวมหัวข้อที่เขียนไปแล้ว": {
-      "main": [[{ "node": "AI เขียนบทความ", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "AI เขียนบทความ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "OpenAI Chat Model": {
-      "ai_languageModel": [[{ "node": "AI เขียนบทความ", "type": "ai_languageModel", "index": 0 }]]
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI เขียนบทความ",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     },
     "AI เขียนบทความ": {
-      "main": [[{ "node": "ตรวจสอบก่อนขึ้นเว็บ", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "ตรวจสอบก่อนขึ้นเว็บ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "ตรวจสอบก่อนขึ้นเว็บ": {
-      "main": [[{ "node": "ส่งบทความขึ้น GitHub", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "ส่งบทความขึ้น GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "ส่งบทความขึ้น GitHub": {
-      "main": [[{ "node": "สรุปผล", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "สรุปผล",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ทุก 3 วัน 9 โมง": {
+      "main": [
+        [
+          {
+            "node": "ตั้งค่า GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "settings": { "executionOrder": "v1" },
+  "settings": {
+    "executionOrder": "v1"
+  },
   "pinData": {},
-  "meta": { "instanceId": "lomthong-pattaya-auto-article" },
+  "meta": {
+    "instanceId": "lomthong-pattaya-auto-article"
+  },
   "tags": []
 }
