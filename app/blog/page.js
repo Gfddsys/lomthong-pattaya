@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
+import { getAutoArticles } from "@/lib/articles";
 
 const IMG_LOMTHONG = getUploadedImage("blog-lomthong", "/images/blog-lomthong.png");
 const IMG_CHECK_GOLD = getUploadedImage("blog-check-gold", "/images/blog-check-gold.png");
@@ -12,6 +13,17 @@ const IMG_GOLD_PRICE = getUploadedImage("blog-gold-price", "/images/blog-gold-pr
    เพิ่มบทความใหม่ได้ที่นี่
    ============================================ */
 const articles = [
+  {
+    slug: "thong-k-9k-14k-18k-rap-sue-pattaya",
+    title: "ทองเค 9K 14K 18K ขายได้ไหม? ต่างจากทองไทยยังไง",
+    excerpt:
+      "มีสร้อยหรือแหวนทองเคจากต่างประเทศ แต่ร้านทองทั่วไปไม่รับซื้อ? บทความนี้อธิบายว่าทองเคคืออะไร ขายได้ที่ไหน และคำนวณราคาคร่าวๆ เองได้ยังไง",
+    image: "/images/blog-check-gold.png",
+    imageAlt: "ทองเค 9K 14K 18K ขายได้ไหม รับซื้อทองเคพัทยา",
+    date: "25 กรกฎาคม 2569",
+    readTime: "12 นาที",
+    category: "ความรู้",
+  },
   {
     slug: "khai-thong-mai-mee-bai-set",
     title: "ขายทองไม่มีใบเสร็จ ขายได้ไหม? ต้องใช้เอกสารอะไรบ้าง",
@@ -146,6 +158,26 @@ const articles = [
   },
 ];
 
+/* ============================================
+   รวมบทความอัตโนมัติ (จาก content/articles/*.json)
+   เข้ากับบทความเดิมด้านบน — บทความใหม่ขึ้นก่อน
+   ============================================ */
+function getAllArticles() {
+  const auto = getAutoArticles().map((a) => ({
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt,
+    image: a.fallbackImage,
+    imageAlt: a.imageAlt,
+    date: a.date,
+    readTime: a.readTime,
+    category: a.category,
+  }));
+  // กันซ้ำ: ถ้ามี slug ตรงกับบทความเดิม ให้ใช้ของเดิม
+  const existing = new Set(articles.map((a) => a.slug));
+  return [...auto.filter((a) => !existing.has(a.slug)), ...articles];
+}
+
 export const metadata = {
   title: "บทความ | ความรู้เรื่องทอง หลอมทอง รับซื้อทอง ราคาทอง พัทยา ชลบุรี",
   description:
@@ -176,6 +208,7 @@ export const metadata = {
 };
 
 export default function BlogPage() {
+  const allArticles = getAllArticles();
   return (
     <>
       {/* Blog Hero Banner */}
@@ -199,7 +232,7 @@ export default function BlogPage() {
       <section className="section section-dark">
         <div className="container">
           <div className="blog-grid">
-            {articles.map((article) => (
+            {allArticles.map((article) => (
               <Link
                 href={`/blog/${article.slug}`}
                 key={article.slug}

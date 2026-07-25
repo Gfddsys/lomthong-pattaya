@@ -1,5 +1,6 @@
 import { servicesData } from "../data/services";
 import { BRANCHES } from "../data/branches";
+import { getAutoArticles } from "../lib/articles";
 
 export default function sitemap() {
   const baseUrl = "https://www.xn--72c5ab1amkp1ctc0co.com"; // ← แก้เป็น URL จริงของคุณ
@@ -10,6 +11,14 @@ export default function sitemap() {
   const servicePages = servicesData.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
     lastModified: LASTMOD,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  // บทความอัตโนมัติจาก content/articles/*.json — เพิ่มเข้า sitemap เองโดยไม่ต้องแก้ไฟล์นี้
+  const autoArticlePages = getAutoArticles().map((a) => ({
+    url: `${baseUrl}/blog/${a.slug}`,
+    lastModified: new Date(a.dateIso),
     changeFrequency: "monthly",
     priority: 0.8,
   }));
@@ -42,6 +51,7 @@ export default function sitemap() {
     },
     ...branchPages,
     ...servicePages,
+    ...autoArticlePages,
     {
       url: `${baseUrl}/blog/khai-thong-mai-mee-bai-set`,
       lastModified: LASTMOD,
@@ -110,6 +120,12 @@ export default function sitemap() {
     },
     {
       url: `${baseUrl}/blog/gold-price-trend`,
+      lastModified: LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/thong-k-9k-14k-18k-rap-sue-pattaya`,
       lastModified: LASTMOD,
       changeFrequency: "monthly",
       priority: 0.8,
