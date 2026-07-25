@@ -19,8 +19,9 @@ export function generateStaticParams() {
   return getAutoArticles().map((a) => ({ slug: a.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const article = getAutoArticle(params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const article = getAutoArticle(slug);
   if (!article) return {};
   return {
     title: article.title,
@@ -122,8 +123,9 @@ function Section({ block }) {
   }
 }
 
-export default function AutoArticlePage({ params }) {
-  const article = getAutoArticle(params.slug);
+export default async function AutoArticlePage({ params }) {
+  const { slug } = await params;
+  const article = getAutoArticle(slug);
   if (!article) notFound();
 
   const coverImage = getUploadedImage(`blog-${article.slug}`, article.fallbackImage);
