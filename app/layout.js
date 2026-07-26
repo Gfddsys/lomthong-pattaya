@@ -2,6 +2,7 @@ import "./globals.css";
 import { Prompt } from "next/font/google";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
+import { BRANCHES } from "@/data/branches";
 
 // ฟอนต์ Prompt แบบ self-host (next/font) — ตัดการโหลดจาก Google Fonts ออก เร็วขึ้น ไม่มี layout shift
 const prompt = Prompt({
@@ -132,11 +133,52 @@ const schemaData = {
         closes: "20:00",
       },
       // ดึงจาก data/contact.js เพื่อให้ตรงกับ Navbar/Footer ทุกจุด (สำคัญต่อ Local SEO)
-      sameAs: [CONTACT.facebookUrl, CONTACT.lineUrl],
+      // googlePlaceUrl = ตัวเชื่อม "เว็บนี้ = ร้านนี้ใน Google Maps"
+      // ทำให้ Google/AI ดึงรีวิว ที่ตั้ง เวลาทำการ มารวมกับเว็บได้ → มีโอกาสถูกแนะนำใน AI Overview
+      sameAs: [CONTACT.googlePlaceUrl, CONTACT.facebookUrl, CONTACT.lineUrl],
+      hasMap: CONTACT.googlePlaceUrl,
       // ⚠️ ห้ามใส่ aggregateRating เทียม (rating/จำนวนรีวิวที่ไม่มีอยู่จริง) เด็ดขาด
       // Google ถือเป็น "misleading structured data" และอาจโดน manual action ตัด rich result ทั้งเว็บ
       // ให้ใส่กลับเมื่อมีรีวิวจริงบน Google Business Profile แล้วเท่านั้น (ผูกตัวเลขตามจริง)
     },
+    /* ---------- สาขาทั้ง 2 แห่ง ----------
+       ประกาศแต่ละสาขาเป็น LocalBusiness ของตัวเอง แล้วผูกกลับไปที่ธุรกิจแม่ด้วย parentOrganization
+       ช่วยให้ Google/AI เข้าใจว่า "ร้านนี้มี 2 ที่ตั้งจริง" ไม่ใช่ที่เดียว
+       → มีโอกาสโผล่ในผลค้นหาแบบระบุพื้นที่ (เช่น "ร้านทอง เนินพลับหวาน") มากขึ้น */
+    ...BRANCHES.map((b) => ({
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/branch/${b.slug}#business`,
+      name: b.name,
+      alternateName: b.gbpName,
+      url: `${SITE_URL}/branch/${b.slug}`,
+      telephone: SITE_PHONE,
+      parentOrganization: { "@id": `${SITE_URL}/#business` },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: b.streetAddress,
+        addressLocality: b.locality,
+        addressRegion: b.region,
+        postalCode: b.postalCode,
+        addressCountry: "TH",
+      },
+      geo: { "@type": "GeoCoordinates", latitude: b.lat, longitude: b.lng },
+      hasMap: b.mapUrl,
+      priceRange: "฿",
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "10:00",
+        closes: "20:00",
+      },
+    })),
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,

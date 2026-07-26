@@ -15,6 +15,10 @@ export const CONTACT = {
   facebookUrl: "https://www.facebook.com/hengsiripattaya", // เพจ Facebook จริงของร้าน
   googleReviewUrl: "https://maps.app.goo.gl/HbUrUHzEVS9H6z4G7", // ลิงก์รีวิวจริงบน Google
   googleMapsUrl: "https://maps.app.goo.gl/U9Z2BXarqugMs9UL6", // ลิงก์หมุดร้านบน Google Maps (เปิด/นำทาง)
+  // ลิงก์ Google Maps แบบถาวร (CID) — ใช้ใน schema เท่านั้น
+  // ต่างจากลิงก์ maps.app.goo.gl ตรงที่ลิงก์นี้ "ไม่มีวันเปลี่ยน" และชี้ตรงไปที่ธุรกิจใน Google
+  // ทำให้ Google/AI เชื่อมได้ว่า "เว็บนี้ = ร้านนี้ในแผนที่" (สำคัญมากต่อการถูก AI แนะนำ)
+  googlePlaceUrl: "https://maps.google.com/?cid=7851014282260906235",
   // แผนที่ฝัง (embed) ค้นด้วยชื่อร้านจริง เพื่อโชว์หมุด+ชื่อร้านชัดเจน — ไม่ต้องใช้ API key
   mapEmbedUrl: "https://maps.google.com/maps?q=เฮงศิริรับซื้อทองและนาฬิกาพัทยา&z=17&hl=th&output=embed",
 };
