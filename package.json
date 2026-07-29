@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "new-article": "node scripts/new-article.mjs"
+    "new-article": "node scripts/new-article.mjs",
+    "check-slop": "node scripts/check-slop.mjs"
   },
   "dependencies": {
     "next": "16.2.10",

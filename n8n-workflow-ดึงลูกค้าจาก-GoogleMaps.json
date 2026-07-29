@@ -1,0 +1,115 @@
+{
+  "name": "ดึงข้อมูลร้านค้าจาก Google Maps → Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "google-maps-leads",
+        "formTitle": "ดึงข้อมูลร้านค้าจาก Google Maps",
+        "formDescription": "กรอกคำค้นหาและพื้นที่ ระบบจะไปดึงข้อมูลร้านจาก Google Maps แล้วบันทึกลง Google Sheets ให้อัตโนมัติ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "คำค้นหา",
+              "placeholder": "เช่น ร้านทอง, ร้านรับซื้อทอง, โรงรับจำนำ",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "พื้นที่",
+              "placeholder": "เช่น ป่าตอง ภูเก็ต / พัทยา ชลบุรี",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "จำนวนร้านสูงสุด",
+              "fieldType": "number",
+              "placeholder": "แนะนำ 10-30 (มากเกินอาจ timeout)",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "เริ่มดึงข้อมูล"
+        }
+      },
+      "id": "form-trigger",
+      "name": "ฟอร์มกรอกคำค้นหา",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [-620, 300],
+      "webhookId": "google-maps-leads",
+      "notes": "เปิดหน้าฟอร์มได้จากปุ่ม Production URL ด้านบนของ node นี้ — ส่งลิงก์ให้คนอื่นใช้ได้ด้วย"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/run-sync-get-dataset-items",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ searchStringsArray: [$json['คำค้นหา']], locationQuery: $json['พื้นที่'], maxCrawledPlacesPerSearch: Number($json['จำนวนร้านสูงสุด']) || 10, language: 'th', skipClosedPlaces: true, scrapePlaceDetailPage: true }) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "apify-scrape",
+      "name": "Apify — ดึงข้อมูล Google Maps",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-360, 300],
+      "notes": "ใช้ Actor 'compass/crawler-google-places' (Google Maps Scraper)\n⚠️ endpoint run-sync มีเวลาจำกัด 5 นาที — ถ้าดึงเกิน ~50 ร้านอาจ timeout"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// คัดกรองและจัดข้อมูลก่อนลง Google Sheets\n// ============================================================\n// เพิ่มจากคลิปต้นฉบับ:\n//   - ตัดร้านที่ไม่มีชื่อ (ข้อมูลเสีย)\n//   - ตัดร้านซ้ำ (Apify บางทีคืนซ้ำเมื่อค้นหลายคำ)\n//   - บันทึกว่าแถวนี้มาจากคำค้นอะไร พื้นที่ไหน วันที่เท่าไหร่\n//   - จัดรูปแบบเบอร์โทรให้โทรออกได้เลย\n// ============================================================\n\nconst form = $('ฟอร์มกรอกคำค้นหา').first().json;\nconst searchTerm = form['คำค้นหา'] || '';\nconst searchArea = form['พื้นที่'] || '';\nconst today = new Date().toISOString().slice(0, 10);\n\n// จัดเบอร์โทรไทยให้อยู่ในรูปที่กดโทรได้\nfunction cleanPhone(raw) {\n  if (!raw) return '';\n  let p = String(raw).replace(/[^0-9+]/g, '');\n  if (p.startsWith('+66')) p = '0' + p.slice(3);   // +66812345678 → 0812345678\n  else if (p.startsWith('66') && p.length > 10) p = '0' + p.slice(2);\n  return p;\n}\n\nconst seen = new Set();\nconst rows = [];\n\nfor (const item of $input.all()) {\n  const d = item.json;\n\n  // ข้ามข้อมูลเสีย\n  if (!d.title) continue;\n\n  // กันซ้ำ — ใช้ placeId ถ้ามี ไม่มีก็ใช้ชื่อ+ที่อยู่\n  const key = d.placeId || `${d.title}|${d.address || ''}`;\n  if (seen.has(key)) continue;\n  seen.add(key);\n\n  const phone = cleanPhone(d.phoneUnformatted || d.phone);\n\n  rows.push({\n    json: {\n      'ชื่อร้าน': d.title || '',\n      'ประเภท': d.categoryName || '',\n      'ที่อยู่': d.address || d.street || '',\n      'เบอร์โทร': phone,\n      'เว็บไซต์': d.website || '',\n      'คะแนน': d.totalScore ?? d.score ?? '',\n      'จำนวนรีวิว': d.reviewsCount ?? '',\n      'เวลาทำการ': Array.isArray(d.openingHours)\n        ? d.openingHours.map(h => `${h.day} ${h.hours}`).join(' / ')\n        : '',\n      'ลิงก์ Maps': d.url || '',\n      'มีเบอร์โทร': phone ? 'มี' : 'ไม่มี',\n      'คำค้นหา': searchTerm,\n      'พื้นที่': searchArea,\n      'วันที่ดึง': today,\n    },\n  });\n}\n\nif (rows.length === 0) {\n  throw new Error('ไม่พบข้อมูลร้านเลย — ลองเปลี่ยนคำค้นหาหรือพื้นที่ให้กว้างขึ้น');\n}\n\n// เรียงให้ร้านที่มีเบอร์โทรขึ้นก่อน (ติดต่อได้จริง = มีค่ากว่า)\nrows.sort((a, b) => (b.json['เบอร์โทร'] ? 1 : 0) - (a.json['เบอร์โทร'] ? 1 : 0));\n\nreturn rows;"
+      },
+      "id": "clean-data",
+      "name": "คัดกรอง + จัดข้อมูล",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-100, 300],
+      "notes": "ตัดข้อมูลเสีย กันซ้ำ จัดเบอร์โทร และเรียงร้านที่มีเบอร์ขึ้นก่อน"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "sheets-append",
+      "name": "บันทึกลง Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [160, 300],
+      "notes": "⚠️ ต้องเลือกไฟล์และชีตเอง + หัวตารางต้องสะกดตรงกับชื่อฟิลด์ (ดูในคู่มือ)"
+    }
+  ],
+  "connections": {
+    "ฟอร์มกรอกคำค้นหา": {
+      "main": [[{ "node": "Apify — ดึงข้อมูล Google Maps", "type": "main", "index": 0 }]]
+    },
+    "Apify — ดึงข้อมูล Google Maps": {
+      "main": [[{ "node": "คัดกรอง + จัดข้อมูล", "type": "main", "index": 0 }]]
+    },
+    "คัดกรอง + จัดข้อมูล": {
+      "main": [[{ "node": "บันทึกลง Google Sheets", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {},
+  "meta": { "instanceId": "google-maps-lead-scraper" },
+  "tags": []
+}
