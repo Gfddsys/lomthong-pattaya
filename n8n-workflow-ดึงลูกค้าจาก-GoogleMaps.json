@@ -34,7 +34,10 @@
       "name": "ฟอร์มกรอกคำค้นหา",
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.2,
-      "position": [-620, 300],
+      "position": [
+        -620,
+        300
+      ],
       "webhookId": "google-maps-leads",
       "notes": "เปิดหน้าฟอร์มได้จากปุ่ม Production URL ด้านบนของ node นี้ — ส่งลิงก์ให้คนอื่นใช้ได้ด้วย"
     },
@@ -46,7 +49,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ searchStringsArray: [$json['คำค้นหา']], locationQuery: $json['พื้นที่'], maxCrawledPlacesPerSearch: Number($json['จำนวนร้านสูงสุด']) || 10, language: 'th', skipClosedPlaces: true, scrapePlaceDetailPage: true }) }}",
+        "jsonBody": "={{ JSON.stringify({ searchStringsArray: [$json['คำค้นหา']], locationQuery: $json['พื้นที่'], maxCrawledPlacesPerSearch: Number($json['จำนวนร้านสูงสุด']) || 10, language: 'th', skipClosedPlaces: true, scrapePlaceDetailPage: false, maxReviews: 0, maxImages: 0, maxQuestions: 0, scrapeReviewsPersonalData: false, scrapeContacts: false }) }}",
         "options": {
           "timeout": 300000
         }
@@ -55,18 +58,24 @@
       "name": "Apify — ดึงข้อมูล Google Maps",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [-360, 300],
+      "position": [
+        -360,
+        300
+      ],
       "notes": "ใช้ Actor 'compass/crawler-google-places' (Google Maps Scraper)\n⚠️ endpoint run-sync มีเวลาจำกัด 5 นาที — ถ้าดึงเกิน ~50 ร้านอาจ timeout"
     },
     {
       "parameters": {
-        "jsCode": "// ============================================================\n// คัดกรองและจัดข้อมูลก่อนลง Google Sheets\n// ============================================================\n// เพิ่มจากคลิปต้นฉบับ:\n//   - ตัดร้านที่ไม่มีชื่อ (ข้อมูลเสีย)\n//   - ตัดร้านซ้ำ (Apify บางทีคืนซ้ำเมื่อค้นหลายคำ)\n//   - บันทึกว่าแถวนี้มาจากคำค้นอะไร พื้นที่ไหน วันที่เท่าไหร่\n//   - จัดรูปแบบเบอร์โทรให้โทรออกได้เลย\n// ============================================================\n\nconst form = $('ฟอร์มกรอกคำค้นหา').first().json;\nconst searchTerm = form['คำค้นหา'] || '';\nconst searchArea = form['พื้นที่'] || '';\nconst today = new Date().toISOString().slice(0, 10);\n\n// จัดเบอร์โทรไทยให้อยู่ในรูปที่กดโทรได้\nfunction cleanPhone(raw) {\n  if (!raw) return '';\n  let p = String(raw).replace(/[^0-9+]/g, '');\n  if (p.startsWith('+66')) p = '0' + p.slice(3);   // +66812345678 → 0812345678\n  else if (p.startsWith('66') && p.length > 10) p = '0' + p.slice(2);\n  return p;\n}\n\nconst seen = new Set();\nconst rows = [];\n\nfor (const item of $input.all()) {\n  const d = item.json;\n\n  // ข้ามข้อมูลเสีย\n  if (!d.title) continue;\n\n  // กันซ้ำ — ใช้ placeId ถ้ามี ไม่มีก็ใช้ชื่อ+ที่อยู่\n  const key = d.placeId || `${d.title}|${d.address || ''}`;\n  if (seen.has(key)) continue;\n  seen.add(key);\n\n  const phone = cleanPhone(d.phoneUnformatted || d.phone);\n\n  rows.push({\n    json: {\n      'ชื่อร้าน': d.title || '',\n      'ประเภท': d.categoryName || '',\n      'ที่อยู่': d.address || d.street || '',\n      'เบอร์โทร': phone,\n      'เว็บไซต์': d.website || '',\n      'คะแนน': d.totalScore ?? d.score ?? '',\n      'จำนวนรีวิว': d.reviewsCount ?? '',\n      'เวลาทำการ': Array.isArray(d.openingHours)\n        ? d.openingHours.map(h => `${h.day} ${h.hours}`).join(' / ')\n        : '',\n      'ลิงก์ Maps': d.url || '',\n      'มีเบอร์โทร': phone ? 'มี' : 'ไม่มี',\n      'คำค้นหา': searchTerm,\n      'พื้นที่': searchArea,\n      'วันที่ดึง': today,\n    },\n  });\n}\n\nif (rows.length === 0) {\n  throw new Error('ไม่พบข้อมูลร้านเลย — ลองเปลี่ยนคำค้นหาหรือพื้นที่ให้กว้างขึ้น');\n}\n\n// เรียงให้ร้านที่มีเบอร์โทรขึ้นก่อน (ติดต่อได้จริง = มีค่ากว่า)\nrows.sort((a, b) => (b.json['เบอร์โทร'] ? 1 : 0) - (a.json['เบอร์โทร'] ? 1 : 0));\n\nreturn rows;"
+        "jsCode": "// ============================================================\n// คัดกรองและจัดข้อมูลก่อนลง Google Sheets\n// ============================================================\n// เก็บข้อมูลครบทุกช่องเหมือนเดิม เพราะการตัดคอลัมน์ทิ้งไม่ได้ช่วยประหยัดเครดิต\n// Apify คิดเงินตอนไปดึงร้าน ไม่ได้คิดตามจำนวนช่องที่ส่งกลับมา\n// ดึงมาแล้วก็เก็บไว้ให้หมด เผื่อวันหลังได้ใช้ — ดึงใหม่ต้องจ่ายใหม่\n//\n// สิ่งที่ทำตรงนี้\n//   - ตัดร้านที่ไม่มีชื่อ (ข้อมูลเสีย)\n//   - ตัดร้านซ้ำ (Apify คืนซ้ำได้เมื่อค้นหลายคำ)\n//   - จัดเบอร์โทรเป็น 08x-xxx-xxxx กัน Google Sheets ตัดเลข 0 นำหน้าทิ้ง\n//   - เรียงร้านที่ติดต่อได้ขึ้นก่อน\n// ============================================================\n\n// ── สวิตช์ตัวเดียว ────────────────────────────────────────────\n// true  = เก็บเฉพาะมือถือ (06x / 08x / 09x) ตัดเบอร์บ้านกับร้านที่ไม่มีเบอร์ทิ้ง\n// false = เก็บทุกร้าน ไม่ว่าจะมีเบอร์หรือไม่ (เหมือนตอนแรก)\nconst เอาเฉพาะมือถือ = false;\n// ──────────────────────────────────────────────────────────────\n\nconst form = $('ฟอร์มกรอกคำค้นหา').first().json;\nconst searchTerm = form['คำค้นหา'] || '';\nconst searchArea = form['พื้นที่'] || '';\nconst today = new Date().toISOString().slice(0, 10);\n\n// คืน { เบอร์, เป็นมือถือไหม }\nfunction cleanPhone(raw) {\n  if (!raw) return { phone: '', mobile: false };\n  let p = String(raw).replace(/[^0-9+]/g, '');\n  if (p.startsWith('+66')) p = '0' + p.slice(3);        // +66812345678 -> 0812345678\n  else if (p.startsWith('66') && p.length > 10) p = '0' + p.slice(2);\n\n  const mobile = /^0[689]\\d{8}$/.test(p);\n\n  // ใส่ขีดคั่น ทำให้ชีตมองเป็นข้อความ เลข 0 นำหน้าไม่หาย\n  if (/^0\\d{9}$/.test(p)) return { phone: p.slice(0,3) + '-' + p.slice(3,6) + '-' + p.slice(6), mobile };\n  if (/^0\\d{8}$/.test(p)) return { phone: p.slice(0,2) + '-' + p.slice(2,5) + '-' + p.slice(5), mobile };\n  return { phone: p, mobile };\n}\n\n// Apify เก็บอีเมลไว้หลายที่ แล้วแต่ว่าเปิด contacts enrichment ไว้หรือเปล่า\nfunction findEmail(d) {\n  if (Array.isArray(d.emails) && d.emails.length) return d.emails[0];\n  if (d.email) return d.email;\n  const c = d.contactDetails || {};\n  if (Array.isArray(c.emails) && c.emails.length) return c.emails[0];\n  return '';\n}\n\nconst seen = new Set();\nconst rows = [];\nlet noName = 0, dup = 0, skipped = 0;\n\nfor (const item of $input.all()) {\n  const d = item.json;\n\n  if (!d.title) { noName++; continue; }\n\n  const key = d.placeId || `${d.title}|${d.address || ''}`;\n  if (seen.has(key)) { dup++; continue; }\n  seen.add(key);\n\n  const { phone, mobile } = cleanPhone(d.phoneUnformatted || d.phone);\n  if (เอาเฉพาะมือถือ && !mobile) { skipped++; continue; }\n\n  rows.push({\n    json: {\n      'ชื่อร้าน': d.title || '',\n      'ประเภท': d.categoryName || '',\n      'ที่อยู่': d.address || d.street || '',\n      'เบอร์โทร': phone,\n      'อีเมล': findEmail(d),\n      'เว็บไซต์': d.website || '',\n      'คะแนน': d.totalScore ?? d.score ?? '',\n      'จำนวนรีวิว': d.reviewsCount ?? '',\n      'เวลาทำการ': Array.isArray(d.openingHours)\n        ? d.openingHours.map(h => `${h.day} ${h.hours}`).join(' / ')\n        : '',\n      'ลิงก์ Maps': d.url || d.searchPageUrl || '',\n      'มีเบอร์โทร': phone ? (mobile ? 'มือถือ' : 'เบอร์บ้าน') : 'ไม่มี',\n      'คำค้นหา': searchTerm,\n      'พื้นที่': searchArea,\n      'วันที่ดึง': today,\n    },\n  });\n}\n\n// ร้านที่ติดต่อได้ขึ้นก่อน มือถือ > เบอร์บ้าน > ไม่มีเบอร์\nconst rank = { 'มือถือ': 0, 'เบอร์บ้าน': 1, 'ไม่มี': 2 };\nrows.sort((a, b) => rank[a.json['มีเบอร์โทร']] - rank[b.json['มีเบอร์โทร']]);\n\nconst มือถือ = rows.filter(r => r.json['มีเบอร์โทร'] === 'มือถือ').length;\nconst บ้าน = rows.filter(r => r.json['มีเบอร์โทร'] === 'เบอร์บ้าน').length;\nconsole.log(`เข้ามา ${$input.all().length} | เก็บ ${rows.length} | ` +\n            `มือถือ ${มือถือ} | เบอร์บ้าน ${บ้าน} | ไม่มีเบอร์ ${rows.length - มือถือ - บ้าน} | ` +\n            `ไม่มีชื่อ ${noName} | ซ้ำ ${dup} | ถูกกรองออก ${skipped}`);\n\nif (rows.length === 0) {\n  throw new Error('ไม่พบข้อมูลร้านเลย — ลองใช้คำค้นหาที่กว้างขึ้น หรือเปลี่ยนพื้นที่');\n}\n\nreturn rows;\n"
       },
       "id": "clean-data",
       "name": "คัดกรอง + จัดข้อมูล",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-100, 300],
+      "position": [
+        -100,
+        300
+      ],
       "notes": "ตัดข้อมูลเสีย กันซ้ำ จัดเบอร์โทร และเรียงร้านที่มีเบอร์ขึ้นก่อน"
     },
     {
@@ -93,23 +102,54 @@
       "name": "บันทึกลง Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
-      "position": [160, 300],
+      "position": [
+        160,
+        300
+      ],
       "notes": "⚠️ ต้องเลือกไฟล์และชีตเอง + หัวตารางต้องสะกดตรงกับชื่อฟิลด์ (ดูในคู่มือ)"
     }
   ],
   "connections": {
     "ฟอร์มกรอกคำค้นหา": {
-      "main": [[{ "node": "Apify — ดึงข้อมูล Google Maps", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Apify — ดึงข้อมูล Google Maps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Apify — ดึงข้อมูล Google Maps": {
-      "main": [[{ "node": "คัดกรอง + จัดข้อมูล", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "คัดกรอง + จัดข้อมูล",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "คัดกรอง + จัดข้อมูล": {
-      "main": [[{ "node": "บันทึกลง Google Sheets", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "บันทึกลง Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "settings": { "executionOrder": "v1" },
+  "settings": {
+    "executionOrder": "v1"
+  },
   "pinData": {},
-  "meta": { "instanceId": "google-maps-lead-scraper" },
+  "meta": {
+    "instanceId": "google-maps-lead-scraper"
+  },
   "tags": []
 }
