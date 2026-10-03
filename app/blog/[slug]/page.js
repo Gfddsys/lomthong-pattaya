@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getUploadedImage } from "@/lib/getImage";
 import { getAutoArticles, getAutoArticle } from "@/lib/articles";
+import { SITE_URL } from "@/data/site";
 
 /* ============================================================
    หน้าบทความอัตโนมัติ
@@ -36,22 +37,27 @@ export async function generateMetadata({ params }) {
   };
 }
 
-/* ---------- แปลง **ตัวหนา** ในข้อความเป็น <strong> ---------- */
+/* ---------- แปลง **ตัวหนา** และ [ลิงก์](/หน้าในเว็บ) ในข้อความ ----------
+   ลิงก์รับเฉพาะ path ภายในเว็บ (ขึ้นต้นด้วย /) — ลิงก์ภายในช่วยส่งน้ำหนัก SEO ระหว่างหน้า
+   และกันบทความอัตโนมัติแอบใส่ลิงก์ออกไปเว็บอื่น */
 function RichText({ children }) {
   const text = String(children ?? "");
-  const parts = text.split(/\*\*(.+?)\*\*/g);
-  // index คี่ = ข้อความที่อยู่ในดอกจันคู่
+  const tokens = text.split(/(\*\*.+?\*\*|\[[^\]]+\]\(\/[^)\s]*\))/g);
   return (
     <>
-      {parts.map((part, i) =>
-        i % 2 === 1 ? <strong key={i}>{part}</strong> : part
-      )}
+      {tokens.map((t, i) => {
+        const bold = t.match(/^\*\*(.+)\*\*$/);
+        if (bold) return <strong key={i}>{bold[1]}</strong>;
+        const link = t.match(/^\[([^\]]+)\]\((\/[^)\s]*)\)$/);
+        if (link) return <Link key={i} href={link[2]}>{link[1]}</Link>;
+        return t;
+      })}
     </>
   );
 }
 
 /* ---------- วาดเนื้อหาแต่ละบล็อก ---------- */
-function Section({ block }) {
+function Section({ block, id }) {
   switch (block.type) {
     case "summary":
       return (
@@ -76,7 +82,7 @@ function Section({ block }) {
       );
     case "h2":
       return (
-        <h2>
+        <h2 id={id}>
           <RichText>{block.text}</RichText>
         </h2>
       );
@@ -118,6 +124,33 @@ function Section({ block }) {
           <RichText>{block.text}</RichText>
         </blockquote>
       );
+    case "table":
+      // ตารางเปรียบเทียบ — Google มักดึงไปแสดงเป็น featured snippet
+      return (
+        <div className="blog-table-wrap">
+          <table className="blog-table">
+            {block.caption && <caption>{block.caption}</caption>}
+            <thead>
+              <tr>
+                {block.head.map((h, i) => (
+                  <th key={i} scope="col">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, r) => (
+                <tr key={r}>
+                  {row.map((cell, c) => (
+                    <td key={c}>
+                      <RichText>{cell}</RichText>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
     default:
       return null;
   }
@@ -130,18 +163,37 @@ export default async function AutoArticlePage({ params }) {
 
   const coverImage = getUploadedImage(`blog-${article.slug}`, article.fallbackImage);
 
+  const pageUrl = `${SITE_URL}/blog/${article.slug}`;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: article.title,
-    author: { "@type": "Organization", name: "หลอมทองพัทยา" },
-    publisher: { "@type": "Organization", name: "หลอมทองพัทยา" },
-    datePublished: article.dateIso,
-    dateModified: article.dateIso,
     description: article.description,
-    image: coverImage,
+    keywords: article.keywords.join(", "),
+    mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+    url: pageUrl,
+    // ผูกผู้เขียน/ผู้เผยแพร่กับธุรกิจหลักใน root layout → Google รู้ว่าบทความนี้เป็นของร้านไหน
+    author: { "@id": `${SITE_URL}/#business` },
+    publisher: { "@id": `${SITE_URL}/#business` },
+    datePublished: article.dateIso,
+    dateModified: article.updatedIso || article.dateIso,
+    image: coverImage.startsWith("http") ? coverImage : `${SITE_URL}${coverImage}`,
     inLanguage: "th-TH",
   };
+
+  // สารบัญจากหัวข้อ h2 (โชว์เมื่อมีตั้งแต่ 3 หัวข้อ) — ช่วยคนอ่านบนมือถือ และ Google ใช้ทำลิงก์ "ข้ามไปส่วนนี้"
+  const headingIds = new Map();
+  article.sections.forEach((b, i) => {
+    if (b.type === "h2") headingIds.set(i, `h-${headingIds.size + 1}`);
+  });
+  const toc = [...headingIds].map(([i, id]) => ({ id, text: article.sections[i].text.replace(/\*\*/g, "") }));
+
+  // บทความที่เกี่ยวข้อง: หมวดรูปเดียวกันก่อน แล้วเติมด้วยบทความล่าสุด
+  const others = getAutoArticles().filter((a) => a.slug !== article.slug);
+  const related = [
+    ...others.filter((a) => a.coverTheme === article.coverTheme),
+    ...others.filter((a) => a.coverTheme !== article.coverTheme),
+  ].slice(0, 3);
 
   const faqSchema =
     article.faq.length > 0
@@ -198,8 +250,21 @@ export default async function AutoArticlePage({ params }) {
       </div>
 
       <div className="blog-article-content">
+        {toc.length >= 3 && (
+          <nav className="blog-toc" aria-label="สารบัญ">
+            <p className="blog-toc-title">สารบัญ</p>
+            <ol>
+              {toc.map((h) => (
+                <li key={h.id}>
+                  <a href={`#${h.id}`}>{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
         {article.sections.map((block, i) => (
-          <Section key={i} block={block} />
+          <Section key={i} block={block} id={headingIds.get(i)} />
         ))}
 
         {article.faq.length > 0 && (
@@ -229,6 +294,22 @@ export default async function AutoArticlePage({ params }) {
           </Link>
         </div>
       </div>
+
+      {related.length > 0 && (
+        <aside className="blog-related" aria-label="บทความที่เกี่ยวข้อง">
+          <h2>บทความที่เกี่ยวข้อง</h2>
+          <ul>
+            {related.map((a) => (
+              <li key={a.slug}>
+                <Link href={`/blog/${a.slug}`}>
+                  <span className="blog-related-title">{a.title}</span>
+                  <span className="blog-related-excerpt">{a.excerpt}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
     </article>
   );
 }

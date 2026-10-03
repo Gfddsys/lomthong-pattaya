@@ -38,6 +38,7 @@ export function collectText(a) {
   const out = [a.title, a.description, a.excerpt, a.ctaTitle, a.ctaText];
   for (const s of a.sections || []) {
     if (s.text) out.push(s.text);
+    if (Array.isArray(s.rows)) out.push(...s.rows.flat());
     if (Array.isArray(s.items)) out.push(...s.items);
   }
   for (const f of a.faq || []) out.push(f.q, f.a);

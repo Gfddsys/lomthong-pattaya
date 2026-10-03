@@ -34,7 +34,7 @@ const MAX_ATTEMPTS = 3;
 const SIMILARITY_LIMIT = 0.34;
 
 const COVER_THEMES = ["lomthong", "truat-thong", "rap-sue-thong", "thong-kao", "ran-thong", "krob-phra", "nalika", "brandname"];
-const SECTION_TYPES = ["summary", "h2", "h3", "p", "ul", "ol", "quote"];
+const SECTION_TYPES = ["summary", "h2", "h3", "p", "ul", "ol", "quote", "table"];
 const CTA_LINKS = [
   ...servicesData.map((s) => `/services/${s.slug}`),
   ...BRANCHES.map((b) => `/branch/${b.slug}`),
@@ -58,6 +58,10 @@ const ArticleSchema = z.object({
       type: z.enum(SECTION_TYPES),
       text: z.string().optional(),
       items: z.array(z.string()).optional(),
+      // type "table" เท่านั้น
+      caption: z.string().optional(),
+      head: z.array(z.string()).optional(),
+      rows: z.array(z.array(z.string())).optional(),
     })
   ),
   faq: z.array(z.object({ q: z.string(), a: z.string() })),
@@ -120,7 +124,7 @@ export function similarity(a, b) {
 /* ---------- ด่านตรวจ: คืนรายการปัญหา (ว่าง = ผ่าน) ---------- */
 function collectAllText(a) {
   const out = [a.title, a.description, a.excerpt, a.ctaTitle, a.ctaText];
-  for (const s of a.sections) out.push(s.text || "", ...(s.items || []));
+  for (const s of a.sections) out.push(s.text || "", ...(s.items || []), ...(s.rows || []).flat());
   for (const f of a.faq) out.push(f.q, f.a);
   return out.join("\n");
 }
@@ -135,12 +139,38 @@ export function validate(a, existing) {
   if (a.sections.length < 12 || a.sections.length > 30) problems.push(`sections มี ${a.sections.length} บล็อก (ต้อง 15-25)`);
   if (a.sections[0]?.type !== "summary") problems.push("section แรกต้องเป็น summary");
   for (const [i, s] of a.sections.entries()) {
+    if (s.type === "table") {
+      const ok = s.head?.length >= 2 && s.rows?.length >= 1 && s.rows.every((r) => r.length === s.head.length);
+      if (!ok) problems.push(`section ${i} (table) ต้องมี head อย่างน้อย 2 คอลัมน์ และทุกแถวใน rows ต้องมีจำนวนช่องเท่า head`);
+      continue;
+    }
     const needsItems = ["summary", "ul", "ol"].includes(s.type);
     if (needsItems && !(s.items?.length > 0)) problems.push(`section ${i} (${s.type}) ต้องมี items`);
     if (!needsItems && !s.text?.trim()) problems.push(`section ${i} (${s.type}) ต้องมี text`);
   }
   if (a.faq.length < 3 || a.faq.length > 5) problems.push(`faq มี ${a.faq.length} ข้อ (ต้อง 3-4)`);
   if (a.keywords.length < 3) problems.push("keywords ต้องมีอย่างน้อย 3 คำ");
+
+  // 1.5) SEO on-page — คีย์เวิร์ดหลักต้องอยู่ในจุดที่ Google ให้น้ำหนัก, เนื้อหาต้องลึกพอ, มีลิงก์ภายใน
+  const norm = (t) => String(t || "").replace(/\*\*/g, "").replace(/\s+/g, "");
+  const kw = norm(a.keywords[0]);
+  if (kw) {
+    if (!norm(a.title).includes(kw)) problems.push(`คีย์เวิร์ดหลัก "${a.keywords[0]}" ต้องอยู่ใน title (ไว้ช่วงต้นจะดีที่สุด)`);
+    if (!norm(a.description).includes(kw)) problems.push(`คีย์เวิร์ดหลัก "${a.keywords[0]}" ต้องอยู่ใน description`);
+    const firstP = a.sections.find((s) => s.type === "p");
+    if (!norm(firstP?.text).includes(kw)) problems.push(`คีย์เวิร์ดหลัก "${a.keywords[0]}" ต้องอยู่ในย่อหน้าแรก`);
+    if (!a.sections.some((s) => s.type === "h2" && norm(s.text).includes(kw))) problems.push(`คีย์เวิร์ดหลัก "${a.keywords[0]}" ต้องอยู่ในหัวข้อ h2 อย่างน้อย 1 หัวข้อ`);
+  }
+  const h2Count = a.sections.filter((s) => s.type === "h2").length;
+  if (h2Count < 4) problems.push(`มีหัวข้อ h2 แค่ ${h2Count} หัวข้อ (ต้องอย่างน้อย 4 เพื่อให้ครอบคลุมคำถามรอง)`);
+  const bodyChars = a.sections.reduce((n, s) => n + norm(s.text).length + norm((s.items || []).join("")).length + norm((s.rows || []).flat().join("")).length, 0);
+  if (bodyChars < 3000) problems.push(`เนื้อหายาว ${bodyChars} ตัวอักษร (ต้องอย่างน้อย 3,000 ตัวอักษร ไม่นับเว้นวรรค) — ตอบคำถามให้ลึกกว่านี้ ยกตัวอย่างสถานการณ์จริง`);
+  const validPaths = new Set(["/", ...CTA_LINKS, ...existing.map((e) => `/blog/${e.slug}`)]);
+  const links = [...collectAllText(a).matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)];
+  for (const [, , href] of links) {
+    if (!validPaths.has(href)) problems.push(`ลิงก์ "${href}" ไม่มีอยู่ในเว็บ — ใช้ได้เฉพาะ path จากรายการลิงก์ภายในที่ให้ไว้`);
+  }
+  if (links.length < 3) problems.push(`มีลิงก์ภายใน ${links.length} ลิงก์ (ต้องอย่างน้อย 3 ลิงก์ ไปบทความ/บริการ/สาขาที่เกี่ยวข้อง แทรกในเนื้อหาอย่างเป็นธรรมชาติ)`);
 
   // 2) หัวข้อซ้ำ
   for (const e of existing) {
@@ -225,6 +255,19 @@ ${titles}
 ${Object.values(RULES).flat().map((w) => `"${w}"`).join(" ")}
 </วิธีเขียน>
 
+<SEO>
+ระบบจะตีกลับถ้าไม่ทำตามข้อเหล่านี้:
+- เลือกคีย์เวิร์ดหลัก 1 คำแบบเจาะจง (long-tail) ที่คนพิมพ์ค้นจริง เช่น "ขายทองมรดก พัทยา" ไม่ใช่คำกว้างอย่าง "ขายทองพัทยา" แล้วใส่เป็น keywords[0]
+- คีย์เวิร์ดหลักต้องอยู่ใน title (ไว้ช่วงต้น), description, ย่อหน้าแรก และหัวข้อ h2 อย่างน้อย 1 หัวข้อ ใส่ให้อ่านเป็นธรรมชาติ ห้ามยัดซ้ำจนอ่านแล้วแปลก
+- keywords ที่เหลือคือคำถามรองที่คนค้นต่อ ให้ตอบเป็นหัวข้อ h2/h3 ในบทความ
+- อย่างน้อย 4 หัวข้อ h2 และเนื้อหารวมอย่างน้อย 3,000 ตัวอักษร ตอบให้ครบจนคนอ่านไม่ต้องไปค้นต่อ ยกสถานการณ์จริงที่ลูกค้าเจอที่เคาน์เตอร์
+- summary ต้องตอบคำถามหลักได้ทันทีใน 1-2 ข้อแรก (Google มักดึงไปเป็นคำตอบด้านบนผลค้นหา)
+- ลิงก์ภายในอย่างน้อย 3 ลิงก์ แทรกในประโยคที่เกี่ยวข้องจริง ใช้ได้เฉพาะ path เหล่านี้:
+${["/", ...CTA_LINKS].join(" · ")}
+และบทความเดิม: /blog/<slug> จากรายการ slug ด้านล่าง
+${existing.map((e) => e.slug).join(" · ")}
+</SEO>
+
 <รูปแบบ>
 - slug: ภาษาอังกฤษพิมพ์เล็กคั่นขีด
 - title: ไม่เกิน 60 ตัวอักษร มีคีย์เวิร์ดหลัก
@@ -232,6 +275,8 @@ ${Object.values(RULES).flat().map((w) => `"${w}"`).join(" ")}
 - keywords: 4-6 คำ คำแรกคือคีย์เวิร์ดหลัก
 - category: "ความรู้" หรือ "คู่มือขายทอง"
 - sections: 15-25 บล็อก บล็อกแรกเป็น summary (คำตอบสั้น 3-5 ข้อ) · summary/ul/ol ใช้ items · h2/h3/p/quote ใช้ text
+  · table ใช้ head (หัวคอลัมน์) + rows (แถว จำนวนช่องเท่า head) + caption (ไม่บังคับ) — ใส่ 1 ตารางเมื่อมีของให้เปรียบเทียบจริง
+  · ในข้อความใส่ลิงก์ภายในได้ด้วยรูปแบบ [ข้อความลิงก์](/path)
 - faq: 3-4 ข้อ คำถามแบบที่คนพิมพ์ค้น Google คำตอบ 2-3 ประโยค
 - coverTheme: lomthong (หลอมทอง) · truat-thong (ตรวจทอง XRF ทองแท้ปลอม) · rap-sue-thong (รับซื้อทอง ค่ากลาง) · thong-kao (ทองเก่า ทองหัก) · ran-thong (ร้าน สาขา) · krob-phra (กรอบพระ) · nalika (นาฬิกา) · brandname (กระเป๋าแบรนด์เนม)
 - ctaLink: หน้าที่ตรงกับเนื้อหาบทความที่สุด

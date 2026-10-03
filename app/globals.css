@@ -2536,6 +2536,158 @@ a.contact-item--link:hover {
   color: var(--color-gold-light);
 }
 
+/* ลิงก์ในเนื้อบทความ */
+.blog-article-content p a,
+.blog-article-content li a,
+.blog-article-content td a {
+  color: var(--color-gold-dark);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-article-content p a:hover,
+.blog-article-content li a:hover,
+.blog-article-content td a:hover {
+  color: var(--color-primary);
+}
+
+/* สารบัญ */
+.blog-toc {
+  margin: 0 0 var(--space-2xl);
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--color-dark-2);
+  border: 1px solid rgba(212,168,67,0.25);
+  border-radius: var(--radius-md);
+}
+
+.blog-toc-title {
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-sm) !important;
+}
+
+.blog-toc ol {
+  margin-bottom: 0 !important;
+}
+
+.blog-toc a {
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+.blog-toc a:hover {
+  color: var(--color-gold-dark);
+  text-decoration: underline;
+}
+
+/* กระโดดจากสารบัญแล้วหัวข้อไม่จมใต้ Navbar */
+.blog-article-content h2[id] {
+  scroll-margin-top: 100px;
+}
+
+/* ตารางเปรียบเทียบ — เลื่อนแนวนอนได้บนมือถือ ไม่ดันหน้าเว็บกว้าง */
+.blog-table-wrap {
+  overflow-x: auto;
+  margin-bottom: var(--space-xl);
+  border: 1px solid rgba(212,168,67,0.3);
+  border-radius: var(--radius-md);
+}
+
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.blog-table caption {
+  caption-side: top;
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.blog-table th {
+  background: rgba(212,168,67,0.15);
+  color: var(--color-white);
+  font-weight: 600;
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  white-space: nowrap;
+}
+
+.blog-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid rgba(212,168,67,0.15);
+  vertical-align: top;
+  min-width: 120px;
+}
+
+.blog-table tbody tr:nth-child(even) {
+  background: var(--color-dark-2);
+}
+
+/* บทความที่เกี่ยวข้อง */
+.blog-related {
+  margin-top: var(--space-3xl);
+}
+
+.blog-related h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+}
+
+.blog-related ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.blog-related a {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+  padding: var(--space-lg);
+  border: 1px solid rgba(212,168,67,0.25);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.blog-related a:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.blog-related-title {
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1.5;
+}
+
+.blog-related-excerpt {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .blog-related ul {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Article CTA Box */
 .blog-article-cta {
   margin-top: var(--space-3xl);
