@@ -240,6 +240,9 @@ ${Object.values(RULES).flat().map((w) => `"${w}"`).join(" ")}
 
 /* ---------- เรียก Claude + วนแก้จนผ่านด่าน ---------- */
 async function generate(existing) {
+  if (!process.env.ANTHROPIC_API_KEY?.trim()) {
+    throw new Error("ไม่พบ ANTHROPIC_API_KEY (หรือเป็นค่าว่าง) — ตั้ง secret ใน GitHub: Settings → Secrets and variables → Actions");
+  }
   const client = new Anthropic();
   const messages = [{ role: "user", content: buildPrompt(existing) }];
 
