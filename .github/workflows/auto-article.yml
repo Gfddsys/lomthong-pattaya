@@ -5,9 +5,12 @@
 
 name: บทความอัตโนมัติ
 
+# ⏸ ปิดการรันตามเวลาไว้ (ต.ค. 2026): ตอนนี้บทความอัตโนมัติใช้ Claude routine บนคลาวด์ (แพ็กเกจ Claude)
+#   ที่ https://claude.ai/code/routines แทน ไม่ต้องใช้ API key
+#   ถ้าจะกลับมาใช้ระบบนี้: ใส่ secret ANTHROPIC_API_KEY แล้วเปิด schedule ด้านล่าง (และปิด routine)
 on:
-  schedule:
-    - cron: "0 2 */3 * *" # ทุก 3 วัน 09:00 น. เวลาไทย (02:00 UTC)
+  # schedule:
+  #   - cron: "0 2 */3 * *" # ทุก 3 วัน 09:00 น. เวลาไทย (02:00 UTC)
   workflow_dispatch:
 
 permissions:
