@@ -136,7 +136,8 @@ export function validate(a, existing) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(a.slug)) problems.push(`slug "${a.slug}" ต้องเป็น a-z 0-9 คั่นด้วย - เท่านั้น`);
   if (a.title.length > 70) problems.push(`title ยาว ${a.title.length} ตัวอักษร (ไม่ควรเกิน 60)`);
   if (a.description.length < 90 || a.description.length > 170) problems.push(`description ยาว ${a.description.length} ตัวอักษร (ควร 120-160)`);
-  if (a.sections.length < 12 || a.sections.length > 30) problems.push(`sections มี ${a.sections.length} บล็อก (ต้อง 15-25)`);
+  // ย่อหน้าสั้นอ่านง่ายบนมือถือ + เนื้อหา 3,000 ตัวอักษรขึ้นไป → ต้องมีบล็อกเยอะพอ ไม่งั้น AI ต้องยุบย่อหน้าให้ยาว
+  if (a.sections.length < 15 || a.sections.length > 45) problems.push(`sections มี ${a.sections.length} บล็อก (ต้อง 18-40)`);
   if (a.sections[0]?.type !== "summary") problems.push("section แรกต้องเป็น summary");
   for (const [i, s] of a.sections.entries()) {
     if (s.type === "table") {
@@ -274,7 +275,7 @@ ${existing.map((e) => e.slug).join(" · ")}
 - description: 120-160 ตัวอักษร
 - keywords: 4-6 คำ คำแรกคือคีย์เวิร์ดหลัก
 - category: "ความรู้" หรือ "คู่มือขายทอง"
-- sections: 15-25 บล็อก บล็อกแรกเป็น summary (คำตอบสั้น 3-5 ข้อ) · summary/ul/ol ใช้ items · h2/h3/p/quote ใช้ text
+- sections: 18-40 บล็อก (ย่อหน้าสั้น 2-4 บรรทัด อย่ายุบรวมให้ยาว) บล็อกแรกเป็น summary (คำตอบสั้น 3-5 ข้อ) · summary/ul/ol ใช้ items · h2/h3/p/quote ใช้ text
   · table ใช้ head (หัวคอลัมน์) + rows (แถว จำนวนช่องเท่า head) + caption (ไม่บังคับ) — ใส่ 1 ตารางเมื่อมีของให้เปรียบเทียบจริง
   · ในข้อความใส่ลิงก์ภายในได้ด้วยรูปแบบ [ข้อความลิงก์](/path)
 - faq: 3-4 ข้อ คำถามแบบที่คนพิมพ์ค้น Google คำตอบ 2-3 ประโยค
