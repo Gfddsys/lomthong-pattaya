@@ -1,0 +1,54 @@
+# บทความ SEO อัตโนมัติ — Claude เขียน → ผ่านด่านตรวจ → build ผ่าน → push ขึ้น master → Vercel deploy เอง
+# ตั้งค่าครั้งเดียว: GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+#   ชื่อ ANTHROPIC_API_KEY  ค่า = API key จาก https://console.anthropic.com
+# สั่งรันเองได้ที่แท็บ Actions → "บทความอัตโนมัติ" → Run workflow
+
+name: บทความอัตโนมัติ
+
+on:
+  schedule:
+    - cron: "0 2 */3 * *" # ทุก 3 วัน 09:00 น. เวลาไทย (02:00 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-article
+  cancel-in-progress: false
+
+jobs:
+  write-article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Claude เขียนบทความ + ด่านตรวจ
+        id: article
+        run: node scripts/auto-article.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # ด่านสุดท้าย: lint/build ไม่ผ่าน = ไม่ push = เว็บจริงไม่พัง
+      - run: npm run lint
+      - run: npm run build
+
+      - name: Commit + push
+        env:
+          TITLE: ${{ steps.article.outputs.title }}
+          SLUG: ${{ steps.article.outputs.slug }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "content/articles/$SLUG.json"
+          git commit -m "บทความใหม่: $TITLE"
+          git pull --rebase origin master
+          git push origin HEAD:master

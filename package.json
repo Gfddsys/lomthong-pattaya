@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "new-article": "node scripts/new-article.mjs",
-    "check-slop": "node scripts/check-slop.mjs"
+    "check-slop": "node scripts/check-slop.mjs",
+    "auto-article": "node scripts/auto-article.mjs"
   },
   "dependencies": {
     "next": "16.2.10",
@@ -16,7 +17,9 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10"
+    "eslint-config-next": "16.2.10",
+    "zod": "^4.6.5"
   }
 }
