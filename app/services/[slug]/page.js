@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
+import { SITE_URL } from "@/data/site";
 
 // จับคู่บริการแต่ละอันกับโฟลเดอร์รูปใน public/images/uploads/
 // วางรูปจริงในโฟลเดอร์ที่ตรงกัน ระบบจะดึงมาใช้แทนรูปตัวอย่างอัตโนมัติ
@@ -15,6 +16,14 @@ const SERVICE_IMAGE_SLOT = {
   "online-valuation": "valuation",
   "silver-buying": "silver",
 };
+
+// สร้างหน้าบริการทั้งหมดเป็น static ตอน build (เดิมเป็น dynamic = render ใหม่ทุกครั้งที่มีคนเข้า ช้ากว่า)
+// slug ที่ไม่มีในรายการ → 404 ทันที
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return servicesData.map((s) => ({ slug: s.slug }));
+}
 
 // Generate Metadata for SEO
 export async function generateMetadata({ params }) {
@@ -61,7 +70,7 @@ export default async function ServicePage({ params }) {
     "name": service.title,
     "description": service.metaDescription,
     "provider": {
-      "@id": "https://www.xn--72c5ab1amkp1ctc0co.com/#business"
+      "@id": `${SITE_URL}/#business`
     }
   };
 
@@ -74,19 +83,19 @@ export default async function ServicePage({ params }) {
         "@type": "ListItem",
         "position": 1,
         "name": "หน้าแรก",
-        "item": "https://www.xn--72c5ab1amkp1ctc0co.com/",
+        "item": `${SITE_URL}/`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "บริการของเรา",
-        "item": "https://www.xn--72c5ab1amkp1ctc0co.com/#services",
+        "item": `${SITE_URL}/#services`,
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": service.title,
-        "item": `https://www.xn--72c5ab1amkp1ctc0co.com/services/${service.slug}`,
+        "item": `${SITE_URL}/services/${service.slug}`,
       },
     ],
   };

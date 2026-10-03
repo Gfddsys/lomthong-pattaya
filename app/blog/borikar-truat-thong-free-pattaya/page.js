@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
+import { SITE_URL } from "@/data/site";
 
 const COVER_IMAGE = getUploadedImage("blog-borikar-truat-thong-free-pattaya", "/images/inspection.png");
-const COVER_IMAGE_ABSOLUTE = `https://www.xn--72c5ab1amkp1ctc0co.com${COVER_IMAGE}`;
+const COVER_IMAGE_ABSOLUTE = `${SITE_URL}${COVER_IMAGE}`;
 
 export const metadata = {
   title:
@@ -29,7 +30,7 @@ export const metadata = {
       "ตรวจสอบทองฟรี พัทยา! เช็คเปอร์เซ็นต์ทอง ชั่งน้ำหนัก ไม่เสียค่าใช้จ่าย",
     description:
       "บริการตรวจสอบทองฟรี พัทยา เช็คทองแท้ ตรวจเปอร์เซ็นต์ทอง ชั่งน้ำหนักทอง ไม่เสียค่าใช้จ่าย ด้วยเครื่อง XRF มาตรฐานสากล ที่ร้านหลอมทองพัทยา",
-    url: "https://www.xn--72c5ab1amkp1ctc0co.com/blog/borikar-truat-thong-free-pattaya",
+    url: `${SITE_URL}/blog/borikar-truat-thong-free-pattaya`,
     type: "article",
     images: [
       {
@@ -42,7 +43,7 @@ export const metadata = {
   },
   alternates: {
     canonical:
-      "https://www.xn--72c5ab1amkp1ctc0co.com/blog/borikar-truat-thong-free-pattaya",
+      `${SITE_URL}/blog/borikar-truat-thong-free-pattaya`,
   },
 };
 
@@ -59,20 +60,20 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "หลอมทองพัทยา",
-    url: "https://www.xn--72c5ab1amkp1ctc0co.com",
+    url: `${SITE_URL}`,
   },
   publisher: {
     "@type": "Organization",
     name: "หลอมทองพัทยา",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.xn--72c5ab1amkp1ctc0co.com/images/logo.png",
+      url: `${SITE_URL}/images/logo.jpg`,
     },
   },
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id":
-      "https://www.xn--72c5ab1amkp1ctc0co.com/blog/borikar-truat-thong-free-pattaya",
+      `${SITE_URL}/blog/borikar-truat-thong-free-pattaya`,
   },
   articleSection: "บริการ",
   keywords:
@@ -122,9 +123,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://www.xn--72c5ab1amkp1ctc0co.com/" },
-    { "@type": "ListItem", position: 2, name: "บทความ", item: "https://www.xn--72c5ab1amkp1ctc0co.com/blog" },
-    { "@type": "ListItem", position: 3, name: "ตรวจสอบทองฟรี พัทยา", item: "https://www.xn--72c5ab1amkp1ctc0co.com/blog/borikar-truat-thong-free-pattaya" },
+    { "@type": "ListItem", position: 1, name: "หน้าแรก", item: `${SITE_URL}/` },
+    { "@type": "ListItem", position: 2, name: "บทความ", item: `${SITE_URL}/blog` },
+    { "@type": "ListItem", position: 3, name: "ตรวจสอบทองฟรี พัทยา", item: `${SITE_URL}/blog/borikar-truat-thong-free-pattaya` },
   ],
 };
 

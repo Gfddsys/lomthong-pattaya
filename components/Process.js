@@ -115,6 +115,7 @@ export default function Process() {
             rel="noopener noreferrer"
             className="process-cta-btn"
           >
+            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
             <img
               src="https://cdn.simpleicons.org/line/ffffff"
               alt="LINE"

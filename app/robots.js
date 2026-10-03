@@ -1,9 +1,10 @@
+import { SITE_URL } from "@/data/site";
 /* ============================================
    Robots.txt - บอก Google Bot ว่าจะเข้าถึงหน้าไหนได้บ้าง
    ============================================ */
 
 export default function robots() {
-  const baseUrl = "https://www.xn--72c5ab1amkp1ctc0co.com"; // ← แก้เป็น URL จริงของคุณ
+  const baseUrl = SITE_URL;
 
   return {
     rules: {

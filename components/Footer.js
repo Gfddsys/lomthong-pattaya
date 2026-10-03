@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
+import { BRANCHES } from '@/data/branches';
+import { AREAS } from '@/data/areas';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -28,6 +30,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="footer-line-btn"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
               <img
                 src="https://cdn.simpleicons.org/line/ffffff"
                 alt="LINE"
@@ -43,14 +46,15 @@ export default function Footer() {
           <nav aria-label="เมนูลิงก์ในฟุตเตอร์">
             <h4 className="footer-title">เมนู</h4>
             <ul className="footer-links">
-              <li><a href="/#hero" className="footer-link">หน้าแรก</a></li>
-              <li><a href="/#about" className="footer-link">รู้จักเรา</a></li>
-              <li><a href="/#services" className="footer-link">บริการของเรา</a></li>
-              <li><a href="/#process" className="footer-link">ขั้นตอนบริการ</a></li>
-              <li><a href="/#gallery" className="footer-link">ผลงาน</a></li>
-              <li><a href="/#testimonials" className="footer-link">รีวิวลูกค้า</a></li>
-              <li><a href="/blog" className="footer-link">บทความ</a></li>
-              <li><a href="/#contact" className="footer-link">ติดต่อเรา</a></li>
+              <li><Link href="/#hero" className="footer-link">หน้าแรก</Link></li>
+              <li><Link href="/#about" className="footer-link">รู้จักเรา</Link></li>
+              <li><Link href="/#services" className="footer-link">บริการของเรา</Link></li>
+              <li><Link href="/#process" className="footer-link">ขั้นตอนบริการ</Link></li>
+              <li><Link href="/#gallery" className="footer-link">ผลงาน</Link></li>
+              <li><Link href="/#testimonials" className="footer-link">รีวิวลูกค้า</Link></li>
+              <li><Link href="/rap-lomthong-pattaya" className="footer-link">รับหลอมทองพัทยา</Link></li>
+              <li><Link href="/blog" className="footer-link">บทความ</Link></li>
+              <li><Link href="/#contact" className="footer-link">ติดต่อเรา</Link></li>
             </ul>
           </nav>
 
@@ -84,13 +88,22 @@ export default function Footer() {
                 <span aria-hidden="true">🕐</span>
                 <span>เปิดทุกวัน 10:00 - 20:00 น.</span>
               </li>
-              <li>
-                <span aria-hidden="true">📍</span>
-                <a href={CONTACT.googleReviewUrl} target="_blank" rel="noopener noreferrer">ดูแผนที่ร้านบน Google Maps</a>
-              </li>
+              {/* ลิงก์ภายในไปหน้าสาขา — ทุกหน้าในเว็บชี้ไปหน้าสาขา ช่วยให้ Google ให้น้ำหนักหน้าที่ผูกกับ GBP */}
+              {BRANCHES.map((b) => (
+                <li key={b.slug}>
+                  <span aria-hidden="true">📍</span>
+                  <Link href={`/branch/${b.slug}`}>{b.shortName}</Link>
+                </li>
+              ))}
             </ul>
             <p className="footer-area">
-              พื้นที่บริการ: พัทยา · บางละมุง · ศรีราชา · สัตหีบ · จอมเทียน · นาเกลือ · ชลบุรี
+              พื้นที่บริการ:{' '}
+              {AREAS.map((a, i) => (
+                <span key={a.slug}>
+                  {i > 0 && ' · '}
+                  <Link href={`/area/${a.slug}`}>{a.name}</Link>
+                </span>
+              ))}
             </p>
           </div>
         </div>

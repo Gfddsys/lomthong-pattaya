@@ -99,7 +99,7 @@ export default function ArticleThongKhatThongHak() {
       <div className="blog-article-content">
         <p>
           มีสร้อยทอง<strong>ขาด</strong> แหวน<strong>บิ่น</strong> หรือทอง<strong>หัก</strong>เก็บไว้ในลิ้นชัก
-          แล้วสงสัยว่า <strong>"ทองหักแบบนี้ยังขายได้ไหม? จะโดนกดราคาหรือเปล่า?"</strong> มาดูคำตอบกันครับ
+          แล้วสงสัยว่า <strong>&quot;ทองหักแบบนี้ยังขายได้ไหม? จะโดนกดราคาหรือเปล่า?&quot;</strong> มาดูคำตอบกันครับ
         </p>
 
         <h2>ทองขาด ทองหัก — รับซื้อได้แน่นอน</h2>
@@ -131,7 +131,7 @@ export default function ArticleThongKhatThongHak() {
         </ul>
 
         <blockquote>
-          "ทองหักหรือขาด ไม่ใช่ทองด้อยค่า — มันคือทองน้ำหนักเท่าเดิม ที่ยังมีมูลค่าเต็มตามเนื้อทอง"
+          &quot;ทองหักหรือขาด ไม่ใช่ทองด้อยค่า — มันคือทองน้ำหนักเท่าเดิม ที่ยังมีมูลค่าเต็มตามเนื้อทอง&quot;
         </blockquote>
       </div>
 

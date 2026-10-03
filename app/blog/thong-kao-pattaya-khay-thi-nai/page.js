@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
+import { SITE_URL } from "@/data/site";
 
 const COVER_IMAGE = getUploadedImage("blog-thong-kao-pattaya-khay-thi-nai", "/images/blog-check-gold.png");
 
@@ -95,9 +96,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://www.xn--72c5ab1amkp1ctc0co.com/" },
-    { "@type": "ListItem", position: 2, name: "บทความ", item: "https://www.xn--72c5ab1amkp1ctc0co.com/blog" },
-    { "@type": "ListItem", position: 3, name: "ขายทองเก่าพัทยา", item: "https://www.xn--72c5ab1amkp1ctc0co.com/blog/thong-kao-pattaya-khay-thi-nai" },
+    { "@type": "ListItem", position: 1, name: "หน้าแรก", item: `${SITE_URL}/` },
+    { "@type": "ListItem", position: 2, name: "บทความ", item: `${SITE_URL}/blog` },
+    { "@type": "ListItem", position: 3, name: "ขายทองเก่าพัทยา", item: `${SITE_URL}/blog/thong-kao-pattaya-khay-thi-nai` },
   ],
 };
 

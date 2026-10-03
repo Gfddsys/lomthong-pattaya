@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
+import { SITE_URL } from "@/data/site";
 
 const COVER_IMAGE = getUploadedImage("blog-rap-sue-thong-pattaya", "/images/blog-lomthong.png");
 
@@ -85,9 +86,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://www.xn--72c5ab1amkp1ctc0co.com/" },
-    { "@type": "ListItem", position: 2, name: "บทความ", item: "https://www.xn--72c5ab1amkp1ctc0co.com/blog" },
-    { "@type": "ListItem", position: 3, name: "รับซื้อทองพัทยา ร้านไหนดี", item: "https://www.xn--72c5ab1amkp1ctc0co.com/blog/rap-sue-thong-pattaya" },
+    { "@type": "ListItem", position: 1, name: "หน้าแรก", item: `${SITE_URL}/` },
+    { "@type": "ListItem", position: 2, name: "บทความ", item: `${SITE_URL}/blog` },
+    { "@type": "ListItem", position: 3, name: "รับซื้อทองพัทยา ร้านไหนดี", item: `${SITE_URL}/blog/rap-sue-thong-pattaya` },
   ],
 };
 
@@ -231,8 +232,8 @@ export default function ArticleRapSueThongPattaya() {
         </p>
 
         <blockquote>
-          "ก่อนขายทอง ต้องรู้ราคาตลาดก่อนเสมอ ร้านที่ดีต้องโปร่งใส ชั่งน้ำหนักต่อหน้า
-          และเสนอราคาอิงตามสมาคมค้าทองคำ ไม่กดราคาลูกค้า"
+          &quot;ก่อนขายทอง ต้องรู้ราคาตลาดก่อนเสมอ ร้านที่ดีต้องโปร่งใส ชั่งน้ำหนักต่อหน้า
+          และเสนอราคาอิงตามสมาคมค้าทองคำ ไม่กดราคาลูกค้า&quot;
         </blockquote>
 
         {/* Section 3 */}
@@ -316,8 +317,8 @@ export default function ArticleRapSueThongPattaya() {
         </ul>
 
         <blockquote>
-          "เราเชื่อว่าทองทุกชิ้นมีคุณค่า ไม่ว่าจะเป็นทองเก่า ทองหัก หรือเครื่องประดับที่ไม่ได้ใช้แล้ว
-          เราพร้อมให้ราคาที่ยุติธรรมที่สุด เพราะความซื่อสัตย์คือหัวใจของเรา"
+          &quot;เราเชื่อว่าทองทุกชิ้นมีคุณค่า ไม่ว่าจะเป็นทองเก่า ทองหัก หรือเครื่องประดับที่ไม่ได้ใช้แล้ว
+          เราพร้อมให้ราคาที่ยุติธรรมที่สุด เพราะความซื่อสัตย์คือหัวใจของเรา&quot;
           — หลอมทองพัทยา
         </blockquote>
 

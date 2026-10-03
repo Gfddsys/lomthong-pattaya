@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { CONTACT } from '@/data/contact';
 
 export default function Navbar() {
@@ -35,32 +37,33 @@ export default function Navbar() {
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`} role="navigation" aria-label="Main navigation">
       <div className="container">
         {/* Brand */}
-        <a href="/" className="navbar-brand" aria-label="หลอมทองพัทยา - กลับหน้าแรก">
-          <img
+        <Link href="/" className="navbar-brand" aria-label="หลอมทองพัทยา - กลับหน้าแรก">
+          <Image
             src="/images/uploads/logo/logo-nav.png"
             alt="หลอมทองพัทยา"
             width={48}
             height={48}
+            priority
             className="navbar-brand-logo"
             style={{ height: '48px', width: '48px', borderRadius: '10px', display: 'block', objectFit: 'cover' }}
           />
           <div className="navbar-brand-text">
             <span className="navbar-brand-name">หลอมทองพัทยา</span>
           </div>
-        </a>
+        </Link>
 
         {/* Menu Links */}
         <ul className={`navbar-menu${menuOpen ? ' active' : ''}`} role="menubar">
           {menuLinks.map((link) => (
             <li key={link.href} role="none">
-              <a
+              <Link
                 href={link.href}
                 className="navbar-link"
                 role="menuitem"
                 onClick={handleLinkClick}
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -70,6 +73,7 @@ export default function Navbar() {
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn-icon line" aria-label="เพิ่มเพื่อน LINE">
             {/* ใช้โลโก้ LINE จริงจาก Simple Icons CDN (ไอคอนสำเร็จรูปที่ตรวจสอบแล้ว)
                 แทนการวาด SVG เอง เพื่อไม่ให้เพี้ยนแบบที่ผ่านมา */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
             <img
               src="https://cdn.simpleicons.org/line/ffffff"
               alt="LINE"

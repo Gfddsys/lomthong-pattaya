@@ -2,8 +2,37 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BRANCHES, getBranch } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
+import { servicesData } from "@/data/services";
+import { getAutoArticles } from "@/lib/articles";
+import { SITE_URL } from "@/data/site";
 
-const SITE_URL = "https://www.xn--72c5ab1amkp1ctc0co.com";
+
+/* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
+   ใส่ชื่อพื้นที่ของสาขาในคำถาม เพื่อให้ตรงกับคำค้นแบบ "ร้านทอง <พื้นที่>" */
+function branchFaq(b) {
+  return [
+    {
+      q: `ร้านรับซื้อทอง${b.area} อยู่ตรงไหน`,
+      a: `${b.name} ตั้งอยู่ที่ ${b.address} กดปุ่ม "นำทางมาสาขานี้" เพื่อเปิด Google Maps ได้ทันที หรือโทร ${CONTACT.phoneDisplay} สอบถามเส้นทาง`,
+    },
+    {
+      q: `${b.shortName} เปิดกี่โมง เปิดวันอาทิตย์ไหม`,
+      a: `เปิดทุกวัน 10:00 - 20:00 น. รวมวันเสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ์`,
+    },
+    {
+      q: "ขายทองต้องใช้เอกสารอะไรบ้าง",
+      a: "ใช้บัตรประจำตัวประชาชนตัวจริงของผู้ขาย (ใช้สำเนาแทนไม่ได้) ส่วนใบรับประกันหรือใบเสร็จ ไม่มีก็ขายได้",
+    },
+    {
+      q: "ตรวจทองเสียค่าใช้จ่ายไหม",
+      a: "ตรวจเปอร์เซ็นต์ทองด้วยเครื่อง XRF ฟรี ใช้เวลาไม่กี่นาที ทำต่อหน้าลูกค้าทุกขั้นตอน ไม่ขายก็ไม่มีค่าใช้จ่าย",
+    },
+    {
+      q: "ขายทองแล้วได้เงินสดเลยไหม",
+      a: "ได้ จ่ายเงินสดทันทีหลังตกลงราคา หรือเลือกรับโอนเข้าบัญชีธนาคารได้ตามสะดวก",
+    },
+  ];
+}
 
 export function generateStaticParams() {
   return BRANCHES.map((b) => ({ slug: b.slug }));
@@ -31,7 +60,12 @@ export default async function BranchPage({ params }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "JewelryStore",
+    // @id เดียวกับใน app/layout.js → Google รวมเป็น entity เดียว ไม่ใช่ร้านซ้ำ 2 ร้าน
+    "@id": `${SITE_URL}/branch/${b.slug}#business`,
     name: b.name,
+    alternateName: b.gbpName,
+    parentOrganization: { "@id": `${SITE_URL}/#business` },
+    image: `${SITE_URL}/images/og-cover.jpg`,
     url: `${SITE_URL}/branch/${b.slug}`,
     telephone: CONTACT.phoneDisplay,
     address: {
@@ -56,6 +90,24 @@ export default async function BranchPage({ params }) {
     sameAs: [b.mapUrl],
   };
 
+  const faq = branchFaq(b);
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
+  // บทความที่พูดถึงพื้นที่ของสาขานี้ขึ้นก่อน แล้วเติมด้วยบทความล่าสุด (ลิงก์ภายใน = ส่งน้ำหนัก SEO ระหว่างหน้า)
+  const articles = getAutoArticles();
+  const areaFirst = [
+    ...articles.filter((a) => a.title.includes(b.area)),
+    ...articles.filter((a) => !a.title.includes(b.area)),
+  ].slice(0, 6);
+
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -69,6 +121,7 @@ export default async function BranchPage({ params }) {
     <article className="blog-article">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <nav className="blog-article-nav" aria-label="Breadcrumb">
         <Link href="/">หน้าแรก</Link>
@@ -115,12 +168,33 @@ export default async function BranchPage({ params }) {
 
         <h2>บริการที่ {b.shortName}</h2>
         <ul>
-          <li>รับหลอมทองคำทุกชนิด</li>
-          <li>รับซื้อทองเก่า ทองหัก ทองชำรุด</li>
-          <li>รับซื้อเครื่องประดับทอง</li>
-          <li>รับซื้อนาฬิกาแบรนด์เนม (Rolex, Omega, Cartier ฯลฯ)</li>
-          <li>ตรวจสอบเปอร์เซ็นต์ทองฟรี ด้วยเครื่อง XRF</li>
+          {servicesData.map((s) => (
+            <li key={s.slug}>
+              <Link href={`/services/${s.slug}`}>{s.title}</Link>
+            </li>
+          ))}
         </ul>
+
+        <h2>คำถามที่พบบ่อย — {b.shortName}</h2>
+        {faq.map((f) => (
+          <div key={f.q}>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        {areaFirst.length > 0 && (
+          <>
+            <h2>บทความที่น่าอ่านก่อนมาขายทอง</h2>
+            <ul>
+              {areaFirst.map((a) => (
+                <li key={a.slug}>
+                  <Link href={`/blog/${a.slug}`}>{a.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
 
       <div className="blog-article-cta">

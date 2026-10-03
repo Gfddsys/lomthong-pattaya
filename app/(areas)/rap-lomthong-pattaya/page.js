@@ -2,9 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
+import { SITE_URL } from "@/data/site";
+import { AREAS } from "@/data/areas";
 
 const COVER_IMAGE = getUploadedImage("hero", "/images/hero.png");
-const SITE_URL = "https://www.xn--72c5ab1amkp1ctc0co.com";
 
 export const metadata = {
   title: "รับหลอมทองพัทยา ให้ราคาสูงสุด ตรวจฟรี จ่ายสดทันที | หลอมทองพัทยา",
@@ -190,6 +191,13 @@ export default function RapLomthongPattayaPage() {
           ก็สามารถเดินทางมาใช้บริการ หรือส่งรูปมาประเมินราคาก่อนได้ เราให้บริการครอบคลุมทั่วจังหวัดชลบุรีและพื้นที่ใกล้เคียง
           หากมีทองจำนวนมาก สามารถสอบถามบริการรับถึงที่ได้
         </p>
+        <ul>
+          {AREAS.map((a) => (
+            <li key={a.slug}>
+              <Link href={`/area/${a.slug}`}>รับซื้อทอง {a.name}</Link> — เส้นทางและระยะทางไปสาขาที่ใกล้ที่สุด
+            </li>
+          ))}
+        </ul>
 
         <h2>ทำไมต้องเลือก หลอมทองพัทยา</h2>
         <ul>

@@ -1,12 +1,15 @@
 import { servicesData } from "../data/services";
 import { BRANCHES } from "../data/branches";
+import { AREAS } from "../data/areas";
 import { getAutoArticles } from "../lib/articles";
+import { SITE_URL } from "@/data/site";
 
 export default function sitemap() {
-  const baseUrl = "https://www.xn--72c5ab1amkp1ctc0co.com"; // ← แก้เป็น URL จริงของคุณ
+  const baseUrl = SITE_URL;
   // วันแก้ไขเนื้อหาจริงครั้งล่าสุด — อัปเดตค่านี้เมื่อมีการแก้เนื้อหาเว็บครั้งใหญ่
   // (อย่าใช้ new Date() เพราะจะทำให้ lastmod ขยับทุกครั้งที่ regenerate = โกหก Googlebot)
   const LASTMOD = new Date("2026-07-12");
+  const AREAS_LASTMOD = new Date("2026-10-03"); // วันที่เพิ่มหน้าพื้นที่บริการ
 
   const servicePages = servicesData.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
@@ -30,6 +33,13 @@ export default function sitemap() {
     priority: 0.9,
   }));
 
+  const areaPages = AREAS.map((a) => ({
+    url: `${baseUrl}/area/${a.slug}`,
+    lastModified: AREAS_LASTMOD,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
   return [
     {
       url: baseUrl,
@@ -50,6 +60,7 @@ export default function sitemap() {
       priority: 0.9,
     },
     ...branchPages,
+    ...areaPages,
     ...servicePages,
     ...autoArticlePages,
     {

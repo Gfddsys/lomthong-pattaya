@@ -10,6 +10,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // โฟลเดอร์ build สำรองจากการ audit — เป็นโค้ดที่ถูก compile แล้ว ไม่ใช่ซอร์ส
+    ".next-audit/**",
   ]),
 ]);
 

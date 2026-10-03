@@ -3,6 +3,8 @@ import { Prompt } from "next/font/google";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
 import { BRANCHES } from "@/data/branches";
+import { SITE_URL } from "@/data/site";
+import ScrollAnimation from "@/components/ScrollAnimation";
 
 // ฟอนต์ Prompt แบบ self-host (next/font) — ตัดการโหลดจาก Google Fonts ออก เร็วขึ้น ไม่มี layout shift
 const prompt = Prompt({
@@ -18,7 +20,6 @@ const prompt = Prompt({
 const SITE_NAME = "หลอมทองพัทยา";
 const SITE_DESCRIPTION =
   "รับหลอมทองพัทยา รับซื้อทองเก่า ทองชำรุด ทองหัก เครื่องประดับ โดยช่างผู้ชำนาญ ให้ราคายุติธรรม ตรวจสอบฟรี บริการถึงที่ - หลอมทองพัทยา";
-const SITE_URL = "https://www.xn--72c5ab1amkp1ctc0co.com"; // หลอมทองพัทยา.com ในรูป punycode (มาตรฐานอินเทอร์เน็ตบังคับใช้รูปนี้)
 const SITE_PHONE = CONTACT.phoneDisplay; // เบอร์จริงจาก data/contact.js
 const SITE_ADDRESS = "ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150";
 // วางรูปจริงไว้ที่ public/images/uploads/hero/ เพื่อแทนที่รูปตัวอย่าง (ไม่ต้องเปลี่ยนชื่อไฟล์)
@@ -201,7 +202,6 @@ const schemaData = {
   ],
 };
 
-import ScrollAnimation from "@/components/ScrollAnimation";
 
 export default function RootLayout({ children }) {
   return (
