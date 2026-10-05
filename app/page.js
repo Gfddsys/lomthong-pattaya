@@ -14,7 +14,11 @@ import { getUploadedImage } from "@/lib/getImage";
 
 // canonical ของหน้าแรก (title/description ยังใช้ค่า default จาก root layout)
 export const metadata = {
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    // คู่ภาษา: หน้าภาษาอังกฤษสำหรับชาวต่างชาติอยู่ที่ /en
+    languages: { th: "/", en: "/en", "x-default": "/" },
+  },
 };
 
 export default function Home() {

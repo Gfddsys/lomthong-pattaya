@@ -68,6 +68,11 @@ export default function Navbar() {
           ))}
         </ul>
 
+        {/* สลับเป็นภาษาอังกฤษ — อยู่นอก navbar-cta เพราะกลุ่มนั้นถูกซ่อนบนมือถือ */}
+        <Link href="/en" hrefLang="en" className="navbar-lang" aria-label="English version">
+          EN
+        </Link>
+
         {/* CTA Button */}
         <div className="navbar-cta">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn-icon line" aria-label="เพิ่มเพื่อน LINE">

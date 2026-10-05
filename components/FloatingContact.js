@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { CONTACT } from '@/data/contact';
 
-export default function FloatingContact() {
+// label: ข้อความบนปุ่ม (หน้าภาษาอังกฤษส่ง label เป็นภาษาอังกฤษ)
+export default function FloatingContact({ label = 'ประเมินราคาฟรี', ariaLabel = 'ประเมินราคาฟรีผ่าน LINE' }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -23,8 +24,8 @@ export default function FloatingContact() {
       target="_blank"
       rel="noopener noreferrer"
       className="floating-cta"
-      aria-label="ประเมินราคาฟรีผ่าน LINE"
-      title="ประเมินราคาฟรีผ่าน LINE"
+      aria-label={ariaLabel}
+      title={ariaLabel}
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
       <img
@@ -34,7 +35,7 @@ export default function FloatingContact() {
         height={24}
         style={{ width: '24px', height: '24px', display: 'block' }}
       />
-      <span>ประเมินราคาฟรี</span>
+      <span>{label}</span>
     </a>
   );
 }

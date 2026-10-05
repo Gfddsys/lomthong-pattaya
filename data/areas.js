@@ -59,7 +59,7 @@ export const AREAS = [
         h: "ทองเก่าเก็บไว้นาน ใบเสร็จหายก็ขายได้",
         p: "ทองที่เก็บไว้หลายสิบปีมักไม่มีใบเสร็จแล้ว บางชิ้นสีหมอง ขาด หรือบุบ ร้านเราไม่ได้ดูที่สภาพหรือใบเสร็จ แต่ชั่งน้ำหนักและวัดเปอร์เซ็นต์ทองด้วยเครื่อง XRF แล้วคิดราคาตามเนื้อทองจริง",
         links: [
-          { href: "/blog/pattaya-gold-shop-no-receipt-sale", label: "ไม่มีใบเสร็จ ขายทองได้ไหม" },
+          { href: "/blog/khai-thong-tong-chai-ekasan-arai-pattaya", label: "ไม่มีใบเสร็จ ขายทองได้ไหม" },
           { href: "/blog/where-to-sell-broken-gold-pattaya", label: "ทองหัก ทองขาด ขายที่ไหนดี" },
         ],
       },
@@ -95,8 +95,8 @@ export const AREAS = [
         h: "รีบใช้เงิน ไม่ต้องรอ",
         p: "ตรวจทองด้วยเครื่อง XRF ใช้เวลาเพียงไม่กี่นาที ตกลงราคาแล้วรับเงินสดได้ทันที หรือเลือกโอนเข้าบัญชีก็ได้ ร้านเปิดทุกวัน 10:00-20:00 น. แวะหลังเลิกงานก็ยังทัน",
         links: [
-          { href: "/blog/pattaya-gold-shop-instant-cash-no-wait", label: "ขายทองรับเงินสดทันที ไม่ต้องรอ" },
-          { href: "/blog/pattaya-gold-shop-open-daily-evening-service", label: "ร้านทองเปิดถึงค่ำ" },
+          { href: "/blog/pattaya-gold-shop-payment-cash-vs-transfer", label: "ขายทองรับเงินสดทันที ไม่ต้องรอ" },
+          { href: "/blog/pattaya-gold-shop-open-daily-ten-am-eight-pm", label: "ร้านทองเปิดถึงค่ำ" },
         ],
       },
       {

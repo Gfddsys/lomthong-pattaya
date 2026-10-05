@@ -19,6 +19,9 @@ export const BRANCHES = [
     lat: 12.9187667,
     lng: 100.8927284,
     hours: "เปิดทุกวัน 10:00 - 20:00 น.",
+    // สำหรับหน้าภาษาอังกฤษ /en
+    nameEn: "South Pattaya Branch",
+    addressEn: "137 South Pattaya Road (Pattaya Tai), Nong Prue, Bang Lamung, Chonburi 20150",
     reviews: 10,
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9187667,100.8927284&z=17&hl=th&output=embed",
@@ -38,6 +41,8 @@ export const BRANCHES = [
     lat: 12.9317188,
     lng: 100.906533,
     hours: "เปิดทุกวัน 10:00 - 20:00 น.",
+    nameEn: "Noen Plap Wan Branch",
+    addressEn: "13/228 Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
     reviews: 34,
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9317188,100.906533&z=17&hl=th&output=embed",

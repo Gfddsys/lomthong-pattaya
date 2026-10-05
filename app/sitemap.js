@@ -10,6 +10,9 @@ export default function sitemap() {
   // (อย่าใช้ new Date() เพราะจะทำให้ lastmod ขยับทุกครั้งที่ regenerate = โกหก Googlebot)
   const LASTMOD = new Date("2026-07-12");
   const AREAS_LASTMOD = new Date("2026-10-03"); // วันที่เพิ่มหน้าพื้นที่บริการ
+  const EN_LASTMOD = new Date("2026-10-06"); // วันที่เพิ่มหน้าภาษาอังกฤษ /en
+  // หน้าแรกภาษาไทย ↔ หน้าภาษาอังกฤษ เป็นคู่ภาษากัน (hreflang)
+  const LANGS = { th: baseUrl, en: `${baseUrl}/en` };
 
   const servicePages = servicesData.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
@@ -21,7 +24,7 @@ export default function sitemap() {
   // บทความอัตโนมัติจาก content/articles/*.json — เพิ่มเข้า sitemap เองโดยไม่ต้องแก้ไฟล์นี้
   const autoArticlePages = getAutoArticles().map((a) => ({
     url: `${baseUrl}/blog/${a.slug}`,
-    lastModified: new Date(a.dateIso),
+    lastModified: new Date(a.updatedIso),
     changeFrequency: "monthly",
     priority: 0.8,
   }));
@@ -46,6 +49,14 @@ export default function sitemap() {
       lastModified: LASTMOD,
       changeFrequency: "weekly",
       priority: 1,
+      alternates: { languages: LANGS },
+    },
+    {
+      url: `${baseUrl}/en`,
+      lastModified: EN_LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.9,
+      alternates: { languages: LANGS },
     },
     {
       url: `${baseUrl}/blog`,
@@ -63,12 +74,6 @@ export default function sitemap() {
     ...areaPages,
     ...servicePages,
     ...autoArticlePages,
-    {
-      url: `${baseUrl}/blog/khai-thong-mai-mee-bai-set`,
-      lastModified: LASTMOD,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
     {
       url: `${baseUrl}/blog/wi-thi-kamnuan-rakha-khai-thong-kao`,
       lastModified: LASTMOD,
