@@ -65,6 +65,13 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      // ราคาเปลี่ยนทุกวัน → lastmod = วันนี้ (เนื้อหาเปลี่ยนจริง ไม่ได้หลอก Googlebot)
+      url: `${baseUrl}/rakha-thong-wan-nee`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/rap-lomthong-pattaya`,
       lastModified: LASTMOD,
       changeFrequency: "weekly",

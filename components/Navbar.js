@@ -26,9 +26,9 @@ export default function Navbar() {
     { label: 'หน้าแรก', href: '/#hero' },
     { label: 'รู้จักเรา', href: '/#about' },
     { label: 'บริการ', href: '/#services' },
-    { label: 'ขั้นตอน', href: '/#process' },
     { label: 'ผลงาน', href: '/#gallery' },
     { label: 'รีวิว', href: '/#testimonials' },
+    { label: 'ราคาทอง', href: '/rakha-thong-wan-nee' },
     { label: 'บทความ', href: '/blog' },
     { label: 'ติดต่อเรา', href: '/#contact' },
   ];

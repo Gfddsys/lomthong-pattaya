@@ -164,9 +164,9 @@ export default function GoldPrice({ isHero = false }) {
             diffLabel="เทียบราคาเปิด (บาท)"
             buy={data.gold_bar.buy}
             sell={data.gold_bar.sell}
-            stripLabel="ทองรูปพรรณ 96.5%"
+            stripLabel="ทองรูปพรรณ 96.5% (ประมาณ)"
             stripValue={`รับซื้อ ${data.gold_ornament.buy} · ขาย ${data.gold_ornament.sell}`}
-            note="* ราคาอ้างอิงจากสมาคมค้าทองคำ ราคาหน้าร้านอาจมีการเปลี่ยนแปลง"
+            note="* ทองคำแท่งอ้างอิงราคาประกาศสมาคมค้าทองคำ · ทองรูปพรรณเป็นราคาคำนวณโดยประมาณ ราคาหน้าร้านอาจต่างกัน"
           />
 
           {data.silver && (

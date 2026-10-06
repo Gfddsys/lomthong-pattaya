@@ -2935,3 +2935,189 @@ a.contact-item--link:hover {
     white-space: nowrap;
   }
 }
+
+/* ============================================
+   ราคาทองวันนี้ /rakha-thong-wan-nee
+   ============================================ */
+.gp-table td:not(:first-child),
+.gp-table th:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.gp-table td:not(:first-child) {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.gp-source {
+  font-size: var(--font-size-sm) !important;
+  color: var(--color-text-muted);
+}
+
+.gold-calc {
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  background: #fdf8ec;
+  border: 1px solid rgba(212, 168, 67, 0.35);
+  border-radius: var(--radius-md);
+}
+
+.gold-calc-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: var(--space-md);
+}
+
+.gold-calc-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.gold-calc-fields input,
+.gold-calc-fields select {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid rgba(212, 168, 67, 0.5);
+  border-radius: var(--radius-sm, 6px);
+  background: #fff;
+  font: inherit;
+  font-size: var(--font-size-base);
+  color: var(--color-white);
+}
+
+.gold-calc-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(212, 168, 67, 0.3);
+}
+
+.gold-calc-result strong {
+  font-size: var(--font-size-2xl);
+  color: var(--color-gold-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.gold-calc-note {
+  margin: var(--space-sm) 0 0 !important;
+  font-size: var(--font-size-xs) !important;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.embed-code {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.embed-code textarea {
+  width: 100%;
+  padding: var(--space-md);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  border: 1px solid rgba(212, 168, 67, 0.4);
+  border-radius: var(--radius-md);
+  background: var(--color-dark-2);
+  color: var(--color-white);
+  resize: vertical;
+}
+
+@media (max-width: 768px) {
+  .gold-calc-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gold-calc-fields label:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* กล่องราคาทองสำหรับ iframe ของเว็บอื่น /embed/gold-price */
+.gp-embed {
+  max-width: 420px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #e6cf8f;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+
+.gp-embed-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.gp-embed-head strong {
+  font-size: 16px;
+  color: #a07e2e;
+}
+
+.gp-embed-head span {
+  font-size: 12px;
+  color: #666;
+}
+
+.gp-embed-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.gp-embed-table th {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+  color: #666;
+  padding: 4px 0;
+}
+
+.gp-embed-table th:first-child,
+.gp-embed-table td:first-child {
+  text-align: left;
+}
+
+.gp-embed-table td {
+  padding: 6px 0;
+  border-top: 1px solid #f0e4c4;
+  text-align: right;
+  font-weight: 600;
+}
+
+.gp-embed-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #888;
+}
+
+.gp-embed-foot a {
+  color: #8b0000;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.gp-embed-error {
+  color: #8b0000;
+}

@@ -52,6 +52,7 @@ export default function Footer() {
               <li><Link href="/#process" className="footer-link">ขั้นตอนบริการ</Link></li>
               <li><Link href="/#gallery" className="footer-link">ผลงาน</Link></li>
               <li><Link href="/#testimonials" className="footer-link">รีวิวลูกค้า</Link></li>
+              <li><Link href="/rakha-thong-wan-nee" className="footer-link">ราคาทองวันนี้</Link></li>
               <li><Link href="/rap-lomthong-pattaya" className="footer-link">รับหลอมทองพัทยา</Link></li>
               <li><Link href="/en" hrefLang="en" className="footer-link">English: Sell gold in Pattaya</Link></li>
               <li><Link href="/blog" className="footer-link">บทความ</Link></li>
