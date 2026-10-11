@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
 
   if (!service) {
     return {
-      title: 'ไม่พบบริการ | หลอมทองพัทยา',
+      title: 'ไม่พบบริการ',
     };
   }
 

@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const b = getBranch(slug);
   if (!b) return {};
-  const title = `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
+  const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
   const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน 10:00-20:00 น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,

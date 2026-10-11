@@ -21,6 +21,8 @@ export const BRANCHES = [
     hours: "เปิดทุกวัน 10:00 - 20:00 น.",
     // สำหรับหน้าภาษาอังกฤษ /en
     nameEn: "South Pattaya Branch",
+    // หัวข้อหน้าสาขาใน Google — คำที่คนค้นจริงจาก Search Console
+    seoTitle: "ร้านหลอมทองพัทยาใต้ · ร้านทอง รับซื้อทอง ถนนพัทยาใต้",
     addressEn: "137 South Pattaya Road (Pattaya Tai), Nong Prue, Bang Lamung, Chonburi 20150",
     reviews: 10,
     mapEmbedUrl:
@@ -42,6 +44,7 @@ export const BRANCHES = [
     lng: 100.906533,
     hours: "เปิดทุกวัน 10:00 - 20:00 น.",
     nameEn: "Noen Plap Wan Branch",
+    seoTitle: "ร้านทองซอยเนินพลับหวาน · รับซื้อทอง หลอมทอง เนินพลับหวาน",
     addressEn: "13/228 Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
     reviews: 34,
     mapEmbedUrl:

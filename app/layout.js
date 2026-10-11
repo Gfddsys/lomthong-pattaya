@@ -18,8 +18,11 @@ const prompt = Prompt({
    ข้อมูล SEO หลัก - แก้ไขได้ที่นี่
    ============================================ */
 const SITE_NAME = "หลอมทองพัทยา";
+// ปรับ ต.ค. 2026 ตามข้อมูล Search Console: คนค้น "ร้านหลอมทองพัทยา" มากที่สุด แต่คลิกน้อย
+// → บอกข้อมูลที่คนอยากรู้ก่อนกด (2 สาขา เปิดทุกวัน ตรวจฟรี เงินสด) ไว้ในคำอธิบายที่โชว์บนหน้าผลค้นหา
 const SITE_DESCRIPTION =
-  "รับหลอมทองพัทยา รับซื้อทองเก่า ทองชำรุด ทองหัก เครื่องประดับ โดยช่างผู้ชำนาญ ให้ราคายุติธรรม ตรวจสอบฟรี บริการถึงที่ - หลอมทองพัทยา";
+  "ร้านหลอมทองพัทยา (เฮงศิริ) 2 สาขา พัทยาใต้ · เนินพลับหวาน เปิดทุกวัน 10:00-20:00 น. รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองเค เครื่องเงิน นาฬิกาแบรนด์เนม ตรวจ XRF ฟรีต่อหน้า จ่ายเงินสดทันที";
+const HOME_TITLE = "ร้านหลอมทองพัทยา รับซื้อทอง ตรวจ XRF ฟรี จ่ายเงินสดทันที";
 const SITE_PHONE = CONTACT.phoneDisplay; // เบอร์จริงจาก data/contact.js
 const SITE_ADDRESS = "ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150";
 // วางรูปจริงไว้ที่ public/images/uploads/hero/ เพื่อแทนที่รูปตัวอย่าง (ไม่ต้องเปลี่ยนชื่อไฟล์)
@@ -30,7 +33,7 @@ const OG_IMAGE = "/images/og-cover.jpg";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `หลอมทองพัทยา | รับซื้อทอง หลอมทอง`,
+    default: HOME_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -56,7 +59,7 @@ export const metadata = {
     locale: "th_TH",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "หลอมทองพัทยา | รับซื้อทอง หลอมทอง",
+    title: HOME_TITLE,
     description: SITE_DESCRIPTION,
     images: [
       {
@@ -69,7 +72,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "หลอมทองพัทยา | รับซื้อทอง หลอมทอง",
+    title: HOME_TITLE,
     description: SITE_DESCRIPTION,
     images: [OG_IMAGE],
   },
@@ -193,7 +196,7 @@ const schemaData = {
       "@type": "WebPage",
       "@id": `${SITE_URL}/#webpage`,
       url: SITE_URL,
-      name: "หลอมทองพัทยา | รับซื้อทอง หลอมทอง",
+      name: HOME_TITLE,
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#business` },
       description: SITE_DESCRIPTION,

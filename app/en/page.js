@@ -162,7 +162,7 @@ export default function SellGoldPattayaEn() {
           <li>Broken, bent or single-earring pieces, scrap gold and gold dust</li>
           <li>Gold bars</li>
           <li>Gold amulet frames</li>
-          <li>Silver jewelry and silverware</li>
+          <li>Silver jewelry, silverware and silver bars</li>
           <li>
             Luxury watches, valued as pre-owned watches (see{" "}
             <Link href="/services/watch-buying" hrefLang="th">watch buying</Link>, in Thai)
