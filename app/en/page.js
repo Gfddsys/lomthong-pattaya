@@ -16,7 +16,7 @@ const PAGE_URL = `${SITE_URL}/en`;
 const COVER_IMAGE = getUploadedImage("hero", "/images/hero.png");
 const TITLE = "Sell Gold in Pattaya | Free XRF Test, Cash Paid on the Spot";
 const DESCRIPTION =
-  "Sell gold in Pattaya with your passport: 9K, 14K, 18K, 22K and Italian gold, broken jewelry, scrap gold and luxury watches. Free XRF purity test in front of you, cash in Thai baht. Open daily 10:00 to 20:00.";
+  "Sell gold in Pattaya with your passport: 9K, 14K, 18K, 22K and Italian gold, broken jewelry, scrap gold and luxury watches. Free XRF purity test in front of you, cash in Thai baht. Open daily until 20:00.";
 
 export const metadata = {
   title: { absolute: TITLE },
@@ -112,7 +112,7 @@ export default function SellGoldPattayaEn() {
         <h1>Sell Gold in Pattaya: Free XRF Test, Cash Paid on the Spot</h1>
         <div className="blog-article-meta">
           <span>📍 2 shops in Pattaya</span>
-          <span>🕐 Open daily 10:00 to 20:00</span>
+          <span>🕐 Open daily until 20:00</span>
           <span>🛂 Bring your passport</span>
         </div>
       </header>
@@ -254,7 +254,7 @@ export default function SellGoldPattayaEn() {
         </ol>
 
         <h2>Our two shops in Pattaya</h2>
-        <p>Both shops are open every day, including weekends and public holidays, from 10:00 to 20:00. No appointment needed.</p>
+        <p>Both shops are open every day, including weekends and public holidays: Noen Plap Wan from 10:00 to 20:00, South Pattaya from 10:30 to 20:00. No appointment needed.</p>
         <div className="en-branches">
           {BRANCHES.map((b) => (
             <div key={b.slug} className="en-branch">
@@ -286,7 +286,7 @@ export default function SellGoldPattayaEn() {
 
       <div className="blog-article-cta">
         <h3>Find out what your gold is worth</h3>
-        <p>Free XRF test in front of you · Cash in Thai baht on the spot · Open daily 10:00 to 20:00</p>
+        <p>Free XRF test in front of you · Cash in Thai baht on the spot · Open daily until 20:00</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.phoneHref} className="btn btn-primary">
             📞 Call {CONTACT.phoneDisplay}

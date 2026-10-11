@@ -191,7 +191,7 @@ export function validate(a, existing) {
     if (m[0].replace(/\D/g, "") !== shopPhone) problems.push(`เบอร์โทร "${m[0]}" ไม่ใช่เบอร์ร้าน (${CONTACT.phoneDisplay})`);
   }
   for (const m of text.matchAll(/(\d{1,2})[:.](\d{2})\s*น/g)) {
-    if (!["10:00", "20:00"].includes(`${m[1].padStart(2, "0")}:${m[2]}`)) problems.push(`เวลา "${m[0]}" ไม่ตรงเวลาเปิดร้าน (10:00-20:00 น.)`);
+    if (!["10:00", "10:30", "20:00"].includes(`${m[1].padStart(2, "0")}:${m[2]}`)) problems.push(`เวลา "${m[0]}" ไม่ตรงเวลาเปิดร้าน (เนินพลับหวาน 10:00-20:00 น. / พัทยาใต้ 10:30-20:00 น.)`);
   }
   const FALSE_CLAIMS = [
     [/ประสบการณ์(กว่า|มากกว่า)?\s*\d+\s*ปี/, "ห้ามอ้างจำนวนปีประสบการณ์"],

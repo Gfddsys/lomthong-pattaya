@@ -171,7 +171,7 @@ export default async function RakhaThongWanNee() {
         </p>
         <p>
           ตกลงราคาแล้ว <Link href="/blog/pattaya-gold-shop-payment-cash-vs-transfer">รับเงินสดทันทีหรือโอนเข้าบัญชี</Link>ได้
-          ร้านเปิดทุกวัน 10:00 - 20:00 น. ที่ <Link href="/branch/pattaya-tai">สาขาพัทยาใต้</Link> และ{" "}
+          ร้านเปิดทุกวันถึง 20:00 น. ที่ <Link href="/branch/pattaya-tai">สาขาพัทยาใต้</Link> และ{" "}
           <Link href="/branch/noen-plap-wan">สาขาเนินพลับหวาน</Link>
         </p>
 
@@ -202,7 +202,7 @@ export default async function RakhaThongWanNee() {
 
       <div className="blog-article-cta">
         <h3>ราคาทองวันนี้ดี อยากขายทอง</h3>
-        <p>ตรวจเปอร์เซ็นต์ทองฟรีต่อหน้าคุณ · รับเงินสดทันที · เปิดทุกวัน 10:00 - 20:00 น.</p>
+        <p>ตรวจเปอร์เซ็นต์ทองฟรีต่อหน้าคุณ · รับเงินสดทันที · เปิดทุกวันถึง 20:00 น.</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.phoneHref} className="btn btn-primary">
             📞 โทร {CONTACT.phoneDisplay}

@@ -38,7 +38,7 @@ export async function generateMetadata({ params }) {
   if (!area) return {};
   const [nearest] = branchesByDistance(area);
   const title = `รับซื้อทอง ${area.name} · ขายทอง หลอมทอง ใกล้${area.name}`;
-  const description = `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน 10:00-20:00 น. โทร ${CONTACT.phoneDisplay}`;
+  const description = `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${nearest.opens}-${nearest.closes} น. โทร ${CONTACT.phoneDisplay}`;
   return {
     title,
     description,
@@ -114,7 +114,7 @@ export default async function AreaPage({ params }) {
         <div className="blog-article-meta">
           <span>📍 ใกล้สุด: {nearest.shortName} (~{nearest.km.toFixed(1)} กม.)</span>
           <span>🔬 ตรวจ XRF ฟรี</span>
-          <span>🕐 ทุกวัน 10:00-20:00</span>
+          <span>🕐 ทุกวัน {nearest.opens}-{nearest.closes}</span>
         </div>
       </header>
 
@@ -170,7 +170,7 @@ export default async function AreaPage({ params }) {
 
       <div className="blog-article-cta">
         <h3>มาจาก{area.name} แวะ{nearest.shortName}ได้เลย</h3>
-        <p>{nearest.address} · เปิดทุกวัน 10:00-20:00 น. · ใช้บัตรประชาชนตัวจริง ไม่มีใบเสร็จก็ขายได้</p>
+        <p>{nearest.address} · {nearest.hours} · ใช้บัตรประชาชนตัวจริง ไม่มีใบเสร็จก็ขายได้</p>
         <div className="blog-article-cta-actions">
           <a href={nearest.directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             🧭 นำทางไป{nearest.shortName}

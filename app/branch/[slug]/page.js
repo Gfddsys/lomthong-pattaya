@@ -17,7 +17,7 @@ function branchFaq(b) {
     },
     {
       q: `${b.shortName} เปิดกี่โมง เปิดวันอาทิตย์ไหม`,
-      a: `เปิดทุกวัน 10:00 - 20:00 น. รวมวันเสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ์`,
+      a: `${b.hours} รวมวันเสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ์`,
     },
     {
       q: "ขายทองต้องใช้เอกสารอะไรบ้าง",
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }) {
   const b = getBranch(slug);
   if (!b) return {};
   const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
-  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน 10:00-20:00 น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${b.opens}-${b.closes} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,
     description,
@@ -83,8 +83,8 @@ export default async function BranchPage({ params }) {
       dayOfWeek: [
         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
       ],
-      opens: "10:00",
-      closes: "20:00",
+      opens: b.opens,
+      closes: b.closes,
     },
     hasMap: b.mapUrl,
     sameAs: [b.mapUrl],
@@ -134,7 +134,7 @@ export default async function BranchPage({ params }) {
         <div className="blog-article-meta">
           <span>📍 {b.shortName}</span>
           <span>⭐ Google รีวิว {b.reviews}</span>
-          <span>🕐 ทุกวัน 10:00-20:00</span>
+          <span>🕐 ทุกวัน {b.opens}-{b.closes}</span>
         </div>
       </header>
 
@@ -199,7 +199,7 @@ export default async function BranchPage({ params }) {
 
       <div className="blog-article-cta">
         <h3>แวะมาที่ {b.shortName} ได้เลย</h3>
-        <p>{b.address} · เปิดทุกวัน 10:00-20:00 น. · ตรวจทองต่อหน้าคุณ จ่ายเงินสดทันที</p>
+        <p>{b.address} · {b.hours} · ตรวจทองต่อหน้าคุณ จ่ายเงินสดทันที</p>
         <div className="blog-article-cta-actions">
           <a href={b.mapUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             🧭 นำทางมาสาขานี้

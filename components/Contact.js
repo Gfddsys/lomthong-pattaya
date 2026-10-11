@@ -1,4 +1,5 @@
 import { CONTACT } from "@/data/contact";
+import { HOURS_SUMMARY } from "@/data/branches";
 import MapEmbed from "@/components/MapEmbed";
 
 export default function Contact() {
@@ -79,7 +80,7 @@ export default function Contact() {
                 <div className="contact-item-icon" aria-hidden="true">🕐</div>
                 <div>
                   <div className="contact-item-label">เวลาทำการ</div>
-                  <div className="contact-item-value">เปิดทุกวัน 10:00 - 20:00 น.</div>
+                  <div className="contact-item-value">{HOURS_SUMMARY}</div>
                 </div>
               </div>
             </div>

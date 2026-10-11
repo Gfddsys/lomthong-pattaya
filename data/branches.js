@@ -11,19 +11,22 @@ export const BRANCHES = [
     area: "พัทยาใต้",
     name: "หลอมทองพัทยา สาขาพัทยาใต้",
     gbpName: "เฮงศิริรับซื้อทองและนาฬิกาพัทยา",
-    address: "137 ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150",
-    streetAddress: "137 ถ.พัทยาใต้ ต.หนองปรือ",
+    address: "225/136 ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150",
+    streetAddress: "225/136 ถ.พัทยาใต้ ต.หนองปรือ",
     locality: "บางละมุง",
     region: "ชลบุรี",
     postalCode: "20150",
     lat: 12.9187667,
     lng: 100.8927284,
-    hours: "เปิดทุกวัน 10:00 - 20:00 น.",
+    // ที่อยู่และเวลาเปิดยืนยันกับเจ้าของร้าน 12 ต.ค. 2026 ให้ตรงกับ Google Business Profile (NAP ต้องตรงกันทุกที่)
+    hours: "เปิดทุกวัน 10:30 - 20:00 น.",
+    opens: "10:30",
+    closes: "20:00",
     // สำหรับหน้าภาษาอังกฤษ /en
     nameEn: "South Pattaya Branch",
     // หัวข้อหน้าสาขาใน Google — คำที่คนค้นจริงจาก Search Console
     seoTitle: "ร้านหลอมทองพัทยาใต้ · ร้านทอง รับซื้อทอง ถนนพัทยาใต้",
-    addressEn: "137 South Pattaya Road (Pattaya Tai), Nong Prue, Bang Lamung, Chonburi 20150",
+    addressEn: "225/136 South Pattaya Road (Pattaya Tai), Nong Prue, Bang Lamung, Chonburi 20150",
     reviews: 32, // Google Maps 12 ต.ค. 2026 (5.0 ดาว)
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9187667,100.8927284&z=17&hl=th&output=embed",
@@ -43,6 +46,8 @@ export const BRANCHES = [
     lat: 12.9317188,
     lng: 100.906533,
     hours: "เปิดทุกวัน 10:00 - 20:00 น.",
+    opens: "10:00",
+    closes: "20:00",
     nameEn: "Noen Plap Wan Branch",
     seoTitle: "ร้านทองซอยเนินพลับหวาน · รับซื้อทอง หลอมทอง เนินพลับหวาน",
     addressEn: "13/228 Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
@@ -52,6 +57,9 @@ export const BRANCHES = [
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
   },
 ];
+
+// สรุปเวลาเปิดทั้ง 2 สาขา สำหรับ Footer / หน้าติดต่อ / คำอธิบายเว็บ
+export const HOURS_SUMMARY = "เปิดทุกวัน · เนินพลับหวาน 10:00-20:00 น. · พัทยาใต้ 10:30-20:00 น.";
 
 export function getBranch(slug) {
   return BRANCHES.find((b) => b.slug === slug);

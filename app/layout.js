@@ -21,7 +21,7 @@ const SITE_NAME = "หลอมทองพัทยา";
 // ปรับ ต.ค. 2026 ตามข้อมูล Search Console: คนค้น "ร้านหลอมทองพัทยา" มากที่สุด แต่คลิกน้อย
 // → บอกข้อมูลที่คนอยากรู้ก่อนกด (2 สาขา เปิดทุกวัน ตรวจฟรี เงินสด) ไว้ในคำอธิบายที่โชว์บนหน้าผลค้นหา
 const SITE_DESCRIPTION =
-  "ร้านหลอมทองพัทยา (เฮงศิริ) 2 สาขา พัทยาใต้ · เนินพลับหวาน เปิดทุกวัน 10:00-20:00 น. รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองเค เครื่องเงิน นาฬิกาแบรนด์เนม ตรวจ XRF ฟรีต่อหน้า จ่ายเงินสดทันที";
+  "ร้านหลอมทองพัทยา (เฮงศิริ) 2 สาขา พัทยาใต้ · เนินพลับหวาน เปิดทุกวันถึง 20:00 น. รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองเค เครื่องเงิน นาฬิกาแบรนด์เนม ตรวจ XRF ฟรีต่อหน้า จ่ายเงินสดทันที";
 const HOME_TITLE = "ร้านหลอมทองพัทยา รับซื้อทอง ตรวจ XRF ฟรี จ่ายเงินสดทันที";
 const SITE_PHONE = CONTACT.phoneDisplay; // เบอร์จริงจาก data/contact.js
 const SITE_ADDRESS = "ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150";
@@ -122,20 +122,6 @@ const schemaData = {
       },
       image: `${SITE_URL}${OG_IMAGE}`,
       priceRange: "฿",
-      openingHoursSpecification: {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-        opens: "10:00",
-        closes: "20:00",
-      },
       // ดึงจาก data/contact.js เพื่อให้ตรงกับ Navbar/Footer ทุกจุด (สำคัญต่อ Local SEO)
       // googlePlaceUrl = ตัวเชื่อม "เว็บนี้ = ร้านนี้ใน Google Maps"
       // ทำให้ Google/AI ดึงรีวิว ที่ตั้ง เวลาทำการ มารวมกับเว็บได้ → มีโอกาสถูกแนะนำใน AI Overview
@@ -179,8 +165,8 @@ const schemaData = {
           "Saturday",
           "Sunday",
         ],
-        opens: "10:00",
-        closes: "20:00",
+        opens: b.opens,
+        closes: b.closes,
       },
     })),
     {

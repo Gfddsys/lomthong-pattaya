@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
-import { BRANCHES } from '@/data/branches';
+import { BRANCHES, HOURS_SUMMARY } from '@/data/branches';
 import { AREAS } from '@/data/areas';
 
 export default function Footer() {
@@ -88,7 +88,7 @@ export default function Footer() {
               </li>
               <li>
                 <span aria-hidden="true">🕐</span>
-                <span>เปิดทุกวัน 10:00 - 20:00 น.</span>
+                <span>{HOURS_SUMMARY}</span>
               </li>
               {/* ลิงก์ภายในไปหน้าสาขา — ทุกหน้าในเว็บชี้ไปหน้าสาขา ช่วยให้ Google ให้น้ำหนักหน้าที่ผูกกับ GBP */}
               {BRANCHES.map((b) => (
