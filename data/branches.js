@@ -24,7 +24,7 @@ export const BRANCHES = [
     // หัวข้อหน้าสาขาใน Google — คำที่คนค้นจริงจาก Search Console
     seoTitle: "ร้านหลอมทองพัทยาใต้ · ร้านทอง รับซื้อทอง ถนนพัทยาใต้",
     addressEn: "137 South Pattaya Road (Pattaya Tai), Nong Prue, Bang Lamung, Chonburi 20150",
-    reviews: 10,
+    reviews: 32, // Google Maps 12 ต.ค. 2026 (5.0 ดาว)
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9187667,100.8927284&z=17&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/srotj15xvzwfWi9M6",
@@ -46,7 +46,7 @@ export const BRANCHES = [
     nameEn: "Noen Plap Wan Branch",
     seoTitle: "ร้านทองซอยเนินพลับหวาน · รับซื้อทอง หลอมทอง เนินพลับหวาน",
     addressEn: "13/228 Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
-    reviews: 34,
+    reviews: 51, // Google Maps 12 ต.ค. 2026 (5.0 ดาว)
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9317188,100.906533&z=17&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
