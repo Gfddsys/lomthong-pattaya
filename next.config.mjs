@@ -46,6 +46,8 @@ const MERGED_ARTICLES = {
 const MOVED_PAGES = {
   // "ราคาทองวันนี้ 2569" แย่งคำค้น "ราคาทองวันนี้" กับหน้าราคาทองที่อัปเดตอัตโนมัติ
   "/blog/gold-price-trend": "/rakha-thong-wan-nee",
+  // บทความรวมหลายพื้นที่ซ้อนกับหน้าพื้นที่บริการ /area/* ที่ละเอียดกว่า
+  "/blog/rap-sue-thong-jomtien-naklua-banglamung": "/area/jomtien",
 };
 
 /** @type {import('next').NextConfig} */
