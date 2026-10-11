@@ -50,6 +50,13 @@ const MOVED_PAGES = {
   "/blog/rap-sue-thong-jomtien-naklua-banglamung": "/area/jomtien",
 };
 
+// ลิงก์สั้นสำหรับ QR ขอรีวิวที่เคาน์เตอร์ (ป้ายพิมพ์แล้วชี้มาที่นี่)
+// เป็น redirect ชั่วคราว จะเปลี่ยนปลายทางทีหลังได้โดยไม่ต้องพิมพ์ป้ายใหม่
+const REVIEW_LINKS = {
+  "/review/pattaya-tai": "https://search.google.com/local/writereview?placeid=ChIJ686UVEaVAjER-wCurORn9Gw",
+  "/review/noen-plap-wan": "https://search.google.com/local/writereview?placeid=ChIJEeEaq92VAjER5ShCa4XZAv8",
+};
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
@@ -60,7 +67,8 @@ const nextConfig = {
         permanent: true,
       }))
     ).concat(
-      Object.entries(MOVED_PAGES).map(([source, destination]) => ({ source, destination, permanent: true }))
+      Object.entries(MOVED_PAGES).map(([source, destination]) => ({ source, destination, permanent: true })),
+      Object.entries(REVIEW_LINKS).map(([source, destination]) => ({ source, destination, permanent: false }))
     );
   },
 };
