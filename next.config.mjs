@@ -29,6 +29,23 @@ const MERGED_ARTICLES = {
     "pattaya-gold-shop-without-box-certificate",
     "khai-thong-mai-mee-bai-set",
   ],
+  // ---- รอบ 2 (12 ต.ค. 2026): บทความยุคแรกที่เขียนเป็นโค้ดแยก ซ้ำกับบทความ JSON ----
+  // กลุ่มทองเค
+  "ran-rub-sue-thong-k-pattaya-18k-14k-9k": ["thong-k-9k-14k-18k-rap-sue-pattaya"],
+  // กลุ่มทองหัก / ทองเก่า
+  "where-to-sell-broken-gold-pattaya": ["thong-khat-thong-hak-rap-sue-mai", "thong-kao-pattaya-khay-thi-nai"],
+  // กลุ่มตรวจทองฟรี
+  "xrf-gold-testing-pattaya-free": ["borikar-truat-thong-free-pattaya"],
+  // กลุ่มหลอมทอง (คำว่า "หลอมทองพัทยา" ให้หน้า /rap-lomthong-pattaya เป็นเจ้าของ)
+  "pattaya-gold-melting-service-time": ["lomthong-khao-jai-ngai", "lomthong-pattaya-best-price", "lomthong-process-pattaya"],
+  // กลุ่มร้านไหนดี / ขายที่ไหนราคาสูง
+  "ran-thong-pattaya-nai-di": ["khai-thong-thi-nai-rakha-sung-pattaya", "rap-sue-thong-pattaya"],
+};
+
+// หน้าเก่าที่ย้ายไปหน้าอื่นที่ไม่ใช่บทความ
+const MOVED_PAGES = {
+  // "ราคาทองวันนี้ 2569" แย่งคำค้น "ราคาทองวันนี้" กับหน้าราคาทองที่อัปเดตอัตโนมัติ
+  "/blog/gold-price-trend": "/rakha-thong-wan-nee",
 };
 
 /** @type {import('next').NextConfig} */
@@ -40,6 +57,8 @@ const nextConfig = {
         destination: `/blog/${target}`,
         permanent: true,
       }))
+    ).concat(
+      Object.entries(MOVED_PAGES).map(([source, destination]) => ({ source, destination, permanent: true }))
     );
   },
 };

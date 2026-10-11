@@ -235,9 +235,9 @@ export default function RapLomthongPattayaPage() {
 
         <p>
           อ่านเพิ่มเติม:{" "}
-          <Link href="/blog/lomthong-pattaya-best-price">หลอมทองพัทยาที่ไหนดี ไม่โดนกดราคา</Link>{" "}·{" "}
-          <Link href="/blog/lomthong-process-pattaya">เจาะลึกขั้นตอนการหลอมทอง</Link>{" "}·{" "}
-          <Link href="/blog/rap-sue-thong-pattaya">รับซื้อทองพัทยา ร้านไหนดี</Link>{" "}·{" "}
+          <Link href="/blog/pattaya-gold-melting-service-time">ขั้นตอนหลอมทอง หลอมแล้วน้ำหนักหายไหม</Link>{" "}·{" "}
+          <Link href="/blog/ran-thong-pattaya-nai-di">ร้านทองพัทยา ร้านไหนดี</Link>{" "}·{" "}
+          <Link href="/rakha-thong-wan-nee">ราคาทองวันนี้</Link>{" "}·{" "}
           <Link href="/blog/check-real-gold">วิธีตรวจสอบทองแท้ด้วยตัวเอง</Link>
         </p>
       </div>
