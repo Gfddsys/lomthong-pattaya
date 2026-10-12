@@ -1669,6 +1669,13 @@ a.testimonial-card {
   text-align: center;
 }
 
+.reviews-cta-note a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ============================================
    CONTACT SECTION
    ============================================ */

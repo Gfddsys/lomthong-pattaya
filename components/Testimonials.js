@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CONTACT } from '@/data/contact';
 
 /* โลโก้ Google 4 สี (SVG) เพื่อสื่อว่าเป็นรีวิวจริงบน Google */
@@ -143,7 +144,8 @@ export default function Testimonials() {
             <GoogleG size={22} /> อ่านรีวิวจริงทั้งหมดบน Google
           </a>
           <span className="reviews-cta-note">
-            คลิกเพื่อดูรีวิวและคะแนนจริงจากลูกค้า หรือเขียนรีวิวให้เราบน Google Maps
+            คลิกเพื่อดูรีวิวและคะแนนจริงจากลูกค้า · เคยใช้บริการแล้ว?{" "}
+            <Link href="/reviews">เขียนรีวิวให้ร้าน</Link>
           </span>
         </div>
       </div>
