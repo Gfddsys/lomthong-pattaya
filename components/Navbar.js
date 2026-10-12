@@ -27,7 +27,7 @@ export default function Navbar() {
     { label: 'รู้จักเรา', href: '/#about' },
     { label: 'บริการ', href: '/#services' },
     { label: 'ผลงาน', href: '/#gallery' },
-    { label: 'รีวิว', href: '/#testimonials' },
+    { label: 'รีวิว', href: '/reviews' },
     { label: 'ราคาทอง', href: '/rakha-thong-wan-nee' },
     { label: 'บทความ', href: '/blog' },
     { label: 'ติดต่อเรา', href: '/#contact' },

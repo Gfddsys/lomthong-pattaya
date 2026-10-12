@@ -133,13 +133,13 @@
   color: var(--accent);
 }
 
-/* เนินพลับหวาน: แดงไวน์อมชมพู + ขอบโรสโกลด์ + พื้นครีมอมชมพู */
+/* เนินพลับหวาน: โทนทองอ่อน — พื้นการ์ดออกทองกว่าการ์ดพัทยาใต้ (ขาว) เล็กน้อย ชื่อสาขาสีทองเข้ม */
 .noen-plap-wan {
-  --accent: #9e1b32;
-  --edge: #c9956b;
-  --tint: #fbede7;
-  --tint-border: #ecd0c4;
-  background: #fdf6f2; /* พื้นการ์ดเข้มกว่าการ์ดพัทยาใต้ (ขาว) เล็กน้อย */
+  --accent: #8a6508;
+  --edge: var(--color-gold-dark);
+  --tint: #faefd2;
+  --tint-border: #ead7a2;
+  background: #fdf7e6;
 }
 
 .address {
@@ -233,6 +233,7 @@
 
 .hint {
   margin: 8px 0 0;
+  text-align: center;
   font-size: 0.78rem;
   color: var(--color-text-muted);
 }
