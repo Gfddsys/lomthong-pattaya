@@ -26,7 +26,7 @@ export default function ReviewCards({ slug }) {
 
       <div className={branches.length > 1 ? styles.grid : styles.single}>
         {branches.map((b) => (
-          <section key={b.slug} className={styles.branch}>
+          <section key={b.slug} className={`${styles.branch} ${styles[b.slug] ?? ""}`}>
             <h2 className={styles.branchName}>{b.shortName}</h2>
             <p className={styles.address}>{b.address}</p>
 

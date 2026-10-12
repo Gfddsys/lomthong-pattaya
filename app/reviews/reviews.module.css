@@ -112,10 +112,16 @@
   }
 }
 
+/* โทนสีของการ์ดแต่ละสาขา — ต่างกันแค่ 1 โทนในชุดสีแดง-ทองของร้าน
+   ให้ลูกค้าแยกออกทันทีว่ากำลังรีวิวสาขาไหน โดยปุ่มหลักสีทองยังเหมือนกันทุกการ์ด */
 .branch {
+  --accent: var(--color-primary); /* พัทยาใต้: แดงเลือดหมู */
+  --edge: var(--color-gold);
+  --tint: #fffdf7;
+  --tint-border: #efe3c4;
   background: #ffffff;
   border-radius: 20px;
-  border-top: 4px solid var(--color-gold);
+  border-top: 4px solid var(--edge);
   padding: 20px 16px 16px;
   box-shadow: 0 10px 30px rgba(92, 0, 0, 0.1);
 }
@@ -124,7 +130,15 @@
   margin: 0;
   text-align: center;
   font-size: 1.35rem;
-  color: var(--color-primary);
+  color: var(--accent);
+}
+
+/* เนินพลับหวาน: แดงไวน์อมชมพู + ขอบโรสโกลด์ + พื้นครีมอมชมพู */
+.noen-plap-wan {
+  --accent: #9e1b32;
+  --edge: #c9956b;
+  --tint: #fff8f5;
+  --tint-border: #f2ddd3;
 }
 
 .address {
@@ -135,8 +149,8 @@
 }
 
 .option {
-  border: 1px solid #efe3c4;
-  background: #fffdf7;
+  border: 1px solid var(--tint-border);
+  background: var(--tint);
   border-radius: 14px;
   padding: 14px;
 }
@@ -187,8 +201,8 @@
 
 .secondary {
   background: #ffffff;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
+  color: var(--accent);
+  border: 2px solid var(--accent);
 }
 
 .primary:hover,
@@ -213,7 +227,7 @@
 }
 
 .steps strong {
-  color: var(--color-primary);
+  color: var(--accent);
 }
 
 .hint {
