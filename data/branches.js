@@ -69,6 +69,12 @@ export function reviewUrl(b) {
   return `https://search.google.com/local/writereview?placeid=${b.placeId}`;
 }
 
+// ลิงก์เปิดหมุดสาขาในแอป Google Maps (มือถือที่มีแอปจะเด้งเข้าแอปเอง ลูกค้าล็อกอินอยู่แล้ว)
+// รูปแบบ Maps URLs ทางการ: query_place_id ชี้หมุดตรง ส่วน query เป็นพิกัดสำรอง
+export function mapsAppUrl(b) {
+  return `https://www.google.com/maps/search/?api=1&query=${b.lat},${b.lng}&query_place_id=${b.placeId}`;
+}
+
 export function getBranch(slug) {
   return BRANCHES.find((b) => b.slug === slug);
 }

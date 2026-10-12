@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./reviews.module.css";
 
 /* หน้ารีวิว /reviews เปิดจาก QR บนเคาน์เตอร์ในร้าน (ลูกค้าถือมือถืออยู่หน้าร้าน)
@@ -12,15 +11,6 @@ export const metadata = {
 export default function ReviewsLayout({ children }) {
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.brand}>
-          <Image src="/images/uploads/logo/logo-nav.png" alt="" width={44} height={44} priority />
-          <span>
-            <strong>หลอมทองพัทยา</strong>
-            <small>เฮงศิริ · รับซื้อทอง หลอมทอง</small>
-          </span>
-        </Link>
-      </header>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
         <Link href="/">หลอมทองพัทยา.com</Link>

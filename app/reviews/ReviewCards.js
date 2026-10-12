@@ -1,9 +1,13 @@
 import Link from "next/link";
-import { BRANCHES, reviewUrl } from "@/data/branches";
+import Image from "next/image";
+import { BRANCHES, mapsAppUrl, reviewUrl } from "@/data/branches";
 import styles from "./reviews.module.css";
 
 /* การ์ดรีวิวของแต่ละสาขา ใช้ทั้งหน้า /reviews (ทุกสาขา) และ /reviews/<slug> (สาขาเดียว)
-   ทุกปุ่มส่งลูกค้าไปหน้าเขียนรีวิวของ Google โดยตรง ไม่มีการคัดกรองว่าพอใจหรือไม่
+   แต่ละสาขามี 2 ทาง:
+   1. เปิดในแอป Google Maps (แนะนำ) — มือถือส่วนใหญ่ล็อกอิน Google ในแอปอยู่แล้ว ไม่ต้องล็อกอินใหม่
+   2. รีวิวผ่านเว็บ — เปิดหน้าเขียนรีวิวตรง แต่ถ้าเบราว์เซอร์ยังไม่ล็อกอิน Gmail ต้องล็อกอินก่อน
+   ทุกปุ่มส่งลูกค้าไป Google โดยตรง ไม่มีการคัดกรองว่าพอใจหรือไม่
    (Google ห้าม "review gating" คือถามความพอใจก่อนแล้วส่งเฉพาะคนที่พอใจไปรีวิว) */
 export default function ReviewCards({ slug }) {
   const branches = slug ? BRANCHES.filter((b) => b.slug === slug) : BRANCHES;
@@ -11,30 +15,62 @@ export default function ReviewCards({ slug }) {
 
   return (
     <>
-      <div className={styles.intro}>
+      <section className={styles.hero}>
+        <Image
+          src="/images/uploads/logo/logo-nav.png"
+          alt="โลโก้เฮงศิริ หลอมทองพัทยา"
+          width={64}
+          height={64}
+          priority
+          className={styles.logo}
+        />
+        <h1 className={styles.brand}>เฮงศิริ</h1>
+        <p className={styles.tagline}>รับซื้อทอง · หลอมทอง พัทยา</p>
+        <p className={styles.thanks}>ขอบคุณที่ไว้วางใจเฮงศิริครับ 🙏</p>
         <div className={styles.stars} aria-hidden="true">★★★★★</div>
-        <h1>ขอบคุณที่ใช้บริการครับ</h1>
-        <p>ช่วยรีวิวร้านบน Google ให้หน่อยนะครับ ใช้เวลาไม่ถึง 1 นาที</p>
-      </div>
+        <p className={styles.ask}>ช่วยรีวิวร้านบน Google ให้หน่อยนะครับ ใช้เวลาไม่ถึง 1 นาที</p>
+      </section>
 
-      <div className={styles.cards}>
+      <div className={branches.length > 1 ? styles.grid : styles.single}>
         {branches.map((b) => (
-          <section key={b.slug} className={styles.card}>
-            <h2>{b.shortName}</h2>
+          <section key={b.slug} className={styles.branch}>
+            <h2 className={styles.branchName}>{b.shortName}</h2>
             <p className={styles.address}>{b.address}</p>
-            <a href={reviewUrl(b)} className={styles.button} rel="noopener">
-              <GoogleIcon />
-              เขียนรีวิวบน Google
-            </a>
+
+            <div className={styles.option}>
+              <p className={styles.optionLabel}>
+                มีแอป Google Maps ในเครื่อง <span className={styles.badge}>แนะนำ</span>
+              </p>
+              <a href={mapsAppUrl(b)} className={styles.primary} rel="noopener">
+                <MapsPin />
+                เปิดในแอป Google Maps
+              </a>
+              <ol className={styles.steps}>
+                <li>
+                  เลื่อนลง กดแท็บ <strong>รีวิว</strong>
+                </li>
+                <li>
+                  กด <strong>เขียนรีวิว</strong> แล้วให้ดาวได้เลย
+                </li>
+              </ol>
+              <p className={styles.hint}>ไม่ต้องล็อกอินใหม่</p>
+            </div>
+
+            <div className={styles.option}>
+              <p className={styles.optionLabel}>ไม่มีแอป Google Maps</p>
+              <a href={reviewUrl(b)} className={styles.secondary} rel="noopener">
+                <GoogleIcon />
+                รีวิวผ่านเว็บ
+              </a>
+              <p className={styles.hint}>ต้องล็อกอินบัญชี Gmail ก่อน 1 ครั้ง</p>
+            </div>
           </section>
         ))}
       </div>
 
-      <ol className={styles.steps}>
-        <li>แตะจำนวนดาวที่ต้องการ</li>
-        <li>เล่าสั้น ๆ ว่ามาใช้บริการอะไร เช่น หลอมทอง ขายทองเก่า ขายนาฬิกา</li>
-        <li>กด &quot;โพสต์&quot; เป็นอันเสร็จ</li>
-      </ol>
+      <p className={styles.tip}>
+        เล่าสั้น ๆ ว่ามาใช้บริการอะไร เช่น <strong>หลอมทอง ขายทองเก่า ขายนาฬิกา</strong> ช่วยให้ลูกค้าคนอื่นตัดสินใจได้ง่ายขึ้นครับ
+      </p>
 
       {others.length > 0 && (
         <p className={styles.switch}>
@@ -47,14 +83,23 @@ export default function ReviewCards({ slug }) {
         </p>
       )}
 
-      <p className={styles.en}>Thank you! Tap the button above to review us on Google.</p>
+      <p className={styles.en}>Thank you! Tap a button above to review us on Google.</p>
     </>
+  );
+}
+
+function MapsPin() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path fill="#EA4335" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z" />
+      <circle cx="12" cy="9" r="2.6" fill="#fff" />
+    </svg>
   );
 }
 
 function GoogleIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
       <path fill="#4285F4" d="M22.6 12.3c0-.8-.1-1.5-.2-2.3H12v4.3h5.9a5 5 0 0 1-2.2 3.3v2.8h3.6c2.1-1.9 3.3-4.8 3.3-8.1z" />
       <path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.9A11 11 0 0 0 12 23z" />
       <path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7H2.1a11 11 0 0 0 0 10l3.7-2.9z" />

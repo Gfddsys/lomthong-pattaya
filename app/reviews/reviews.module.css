@@ -1,142 +1,190 @@
-/* หน้ารีวิว /reviews — ออกแบบสำหรับมือถือเป็นหลัก (ลูกค้าสแกน QR ที่เคาน์เตอร์) */
+/* หน้ารีวิว /reviews — ออกแบบสำหรับมือถือเป็นหลัก (ลูกค้าสแกน QR ที่เคาน์เตอร์)
+   ใช้สีแดงเลือดหมู + ทองตามธีมเว็บ (ตัวแปรใน globals.css) */
 .page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #fffaf0 0%, #ffffff 60%);
-}
-
-.header {
-  padding: 14px 16px;
-  border-bottom: 1px solid #f0e2bf;
-  background: #ffffff;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 520px;
-  margin: 0 auto;
-  color: inherit;
-  text-decoration: none;
-}
-
-.brand img {
-  border-radius: 10px;
-}
-
-.brand span {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.3;
-}
-
-.brand strong {
-  color: var(--color-primary);
-  font-size: 1.05rem;
-}
-
-.brand small {
-  color: var(--color-text-muted);
-  font-size: 0.8rem;
+  background: #fbf8f2;
 }
 
 .main {
   flex: 1;
   width: 100%;
-  max-width: 520px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 28px 16px 32px;
+  padding: 0 0 32px;
 }
 
-.intro {
+/* ---------- หัวหน้า: แถบแดงแบบ hero ของเว็บ ---------- */
+.hero {
+  position: relative;
   text-align: center;
+  padding: 32px 20px 56px;
+  background: var(--gradient-hero), var(--gradient-red);
+  color: #ffffff;
+  border-radius: 0 0 28px 28px;
+  overflow: hidden;
+}
+
+
+.logo {
+  display: block;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 0 0 3px rgba(240, 210, 124, 0.55);
+}
+
+.brand {
+  margin: 12px 0 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.thanks {
+  margin: 14px 0 0;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .stars {
-  color: #e0a800;
-  font-size: 1.9rem;
+  margin-top: 6px;
+  font-size: 1.8rem;
   letter-spacing: 6px;
+  color: var(--color-gold-light);
 }
 
-.intro h1 {
-  margin: 8px 0 6px;
-  font-size: 1.6rem;
-  color: var(--color-white);
+.ask {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.intro p {
-  margin: 0;
-  color: var(--color-text-light);
+/* ---------- การ์ดสาขา ---------- */
+.grid,
+.single {
+  display: grid;
+  gap: 18px;
+  margin-top: -28px;
+  padding: 0 16px;
+  position: relative;
 }
 
-.cards {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 24px;
+.single {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.card {
+@media (min-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.branch {
   background: #ffffff;
-  border: 1px solid #ecd9a6;
-  border-radius: 16px;
-  padding: 18px 16px;
-  box-shadow: 0 4px 18px rgba(160, 126, 46, 0.12);
+  border-radius: 20px;
+  border-top: 4px solid var(--color-gold);
+  padding: 20px 16px 16px;
+  box-shadow: 0 10px 30px rgba(92, 0, 0, 0.1);
 }
 
-.card h2 {
+.branchName {
   margin: 0;
-  font-size: 1.2rem;
-  color: var(--color-white);
+  text-align: center;
+  font-size: 1.35rem;
+  color: var(--color-primary);
 }
 
 .address {
   margin: 4px 0 14px;
-  font-size: 0.85rem;
+  text-align: center;
+  font-size: 0.8rem;
   color: var(--color-text-muted);
 }
 
-.button {
+.option {
+  border: 1px solid #efe3c4;
+  background: #fffdf7;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.option + .option {
+  margin-top: 10px;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+.badge {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.primary,
+.secondary {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   width: 100%;
-  min-height: 54px;
+  min-height: 52px;
   padding: 12px 16px;
   border-radius: 12px;
-  background: var(--gradient-red);
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 1.05rem;
+  font-weight: 700;
+  font-size: 1.02rem;
   text-decoration: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.button svg {
-  flex-shrink: 0;
-  background: #ffffff;
-  border-radius: 50%;
-  padding: 3px;
-  box-sizing: content-box;
+.primary {
+  background: var(--gradient-gold);
+  color: #3a2a00;
+  box-shadow: 0 4px 14px rgba(160, 126, 46, 0.35);
 }
 
-.button:hover,
-.button:focus-visible {
+.secondary {
+  background: #ffffff;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.primary:hover,
+.primary:focus-visible,
+.secondary:hover,
+.secondary:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(139, 0, 0, 0.3);
+  box-shadow: 0 6px 18px rgba(139, 0, 0, 0.2);
 }
 
 .steps {
-  margin: 26px 0 0;
-  padding: 16px 16px 16px 36px;
-  background: #fff7e3;
-  border-radius: 12px;
-  color: var(--color-text-light);
-  font-size: 0.92rem;
-  line-height: 1.7;
+  margin: 12px 0 0;
+  padding-left: 22px;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--color-gray-100);
   list-style: decimal;
 }
 
@@ -144,10 +192,31 @@
   list-style: decimal;
 }
 
-.switch {
-  margin: 20px 0 0;
+.steps strong {
+  color: var(--color-primary);
+}
+
+.hint {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+/* ---------- ท้ายหน้า ---------- */
+.tip {
+  max-width: 480px;
+  margin: 22px auto 0;
+  padding: 0 20px;
   text-align: center;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-light);
+}
+
+.switch {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 0.9rem;
   color: var(--color-text-muted);
 }
 
@@ -157,16 +226,17 @@
 }
 
 .en {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
+  padding: 0 16px;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--color-text-muted);
 }
 
 .footer {
   padding: 16px;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 
 .footer a {
