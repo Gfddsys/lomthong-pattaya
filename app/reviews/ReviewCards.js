@@ -26,7 +26,7 @@ export default function ReviewCards({ slug }) {
           priority
           className={styles.logo}
         />
-        <h1 className={styles.brand}>เฮงศิริ</h1>
+        <h1 className={styles.brand}>หลอมทองพัทยา</h1>
         <p className={styles.tagline}>รับซื้อทอง · หลอมทอง พัทยา</p>
         <p className={styles.thanks}>ขอบคุณที่ไว้วางใจเฮงศิริครับ 🙏</p>
         <div className={styles.stars} aria-hidden="true">★★★★★</div>

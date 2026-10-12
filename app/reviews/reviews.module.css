@@ -39,10 +39,36 @@
   font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.2;
-  background: var(--gradient-gold);
+  letter-spacing: 0.5px;
+  /* ไล่สีทอง + แถบแสงวิ่งผ่าน แบบเดียวกับชื่อร้านบน Navbar  */
+  background: linear-gradient(
+    100deg,
+    #9A742A 0%,
+    #D4A843 30%,
+    #F7DE8A 45%,
+    #FFF0B8 50%,
+    #F7DE8A 55%,
+    #D4A843 70%,
+    #9A742A 100%
+  );
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+  animation: brandShimmer 2.5s linear infinite;
+}
+
+/* CSS Modules ตั้งชื่อ keyframes แยกต่อไฟล์ จึงประกาศซ้ำที่นี่ (ค่าเดียวกับ shimmer ใน globals.css) */
+@keyframes brandShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand {
+    animation: none;
+  }
 }
 
 .tagline {
