@@ -21,7 +21,7 @@ export default function ReviewCards({ slug }) {
         <p className={styles.tagline}>รับซื้อทอง · หลอมทอง พัทยา</p>
         <p className={styles.thanks}>ขอบคุณที่ไว้วางใจเฮงศิริครับ 🙏</p>
         <div className={styles.stars} aria-hidden="true">★★★★★</div>
-        <p className={styles.ask}>ช่วยรีวิวร้านบน Google ให้หน่อยนะครับ ใช้เวลาไม่ถึง 1 นาที</p>
+        <p className={styles.ask}>ทุกรีวิวของคุณลูกค้ามีความหมายต่อพวกเรามากครับ ขอบคุณครับ 🙏</p>
       </section>
 
       <div className={branches.length > 1 ? styles.grid : styles.single}>
