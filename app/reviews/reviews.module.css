@@ -137,8 +137,9 @@
 .noen-plap-wan {
   --accent: #9e1b32;
   --edge: #c9956b;
-  --tint: #fff8f5;
-  --tint-border: #f2ddd3;
+  --tint: #fbede7;
+  --tint-border: #ecd0c4;
+  background: #fdf6f2; /* พื้นการ์ดเข้มกว่าการ์ดพัทยาใต้ (ขาว) เล็กน้อย */
 }
 
 .address {
