@@ -5,8 +5,10 @@ import styles from "./reviews.module.css";
 
 /* การ์ดรีวิวของแต่ละสาขา ใช้ทั้งหน้า /reviews (ทุกสาขา) และ /reviews/<slug> (สาขาเดียว)
    แต่ละสาขามี 2 ทาง:
-   1. เปิดในแอป Google Maps (แนะนำ) — มือถือส่วนใหญ่ล็อกอิน Google ในแอปอยู่แล้ว ไม่ต้องล็อกอินใหม่
-   2. รีวิวผ่านเว็บ — เปิดหน้าเขียนรีวิวตรง แต่ถ้าเบราว์เซอร์ยังไม่ล็อกอิน Gmail ต้องล็อกอินก่อน
+   1. เขียนรีวิวเลย — เปิดหน้าให้ดาว/พิมพ์รีวิวตรง (ลิงก์เดียวกับ g.page/r/.../review ที่ GBP แจก)
+      ถ้าเบราว์เซอร์ล็อกอิน Google อยู่ (Android ส่วนใหญ่) จะเข้าหน้าพิมพ์รีวิวทันที
+   2. เปิดในแอป Google Maps — สำรองสำหรับคนที่เบราว์เซอร์ไม่ได้ล็อกอิน (iPhone/Safari)
+      Google ไม่มีลิงก์ที่เปิดหน้าพิมพ์รีวิวในแอปตรง ๆ จึงมีขั้นตอนบอกให้กดต่ออีก 2 ครั้ง
    ทุกปุ่มส่งลูกค้าไป Google โดยตรง ไม่มีการคัดกรองว่าพอใจหรือไม่
    (Google ห้าม "review gating" คือถามความพอใจก่อนแล้วส่งเฉพาะคนที่พอใจไปรีวิว) */
 export default function ReviewCards({ slug }) {
@@ -38,10 +40,16 @@ export default function ReviewCards({ slug }) {
             <p className={styles.address}>{b.address}</p>
 
             <div className={styles.option}>
-              <p className={styles.optionLabel}>
-                มีแอป Google Maps ในเครื่อง <span className={styles.badge}>แนะนำ</span>
-              </p>
-              <a href={mapsAppUrl(b)} className={styles.primary} rel="noopener">
+              <a href={reviewUrl(b)} className={styles.primary} rel="noopener">
+                <GoogleIcon />
+                เขียนรีวิวเลย
+              </a>
+              <p className={styles.hint}>เปิดหน้าให้ดาวและพิมพ์รีวิวทันที</p>
+            </div>
+
+            <div className={styles.option}>
+              <p className={styles.optionLabel}>ถ้าระบบให้ล็อกอิน Gmail ใช้แอป Google Maps แทน</p>
+              <a href={mapsAppUrl(b)} className={styles.secondary} rel="noopener">
                 <MapsPin />
                 เปิดในแอป Google Maps
               </a>
@@ -53,16 +61,6 @@ export default function ReviewCards({ slug }) {
                   กด <strong>เขียนรีวิว</strong> แล้วให้ดาวได้เลย
                 </li>
               </ol>
-              <p className={styles.hint}>ไม่ต้องล็อกอินใหม่</p>
-            </div>
-
-            <div className={styles.option}>
-              <p className={styles.optionLabel}>ไม่มีแอป Google Maps</p>
-              <a href={reviewUrl(b)} className={styles.secondary} rel="noopener">
-                <GoogleIcon />
-                รีวิวผ่านเว็บ
-              </a>
-              <p className={styles.hint}>ต้องล็อกอินบัญชี Gmail ก่อน 1 ครั้ง</p>
             </div>
           </section>
         ))}
