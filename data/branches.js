@@ -31,6 +31,8 @@ export const BRANCHES = [
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9187667,100.8927284&z=17&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/srotj15xvzwfWi9M6",
+    // Place ID ของหมุดใน Google Maps ใช้เปิดหน้าเขียนรีวิวตรง (หน้า /reviews)
+    placeId: "ChIJ686UVEaVAjER-wCurORn9Gw",
   },
   {
     slug: "noen-plap-wan",
@@ -55,11 +57,17 @@ export const BRANCHES = [
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9317188,100.906533&z=17&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
+    placeId: "ChIJEeEaq92VAjER5ShCa4XZAv8",
   },
 ];
 
 // สรุปเวลาเปิดทั้ง 2 สาขา สำหรับ Footer / หน้าติดต่อ / คำอธิบายเว็บ
 export const HOURS_SUMMARY = "เปิดทุกวัน · เนินพลับหวาน 10:00-20:00 น. · พัทยาใต้ 10:30-20:00 น.";
+
+// ลิงก์เปิดหน้าเขียนรีวิวของสาขาบน Google Maps
+export function reviewUrl(b) {
+  return `https://search.google.com/local/writereview?placeid=${b.placeId}`;
+}
 
 export function getBranch(slug) {
   return BRANCHES.find((b) => b.slug === slug);
