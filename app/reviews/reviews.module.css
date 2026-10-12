@@ -4,7 +4,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #fbf8f2;
+  /* แสงทองฟุ้งเต็มความกว้างจอด้านบน (อยู่ที่ .page ไม่ใช่ .hero เพื่อไม่ให้ถูกจำกัดความกว้างตาม .main บนคอม) */
+  background:
+    radial-gradient(ellipse 140% 460px at 50% 0%, rgba(240, 210, 124, 0.42), rgba(240, 210, 124, 0.12) 55%, transparent 80%),
+    #fbf8f2;
 }
 
 .main {
@@ -18,11 +21,7 @@
 /* ---------- หัวหน้า: แถบแดงแบบ hero ของเว็บ ---------- */
 .hero {
   text-align: center;
-  padding: 40px 20px 26px;
-  border-top: 4px solid var(--color-primary);
-  background:
-    radial-gradient(ellipse 70% 90% at 50% 0%, rgba(240, 210, 124, 0.38), transparent 70%),
-    linear-gradient(180deg, #ffffff 0%, #fbf8f2 100%);
+  padding: 44px 20px 26px;
 }
 
 /* เส้นคั่นทองจาง ๆ ใต้หัวหน้า */
