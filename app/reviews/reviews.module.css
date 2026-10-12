@@ -17,25 +17,27 @@
 
 /* ---------- หัวหน้า: แถบแดงแบบ hero ของเว็บ ---------- */
 .hero {
-  position: relative;
   text-align: center;
-  padding: 32px 20px 56px;
-  background: var(--gradient-hero), var(--gradient-red);
-  color: #ffffff;
-  border-radius: 0 0 28px 28px;
-  overflow: hidden;
+  padding: 40px 20px 26px;
+  border-top: 4px solid var(--color-primary);
+  background:
+    radial-gradient(ellipse 70% 90% at 50% 0%, rgba(240, 210, 124, 0.38), transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #fbf8f2 100%);
 }
 
-.logo {
+/* เส้นคั่นทองจาง ๆ ใต้หัวหน้า */
+.hero::after {
+  content: "";
   display: block;
-  margin: 0 auto;
-  border-radius: 16px;
-  box-shadow: 0 0 0 3px rgba(240, 210, 124, 0.55);
+  width: 140px;
+  height: 2px;
+  margin: 20px auto 0;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
 }
 
 .brand {
-  margin: 12px 0 0;
-  font-size: 2.2rem;
+  margin: 0;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -64,30 +66,30 @@
   100% { background-position: 200% center; }
 }
 
-
 .tagline {
-  margin: 2px 0 0;
+  margin: 4px 0 0;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--color-text-muted);
 }
 
 .thanks {
-  margin: 14px 0 0;
-  font-size: 1.1rem;
+  margin: 16px 0 0;
+  font-size: 1.12rem;
   font-weight: 600;
+  color: var(--color-primary);
 }
 
 .stars {
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 1.8rem;
   letter-spacing: 6px;
-  color: var(--color-gold-light);
+  color: #e0a800;
 }
 
 .ask {
   margin: 4px 0 0;
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  color: var(--color-text-light);
 }
 
 /* ---------- การ์ดสาขา ---------- */
@@ -95,9 +97,8 @@
 .single {
   display: grid;
   gap: 18px;
-  margin-top: -28px;
+  margin-top: 8px;
   padding: 0 16px;
-  position: relative;
 }
 
 .single {
@@ -223,15 +224,6 @@
 }
 
 /* ---------- ท้ายหน้า ---------- */
-.tip {
-  max-width: 480px;
-  margin: 22px auto 0;
-  padding: 0 20px;
-  text-align: center;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: var(--color-text-light);
-}
 
 .switch {
   margin: 16px 0 0;

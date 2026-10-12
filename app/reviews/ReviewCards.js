@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { BRANCHES, mapsAppUrl, reviewUrl } from "@/data/branches";
 import styles from "./reviews.module.css";
 
@@ -18,14 +17,6 @@ export default function ReviewCards({ slug }) {
   return (
     <>
       <section className={styles.hero}>
-        <Image
-          src="/images/uploads/logo/logo-nav.png"
-          alt="โลโก้เฮงศิริ หลอมทองพัทยา"
-          width={64}
-          height={64}
-          priority
-          className={styles.logo}
-        />
         <h1 className={styles.brand}>หลอมทองพัทยา</h1>
         <p className={styles.tagline}>รับซื้อทอง · หลอมทอง พัทยา</p>
         <p className={styles.thanks}>ขอบคุณที่ไว้วางใจเฮงศิริครับ 🙏</p>
@@ -65,10 +56,6 @@ export default function ReviewCards({ slug }) {
           </section>
         ))}
       </div>
-
-      <p className={styles.tip}>
-        เล่าสั้น ๆ ว่ามาใช้บริการอะไร เช่น <strong>หลอมทอง ขายทองเก่า ขายนาฬิกา</strong> ช่วยให้ลูกค้าคนอื่นตัดสินใจได้ง่ายขึ้นครับ
-      </p>
 
       {others.length > 0 && (
         <p className={styles.switch}>
