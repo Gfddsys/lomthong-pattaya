@@ -28,6 +28,7 @@ export default function About() {
                   src={src}
                   alt={`บรรยากาศร้านหลอมทองพัทยา ${index + 1}`}
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   style={{ objectFit: 'cover' }}
                 />
               </div>

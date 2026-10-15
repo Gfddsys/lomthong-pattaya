@@ -85,6 +85,7 @@ export default function WhyUs() {
                   src={src}
                   alt={`เครื่องมือตรวจสอบทองคำที่ร้านหลอมทองพัทยา ${index + 1}`}
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   style={{ objectFit: 'cover' }}
                 />
               </div>
