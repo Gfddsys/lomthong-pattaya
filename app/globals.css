@@ -3128,3 +3128,24 @@ a.contact-item--link:hover {
 .gp-embed-error {
   color: #8b0000;
 }
+
+/* ลิงก์ใต้กล่องราคาทองในหน้าแรก → หน้าราคาทองวันนี้ */
+.hero-price-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  background: var(--gradient-gold);
+  color: #3a2a00;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(160, 126, 46, 0.35);
+  position: relative;
+  z-index: 10;
+}
+.hero-price-link:hover,
+.hero-price-link:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(160, 126, 46, 0.45);
+}

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import GoldPrice from './GoldPrice';
 import { getUploadedImage } from '@/lib/getImage';
 
@@ -43,7 +44,7 @@ export default function Hero() {
 
           {/* Heading */}
           <h1 className="animate-on-scroll animate-delay-100">
-            รับ<span className="gold-text">หลอมทอง</span>พัทยา
+            ร้าน<span className="gold-text">หลอมทอง</span>พัทยา
           </h1>
 
           {/* Description */}
@@ -66,6 +67,10 @@ export default function Hero() {
 
           {/* Gold Price Widget */}
           <GoldPrice isHero={true} />
+          {/* ลิงก์จากหน้าแรก (หน้าที่แข็งแรงที่สุด) ไปหน้าราคาทอง ช่วยให้หน้าราคาทองติดคำค้น "ราคาทองวันนี้ พัทยา" */}
+          <Link href="/rakha-thong-wan-nee" className="hero-price-link">
+            ดูราคาทองวันนี้ทั้งหมด + คำนวณราคาขายทองของคุณ →
+          </Link>
         </div>
       </div>
     </section>
