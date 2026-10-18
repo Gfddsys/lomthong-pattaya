@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
 import { BRANCHES } from '@/data/branches';
+import { AREAS } from '@/data/areas';
 import MapEmbed from '@/components/MapEmbed';
 
 /* ไอคอน badge วงกลม — จัดกึ่งกลางด้วย inline style ล้วน + ไอคอนทึบ path อยู่กลาง viewBox */
@@ -123,6 +124,18 @@ export default function StoreLocation() {
             </div>
           </div>
         ))}
+
+        {/* ลิงก์หน้าพื้นที่บริการจากหน้าแรก — เดิมมีแค่ใน footer ทำให้ Google ยังไม่เก็บหน้าพื้นที่เข้า index */}
+        <nav className="store-areas" aria-label="พื้นที่บริการรับซื้อทอง">
+          <p className="store-areas-title">ลูกค้าจากพื้นที่ใกล้เคียง ดูเส้นทางมาร้าน</p>
+          <div className="store-areas-links">
+            {AREAS.map((a) => (
+              <Link key={a.slug} href={`/area/${a.slug}`}>
+                รับซื้อทอง {a.name}
+              </Link>
+            ))}
+          </div>
+        </nav>
       </div>
     </section>
   );
