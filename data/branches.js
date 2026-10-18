@@ -33,6 +33,8 @@ export const BRANCHES = [
     mapUrl: "https://maps.app.goo.gl/srotj15xvzwfWi9M6",
     // Place ID ของหมุดใน Google Maps ใช้เปิดหน้าเขียนรีวิวตรง (หน้า /reviews)
     placeId: "ChIJ686UVEaVAjER-wCurORn9Gw",
+    // เพจ Facebook ที่ดูแลสาขานี้ (พัทยาใต้ใช้เพจหลักของร้าน)
+    facebookUrl: "https://www.facebook.com/hengsiripattaya",
   },
   {
     slug: "noen-plap-wan",
@@ -58,6 +60,7 @@ export const BRANCHES = [
       "https://maps.google.com/maps?q=12.9317188,100.906533&z=17&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
     placeId: "ChIJEeEaq92VAjER5ShCa4XZAv8",
+    facebookUrl: "https://www.facebook.com/hengsirinernplubwan/",
   },
 ];
 

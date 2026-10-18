@@ -125,7 +125,15 @@ const schemaData = {
       // ดึงจาก data/contact.js เพื่อให้ตรงกับ Navbar/Footer ทุกจุด (สำคัญต่อ Local SEO)
       // googlePlaceUrl = ตัวเชื่อม "เว็บนี้ = ร้านนี้ใน Google Maps"
       // ทำให้ Google/AI ดึงรีวิว ที่ตั้ง เวลาทำการ มารวมกับเว็บได้ → มีโอกาสถูกแนะนำใน AI Overview
-      sameAs: [CONTACT.googlePlaceUrl, CONTACT.facebookUrl, CONTACT.lineUrl],
+      // บัญชีทางการทั้งหมดของร้าน ให้ Google รวมเป็นธุรกิจเดียวกัน (Knowledge Panel แสดงไอคอนโซเชียล)
+      sameAs: [
+        CONTACT.googlePlaceUrl,
+        CONTACT.facebookUrl,
+        CONTACT.lineUrl,
+        CONTACT.tiktokUrl,
+        CONTACT.youtubeUrl,
+        CONTACT.instagramUrl,
+      ],
       hasMap: CONTACT.googlePlaceUrl,
       // ⚠️ ห้ามใส่ aggregateRating เทียม (rating/จำนวนรีวิวที่ไม่มีอยู่จริง) เด็ดขาด
       // Google ถือเป็น "misleading structured data" และอาจโดน manual action ตัด rich result ทั้งเว็บ
@@ -153,6 +161,7 @@ const schemaData = {
       },
       geo: { "@type": "GeoCoordinates", latitude: b.lat, longitude: b.lng },
       hasMap: b.mapUrl,
+      sameAs: [b.mapUrl, b.facebookUrl],
       priceRange: "฿",
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",

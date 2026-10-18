@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
 import { BRANCHES, HOURS_SUMMARY } from '@/data/branches';
 import { AREAS } from '@/data/areas';
+import SocialLinks from './SocialLinks';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -22,7 +23,7 @@ export default function Footer() {
               ร้านรับหลอมทอง รับซื้อทอง นาฬิกาแบรนด์เนม และเครื่องประดับครบวงจร
               ในพื้นที่พัทยา ศรีราชา ชลบุรี บางละมุง สัตหีบ
               ให้ราคาสูงตามสมาคมค้าทองคำ ตรวจสอบต่อหน้า จ่ายเงินสดทันที
-              บริการด้วยความซื่อสัตย์ โปร่งใส มากว่า 10 ปี
+              บริการด้วยความซื่อสัตย์ โปร่งใส
             </p>
             <a
               href={CONTACT.lineUrl}
@@ -40,6 +41,8 @@ export default function Footer() {
               />
               แอดไลน์ · ประเมินราคาฟรี
             </a>
+            <p className="footer-follow">ติดตามร้านเรา</p>
+            <SocialLinks />
           </div>
 
           {/* Column 2: Menu */}

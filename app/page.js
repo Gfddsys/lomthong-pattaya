@@ -7,6 +7,7 @@ import StoreLocation from "@/components/StoreLocation";
 import Process from "@/components/Process";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
+import VideoShorts from "@/components/VideoShorts";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
@@ -34,6 +35,11 @@ export default function Home() {
         <StoreLocation />
         <Process />
         <Gallery />
+        <section className="section">
+          <div className="container">
+            <VideoShorts page="home" title="คลิปจากหน้าร้าน" pageUrl="/" />
+          </div>
+        </section>
         <Testimonials />
         <Contact />
       </main>

@@ -5,6 +5,7 @@ import { CONTACT } from "@/data/contact";
 import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
+import SocialLinks from "@/components/SocialLinks";
 
 
 /* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
@@ -87,7 +88,7 @@ export default async function BranchPage({ params }) {
       closes: b.closes,
     },
     hasMap: b.mapUrl,
-    sameAs: [b.mapUrl],
+    sameAs: [b.mapUrl, b.facebookUrl],
   };
 
   const faq = branchFaq(b);
@@ -164,7 +165,9 @@ export default async function BranchPage({ params }) {
           <li><strong>เวลาทำการ:</strong> {b.hours}</li>
           <li><strong>โทรศัพท์:</strong> <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a></li>
           <li><strong>LINE:</strong> <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer">{CONTACT.lineId}</a></li>
+          <li><strong>Facebook:</strong> <a href={b.facebookUrl} target="_blank" rel="noopener noreferrer">เพจ{b.slug === 'noen-plap-wan' ? 'สาขาเนินพลับหวาน' : 'หลักของร้าน'}</a></li>
         </ul>
+        <SocialLinks facebookUrl={b.facebookUrl} className="social-links--branch" />
 
         <h2>บริการที่ {b.shortName}</h2>
         <ul>

@@ -13,6 +13,10 @@ export const CONTACT = {
   lineId: "@hengsiri", // ยืนยันกับเจ้าของร้านแล้ว 19 ต.ค. 2026
   lineUrl: "https://line.me/ti/p/~@hengsiri", // LINE จริงของร้าน (ยืนยันแล้ว)
   facebookUrl: "https://www.facebook.com/hengsiripattaya", // เพจ Facebook จริงของร้าน
+  // บัญชีโซเชียลอื่นของร้าน (เจ้าของร้านยืนยัน 19 ต.ค. 2026) ใช้ทั้งปุ่มในเว็บและ sameAs ใน schema
+  tiktokUrl: "https://www.tiktok.com/@hengsiri.official",
+  youtubeUrl: "https://www.youtube.com/@%E0%B8%AB%E0%B8%A5%E0%B8%AD%E0%B8%A1%E0%B8%97%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B1%E0%B8%97%E0%B8%A2%E0%B8%B2",
+  instagramUrl: "https://www.instagram.com/hengsiri.official/",
   googleReviewUrl: "https://maps.app.goo.gl/HbUrUHzEVS9H6z4G7", // ลิงก์รีวิวจริงบน Google
   googleMapsUrl: "https://maps.app.goo.gl/U9Z2BXarqugMs9UL6", // ลิงก์หมุดร้านบน Google Maps (เปิด/นำทาง)
   // ลิงก์ Google Maps แบบถาวร (CID) — ใช้ใน schema เท่านั้น

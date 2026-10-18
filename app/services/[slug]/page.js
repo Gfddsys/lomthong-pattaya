@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
 import { SITE_URL } from "@/data/site";
 import ServiceIcon from "@/components/ServiceIcon";
+import VideoShorts from "@/components/VideoShorts";
 
 // จับคู่บริการแต่ละอันกับโฟลเดอร์รูปใน public/images/uploads/
 // วางรูปจริงในโฟลเดอร์ที่ตรงกัน ระบบจะดึงมาใช้แทนรูปตัวอย่างอัตโนมัติ
@@ -202,6 +203,8 @@ export default async function ServicePage({ params }) {
             </div>
           </div>
         </div>
+
+        <VideoShorts page={service.slug} title={`คลิปงาน${service.title}จากหน้าร้าน`} pageUrl={`/services/${service.slug}`} />
 
         {service.faq && service.faq.length > 0 && (
           <div style={{ marginTop: '3rem', maxWidth: '760px', marginLeft: 'auto', marginRight: 'auto' }}>
