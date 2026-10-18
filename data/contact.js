@@ -10,8 +10,8 @@
 export const CONTACT = {
   phoneDisplay: "092-883-9799", // ← เบอร์จากรูปโปรของร้าน (แก้ได้ถ้าไม่ตรง)
   phoneHref: "tel:0928839799", // ← เบอร์โทรจริง (ไม่มีขีด)
-  lineId: "@hengsiri", // ← TODO: ยืนยัน LINE ID จริง
-  lineUrl: "https://line.me/ti/p/~@hengsiri", // ← TODO: ยืนยันลิงก์ LINE จริง
+  lineId: "@hengsiri", // ยืนยันกับเจ้าของร้านแล้ว 19 ต.ค. 2026
+  lineUrl: "https://line.me/ti/p/~@hengsiri", // LINE จริงของร้าน (ยืนยันแล้ว)
   facebookUrl: "https://www.facebook.com/hengsiripattaya", // เพจ Facebook จริงของร้าน
   googleReviewUrl: "https://maps.app.goo.gl/HbUrUHzEVS9H6z4G7", // ลิงก์รีวิวจริงบน Google
   googleMapsUrl: "https://maps.app.goo.gl/U9Z2BXarqugMs9UL6", // ลิงก์หมุดร้านบน Google Maps (เปิด/นำทาง)
