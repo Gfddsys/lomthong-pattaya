@@ -8,7 +8,6 @@ import Process from "@/components/Process";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
 import VideoShorts from "@/components/VideoShorts";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import { getUploadedImage } from "@/lib/getImage";
@@ -41,7 +40,6 @@ export default function Home() {
           </div>
         </section>
         <Testimonials />
-        <Contact />
       </main>
       <Footer />
       <FloatingContact />

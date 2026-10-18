@@ -47,8 +47,9 @@ const IconChat = () => (
 );
 
 export default function StoreLocation() {
+  // id="contact": ทุกลิงก์ "ติดต่อเรา" (/#contact) ในเว็บพามาที่ส่วนนี้ (ส่วนติดต่อเดิมที่มีแผนที่ซ้ำถูกเอาออกแล้ว)
   return (
-    <section id="store" className="section section-darker">
+    <section id="contact" className="section section-darker">
       <div className="container">
         <div className="section-header animate-on-scroll">
           <span className="section-label">ที่ตั้งร้าน</span>
