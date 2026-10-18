@@ -3181,3 +3181,16 @@ a.contact-item--link:hover {
   background: var(--color-primary);
   color: #fff;
 }
+
+/* ปุ่ม LINE ในหน้าแรก: ไอคอน + ข้อความกึ่งกลาง */
+.hero-line-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.hero-line-btn img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}

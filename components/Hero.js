@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { CONTACT } from '@/data/contact';
 import GoldPrice from './GoldPrice';
 import { getUploadedImage } from '@/lib/getImage';
 
@@ -57,11 +58,19 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div className="hero-actions animate-on-scroll animate-delay-300">
+            {/* ปุ่มบนสุดคือ LINE: ลูกค้าส่งรูปทองให้ประเมินราคาได้ทันทีโดยไม่ต้องเลื่อนหาช่องทางติดต่อ */}
+            <a
+              href={CONTACT.lineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-line btn-lg hero-line-btn"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG จาก CDN แบบเดียวกับปุ่ม LINE ลอย */}
+              <img src="https://cdn.simpleicons.org/line/ffffff" alt="" width={24} height={24} />
+              ประเมินราคา / สอบถาม
+            </a>
             <a href="#contact" className="btn btn-primary btn-lg">
               รับซื้อทองเก่าให้ราคาสูงพิเศษ
-            </a>
-            <a href="#services" className="btn btn-outline btn-lg">
-              ดูบริการของเรา
             </a>
           </div>
 
