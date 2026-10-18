@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { servicesData } from '../data/services';
 import { getUploadedImage } from '@/lib/getImage';
+import ServiceIcon from './ServiceIcon';
 
 /* จับคู่บริการกับโฟลเดอร์รูป + รูป fallback ที่มีอยู่จริง
    วางรูปจริงใน public/images/uploads/<slot>/ เพื่อแทนรูปตัวอย่างอัตโนมัติ */
@@ -46,7 +47,7 @@ export default function Services() {
                   />
                 </div>
                 <div className="service-icon" aria-hidden="true">
-                  {service.icon}
+                  <ServiceIcon slug={service.slug} />
                 </div>
                 <h3 style={{ marginBottom: '1rem' }}>{service.title}</h3>
                 <p style={{ flexGrow: 1, marginBottom: '1.5rem' }}>{service.excerpt}</p>

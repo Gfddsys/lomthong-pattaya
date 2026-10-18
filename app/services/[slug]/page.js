@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
 import { SITE_URL } from "@/data/site";
+import ServiceIcon from "@/components/ServiceIcon";
 
 // จับคู่บริการแต่ละอันกับโฟลเดอร์รูปใน public/images/uploads/
 // วางรูปจริงในโฟลเดอร์ที่ตรงกัน ระบบจะดึงมาใช้แทนรูปตัวอย่างอัตโนมัติ
@@ -129,7 +130,9 @@ export default async function ServicePage({ params }) {
       )}
       <div className="page-header" style={{ padding: '6rem 0 3rem 0', background: 'var(--color-dark-2)', textAlign: 'center', borderBottom: '1px solid #eaeaea' }}>
         <div className="container">
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{service.icon}</div>
+          <div className="service-icon service-icon--header" aria-hidden="true">
+            <ServiceIcon slug={service.slug} size={38} />
+          </div>
           <h1 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem', fontSize: '2.5rem' }}>{service.title}</h1>
           <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>{service.excerpt}</p>
         </div>

@@ -767,25 +767,24 @@ button {
 }
 
 .service-icon {
-  width: 72px;
-  height: 72px;
-  background: linear-gradient(135deg, #ffffff 0%, #fdf3da 100%);
-  border-radius: var(--radius-lg);
+  width: 64px;
+  height: 64px;
+  background: var(--gradient-red);
+  color: var(--color-gold-light);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -46px auto var(--space-lg);
-  font-size: 32px;
+  margin: -42px auto var(--space-lg);
   transition: all var(--transition-base);
   position: relative;
   z-index: 2;
   border: 3px solid #fff;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 20px rgba(92, 0, 0, 0.25);
 }
 
 .service-card:hover .service-icon {
-  background: linear-gradient(135deg, #ffffff 0%, #f7e7bd 100%);
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .service-card h3 {
@@ -3193,4 +3192,52 @@ a.contact-item--link:hover {
   width: 24px;
   height: 24px;
   display: block;
+}
+
+/* เมนูบนแบบเต็มต้องการพื้นที่ประมาณ 1180px ถ้าจอแคบกว่านั้น (แท็บเล็ต โน้ตบุ๊กจอเล็ก)
+   คำในเมนูจะตัดเป็น 2 บรรทัดและชื่อร้านถูกบีบ จึงเปลี่ยนเป็นปุ่มเมนู (☰) แบบมือถือแทน */
+.navbar-link {
+  white-space: nowrap;
+}
+@media (max-width: 1180px) {
+  .navbar-menu {
+    display: none;
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.98);
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-3xl);
+    gap: var(--space-xl);
+  }
+  .navbar-menu.active {
+    display: flex;
+  }
+  .navbar-link {
+    font-size: var(--font-size-xl);
+    text-align: center;
+  }
+  .navbar-cta {
+    display: none;
+  }
+  .navbar-toggle {
+    display: flex;
+  }
+  .navbar-lang {
+    margin-left: auto;
+    margin-right: var(--space-sm);
+  }
+  .navbar-brand-name {
+    white-space: nowrap;
+  }
+}
+
+/* ไอคอนบริการบนหัวหน้ารายละเอียดบริการ (ไม่ซ้อนบนรูปเหมือนในการ์ด) */
+.service-icon--header {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 1rem;
 }
