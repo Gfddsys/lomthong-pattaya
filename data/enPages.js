@@ -241,7 +241,7 @@ export const EN_PAGES = [
   },
   {
     "slug": "sell-k-gold",
-    "thPath": null,
+    "thPath": "/blog/ran-rub-sue-thong-k-pattaya-18k-14k-9k",
     "title": "Sell 9K, 14K, 18K & Italian Gold in Pattaya | XRF Tested, Cash",
     "description": "Sell foreign karat gold in Pattaya: 9K, 10K, 14K, 18K, 22K and Italian gold that Thai shops often refuse. XRF tested, paid for real gold content in Thai baht.",
     "h1": "Sell 9K, 14K, 18K and Italian Gold in Pattaya",

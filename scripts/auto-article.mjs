@@ -40,6 +40,7 @@ const CTA_LINKS = [
   ...BRANCHES.map((b) => `/branch/${b.slug}`),
   ...AREAS.map((a) => `/area/${a.slug}`),
   "/rakha-thong-wan-nee",
+  "/ran-lomthong-klai-chan",
 ];
 
 /* ---------- รูปแบบผลลัพธ์ที่บังคับให้ AI ตอบ (structured outputs) ---------- */

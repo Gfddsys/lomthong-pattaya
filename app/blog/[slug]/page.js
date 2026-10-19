@@ -1,3 +1,4 @@
+import { EN_FOR_TH } from "@/data/enPages";
 import Image from "next/image";
 import Link from "next/link";
 import { RichText, Section } from "@/components/ContentBlocks";
@@ -34,7 +35,17 @@ export async function generateMetadata({ params }) {
       description: article.ogDescription || article.description,
       type: "article",
     },
-    alternates: { canonical: `/blog/${article.slug}` },
+    alternates: {
+      canonical: `/blog/${article.slug}`,
+      // บทความที่มีฉบับอังกฤษตรงกัน (data/enPages.js) → hreflang ทั้งสองฝั่ง
+      ...(EN_FOR_TH[`/blog/${article.slug}`] && {
+        languages: {
+          th: `/blog/${article.slug}`,
+          en: EN_FOR_TH[`/blog/${article.slug}`],
+          "x-default": `/blog/${article.slug}`,
+        },
+      }),
+    },
   };
 }
 
