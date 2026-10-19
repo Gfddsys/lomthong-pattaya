@@ -142,6 +142,10 @@ export default async function AreaPage({ params }) {
           ))}
         </ul>
 
+        <p>
+          อยู่ที่อื่นหรือกำลังเดินทาง กด <Link href="/ran-lomthong-klai-chan">หาร้านหลอมทองใกล้ฉัน</Link> ดูสาขาที่ใกล้ตำแหน่งของคุณและเปิดอยู่ตอนนี้
+        </p>
+
         <h2>เส้นทางจาก{area.name}</h2>
         <p>{area.route}</p>
 

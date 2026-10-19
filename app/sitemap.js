@@ -92,6 +92,13 @@ export default function sitemap() {
       priority: 0.9,
       alternates: { languages: pairLangs("/rakha-thong-wan-nee") },
     },
+    {
+      // หน้ารวม 2 สาขาสำหรับคำค้น "…ใกล้ฉัน" (เพิ่ม 20 ต.ค. 2569)
+      url: `${baseUrl}/ran-lomthong-klai-chan`,
+      lastModified: new Date("2026-10-20"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     ...enGuidePages,
     ...branchPages,
     ...areaPages,

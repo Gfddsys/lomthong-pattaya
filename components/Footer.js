@@ -60,6 +60,7 @@ export default function Footer() {
               <li><Link href="/services/gold-melting" className="footer-link">รับหลอมทองพัทยา</Link></li>
               <li><Link href="/en" hrefLang="en" className="footer-link">English: Sell gold in Pattaya</Link></li>
               <li><Link href="/blog" className="footer-link">บทความ</Link></li>
+              <li><Link href="/ran-lomthong-klai-chan" className="footer-link">ร้านหลอมทองใกล้ฉัน</Link></li>
               <li><Link href="/#contact" className="footer-link">ติดต่อเรา</Link></li>
             </ul>
           </nav>

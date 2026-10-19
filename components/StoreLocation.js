@@ -128,6 +128,10 @@ export default function StoreLocation() {
 
         {/* ลิงก์หน้าพื้นที่บริการจากหน้าแรก — เดิมมีแค่ใน footer ทำให้ Google ยังไม่เก็บหน้าพื้นที่เข้า index */}
         <nav className="store-areas" aria-label="พื้นที่บริการรับซื้อทอง">
+          <p className="store-areas-near">
+            <Link href="/ran-lomthong-klai-chan" className="btn btn-primary">📍 หาร้านหลอมทองใกล้ฉัน</Link>
+            <span>ดูว่าสาขาไหนใกล้คุณที่สุด และเปิดอยู่ตอนนี้ไหม</span>
+          </p>
           <p className="store-areas-title">ลูกค้าจากพื้นที่ใกล้เคียง ดูเส้นทางมาร้าน</p>
           <div className="store-areas-links">
             {AREAS.map((a) => (

@@ -3388,3 +3388,42 @@ a.contact-item--link:hover {
   max-width: 820px;
   margin: 3.5rem auto 0;
 }
+
+/* ===== หน้า "ร้านหลอมทองใกล้ฉัน" (/ran-lomthong-klai-chan) ===== */
+.near-finder { margin: var(--space-xl) 0 var(--space-2xl); }
+.near-finder-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md);
+  padding: var(--space-lg); border-radius: 14px;
+  background: #fdf8ec; border: 1px solid rgba(212,168,67,0.35);
+}
+.near-finder-bar .near-locate { flex-shrink: 0; }
+.near-finder-note { margin: 0 !important; flex: 1 1 260px; font-size: var(--font-size-sm); color: var(--color-text-light); }
+.near-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-lg); margin-top: var(--space-lg); }
+.near-card {
+  position: relative; padding: var(--space-lg); border-radius: 14px;
+  background: #fff; border: 1px solid #ece4cf; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+.near-card.is-nearest { border-color: var(--color-gold); box-shadow: 0 0 0 2px rgba(212,168,67,0.35), 0 6px 18px rgba(160,126,46,0.12); }
+.near-badge {
+  position: absolute; top: -12px; left: var(--space-lg);
+  padding: 2px 12px; border-radius: 999px; font-size: var(--font-size-xs); font-weight: 600;
+  background: var(--gradient-red); color: #fff;
+}
+.near-card h3 { margin: 0 0 var(--space-xs) !important; font-size: var(--font-size-xl); }
+.near-card h3 a { color: var(--color-primary); text-decoration: none; }
+.near-status { margin: 0 0 var(--space-sm) !important; font-weight: 600; font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.near-status[data-open="true"] { color: #1e7d3a; }
+.near-status[data-open="true"]::before { content: "● "; }
+.near-status[data-open="false"] { color: var(--color-primary); }
+.near-facts { margin: 0 0 var(--space-md) !important; padding: 0 !important; list-style: none; font-size: var(--font-size-sm); color: var(--color-text-light); }
+.near-facts li { padding: 2px 0 !important; }
+.near-facts li::before { content: none !important; }
+.near-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+.near-actions .btn { flex: 1 1 120px; justify-content: center; }
+.near-services { list-style: none; padding: 0 !important; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-md); }
+.near-services li { margin: 0 !important; padding: var(--space-md) !important; border-radius: 12px; background: #fdf8ec; border: 1px solid #f0e4c4; display: grid; gap: 4px; }
+.near-services li::before { content: none !important; }
+.near-services a { font-weight: 700; color: var(--color-primary); }
+.near-services span { font-size: var(--font-size-sm); color: var(--color-text-light); }
+.store-areas-near { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-sm) var(--space-md); margin: 0 0 var(--space-lg); text-align: center; }
+.store-areas-near span { color: var(--color-text-muted); font-size: var(--font-size-sm); }
