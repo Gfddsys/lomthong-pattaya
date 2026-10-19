@@ -4,6 +4,7 @@ import { AREAS } from "../data/areas";
 import { getAutoArticles } from "../lib/articles";
 import { SITE_URL } from "@/data/site";
 import { EN_PAGES, EN_FOR_TH } from "@/data/enPages";
+import { WATCH_BRANDS } from "@/data/watchBrands";
 
 export default function sitemap() {
   const baseUrl = SITE_URL;
@@ -99,6 +100,13 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    // หน้ารับซื้อนาฬิการายแบรนด์ (data/watchBrands.js)
+    ...WATCH_BRANDS.map((b) => ({
+      url: `${baseUrl}/rap-sue-nalika/${b.slug}`,
+      lastModified: new Date("2026-10-20"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    })),
     ...enGuidePages,
     ...branchPages,
     ...areaPages,
