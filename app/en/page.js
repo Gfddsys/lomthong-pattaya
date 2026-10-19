@@ -4,6 +4,7 @@ import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
 import { BRANCHES } from "@/data/branches";
 import { SITE_URL } from "@/data/site";
+import { EN_PAGES } from "@/data/enPages";
 
 /* ============================================
    Sell Gold in Pattaya — หน้าภาษาอังกฤษสำหรับชาวต่างชาติ
@@ -277,6 +278,16 @@ export default function SellGoldPattayaEn() {
           Noen Plap Wan shop is closer to North Pattaya, Naklua and the Sukhumvit side. Show the Thai address
           to your taxi or motorbike driver.
         </p>
+
+        <h2>More guides for selling in Pattaya</h2>
+        <ul>
+          <li><Link href="/en/gold-price-today">Gold price today, per gram by karat</Link></li>
+          {EN_PAGES.map((p) => (
+            <li key={p.slug}>
+              <Link href={`/en/${p.slug}`}>{p.h1}</Link>
+            </li>
+          ))}
+        </ul>
 
         <h2>Frequently asked questions</h2>
         {FAQ.map((f) => (

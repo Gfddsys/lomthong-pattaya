@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/ContentBlocks";
 import { EN_PAGES, getEnPage } from "@/data/enPages";
 import { CONTACT } from "@/data/contact";
+import { BRANCHES } from "@/data/branches";
 import { SITE_URL } from "@/data/site";
 
 /* หน้าภาษาอังกฤษเพิ่มเติม — เนื้อหาอยู่ใน data/enPages.js ใช้ layout ภาษาอังกฤษของ app/en/layout.js */
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }) {
     keywords: page.keywords,
     alternates: {
       canonical: path,
-      languages: { th: page.thPath, en: path, "x-default": page.thPath },
+      ...(page.thPath && { languages: { th: page.thPath, en: path, "x-default": page.thPath } }),
     },
     openGraph: { type: "article", locale: "en_US", url: `${SITE_URL}${path}`, title: page.title, description: page.description },
   };
@@ -35,6 +36,19 @@ export default async function EnGuidePage({ params }) {
   if (!page) notFound();
   const pageUrl = `${SITE_URL}/en/${page.slug}`;
 
+  // ข้อ 22 ในแผน: ผูกหน้าอังกฤษกับร้านและ 2 สาขา (@id เดียวกับ app/layout.js → Google รวมเป็น entity เดียว)
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: page.title,
+    description: page.description,
+    inLanguage: "en",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${SITE_URL}/#business` },
+    mentions: BRANCHES.map((b) => ({ "@id": `${SITE_URL}/branch/${b.slug}#business` })),
+  };
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -56,6 +70,7 @@ export default async function EnGuidePage({ params }) {
 
   return (
     <article className="blog-article">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 

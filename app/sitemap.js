@@ -31,14 +31,14 @@ export default function sitemap() {
 
   const EN_GUIDES_LASTMOD = new Date("2026-10-19"); // วันที่เพิ่มหน้าอังกฤษชุดที่ 2
   const enGuidePages = [
-    ...EN_PAGES.map((p) => ({ url: `${baseUrl}/en/${p.slug}`, langs: pairLangs(p.thPath) })),
+    ...EN_PAGES.map((p) => ({ url: `${baseUrl}/en/${p.slug}`, langs: p.thPath ? pairLangs(p.thPath) : null })),
     { url: `${baseUrl}/en/gold-price-today`, langs: pairLangs("/rakha-thong-wan-nee") },
   ].map(({ url, langs }) => ({
     url,
     lastModified: EN_GUIDES_LASTMOD,
     changeFrequency: "monthly",
     priority: 0.7,
-    alternates: { languages: langs },
+    ...(langs && { alternates: { languages: langs } }),
   }));
 
   // บทความอัตโนมัติจาก content/articles/*.json — เพิ่มเข้า sitemap เองโดยไม่ต้องแก้ไฟล์นี้

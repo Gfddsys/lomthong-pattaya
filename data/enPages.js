@@ -4,6 +4,7 @@
    ⚠️ ข้อเท็จจริงทั้งหมดแปลมาจากหน้าบริการภาษาไทย (data/services.js) ห้ามเพิ่มสิ่งที่ร้านไม่ได้ยืนยัน
    เช่น "พนักงานพูดอังกฤษได้" "จ่ายเป็นดอลลาร์" "เปิด 24 ชม."
    thPath = หน้าภาษาไทยที่เนื้อหาตรงกัน ใช้ทำ hreflang ทั้งสองฝั่ง (EN_FOR_TH ด้านล่าง)
+   thPath = null → ไม่มีหน้าไทยที่ตรงกันพอดี จึงไม่ประกาศ hreflang (ประกาศผิดคู่แย่กว่าไม่ประกาศ)
    blocks ใช้รูปแบบเดียวกับบทความ (components/ContentBlocks.js) รองรับ **ตัวหนา** และ [ลิงก์](/path)
 */
 
@@ -238,6 +239,432 @@ export const EN_PAGES = [
       { q: "Can you test silver or platinum?", a: "Yes. XRF reads many metals, so silver and platinum can be checked before selling too." },
     ],
   },
+  {
+    "slug": "sell-k-gold",
+    "thPath": null,
+    "title": "Sell 9K, 14K, 18K & Italian Gold in Pattaya | XRF Tested, Cash",
+    "description": "Sell foreign karat gold in Pattaya: 9K, 10K, 14K, 18K, 22K and Italian gold that Thai shops often refuse. XRF tested, paid for real gold content in Thai baht.",
+    "h1": "Sell 9K, 14K, 18K and Italian Gold in Pattaya",
+    "breadcrumb": "Sell 9K-18K gold",
+    "keywords": [
+      "sell 18K gold Pattaya",
+      "sell 14K gold Thailand",
+      "sell 9K gold Pattaya",
+      "sell Italian gold Pattaya",
+      "do Thai gold shops buy 18K gold"
+    ],
+    "blocks": [
+      {
+        "type": "summary",
+        "label": "In short",
+        "items": [
+          "Yes, you can sell **9K, 10K, 14K, 18K and 22K gold** in Pattaya. We buy it every day.",
+          "Many Thai gold shops refuse foreign karat gold because they only trade **96.5% Thai gold**. We measure the real purity with an **XRF machine** instead.",
+          "You are paid for the **gold content**: weight × purity measured in front of you, at the Thai Gold Traders Association price of the day.",
+          "Bring your **original passport**. Payment in Thai baht, cash or bank transfer."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Why many Thai gold shops say no to 18K or 14K gold"
+      },
+      {
+        "type": "p",
+        "text": "Thailand's gold shops sell jewelry made of **96.5% gold**, and most buy back only the same kind, often only with their own receipt. A European 18K chain (75% gold) or an American 14K ring (58.5%) does not fit that system: they cannot resell it as it is, and without a testing machine they cannot be sure of the purity. Saying no is the safe option for them. It does not mean your gold has no value."
+      },
+      {
+        "type": "p",
+        "text": "We test every piece on an XRF analyzer, so the karat on the stamp does not matter. We pay for the gold that is actually there."
+      },
+      {
+        "type": "h2",
+        "text": "Karat stamps and how much gold they contain"
+      },
+      {
+        "type": "table",
+        "caption": "Common gold stamps",
+        "head": [
+          "Stamp",
+          "Karat",
+          "Gold content",
+          "Often found in"
+        ],
+        "rows": [
+          [
+            "375",
+            "9K",
+            "37.5%",
+            "UK and Australian jewelry"
+          ],
+          [
+            "417",
+            "10K",
+            "41.7%",
+            "American jewelry"
+          ],
+          [
+            "585",
+            "14K",
+            "58.5%",
+            "American and European jewelry"
+          ],
+          [
+            "750",
+            "18K",
+            "75%",
+            "Italian, European and Asian jewelry, watch cases"
+          ],
+          [
+            "916",
+            "22K",
+            "91.6%",
+            "Indian and Middle Eastern jewelry"
+          ],
+          [
+            "965 / 96.5",
+            "Thai gold",
+            "96.5%",
+            "Jewelry bought in Thailand"
+          ],
+          [
+            "999 / 9999",
+            "24K",
+            "99.9-99.99%",
+            "Gold bars and coins"
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Stamps can be wrong, worn or missing. That is why the XRF reading, not the stamp, sets the price. Check the gold value per gram for each karat on our [gold price page](/en/gold-price-today)."
+      },
+      {
+        "type": "h2",
+        "text": "Gold-filled and gold-plated: what the stamps mean"
+      },
+      {
+        "type": "p",
+        "text": "Some stamps look like karat marks but mean the piece is **not solid gold**. Only a thin layer of gold covers another metal, so the gold value is very small:"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "**GF**, **1/20 14K GF**, **14K Gold Filled**: a gold layer bonded to brass or copper",
+          "**GP**, **GEP**, **HGE**, **RGP**: gold-plated or electroplated",
+          "**Vermeil**: gold plating over silver; the silver has value, the gold layer very little"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Not sure what you have? The [XRF test](/en/xrf-gold-test) is free and shows the result in minutes."
+      },
+      {
+        "type": "h2",
+        "text": "How your foreign gold is priced"
+      },
+      {
+        "type": "p",
+        "text": "Price = **weight × (purity measured ÷ 96.5%) × the shop buying price per gram of 96.5% gold** that day. Example of the method: an 18K chain of 10 g measured at 75% counts as 10 × 75 ÷ 96.5 ≈ 7.8 g of Thai 96.5% gold. The day's price per gram changes several times a day, so the final number is calculated in front of you."
+      },
+      {
+        "type": "h3",
+        "text": "Why you get less than you paid"
+      },
+      {
+        "type": "p",
+        "text": "A piece bought at a jeweler includes design, brand, taxes and the retail margin. When you sell, in any country, only the gold content is paid. The gold itself is priced on the world market, so the gold value in Pattaya is close to what you would get at home."
+      },
+      {
+        "type": "h2",
+        "text": "Jewelry with stones, broken pieces and watches"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "**Stones:** diamonds and gemstones are assessed separately from the gold",
+          "**Broken, bent, single earrings:** paid by gold content; condition does not lower the gold value",
+          "**Many small pieces of mixed karat:** can be [melted into one bar](/en/gold-melting) and tested once",
+          "**Gold watches:** valued as a watch or for the gold, whichever pays more. See [selling a luxury watch](/en/sell-luxury-watch)"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Do gold shops in Thailand buy 18K gold?",
+        "a": "Many Thai gold shops only buy back 96.5% Thai gold. We buy 18K and other karats every day, testing the real purity on an XRF machine and paying for the gold content."
+      },
+      {
+        "q": "Can I sell 14K or 10K American gold?",
+        "a": "Yes. 14K (585) and 10K (417) are paid for their measured gold content, like any other karat."
+      },
+      {
+        "q": "Is 14K gold filled worth anything?",
+        "a": "Very little as gold. Gold-filled (GF) items have only a thin gold layer over another metal. We can test it for free so you know before deciding."
+      },
+      {
+        "q": "Do I need the receipt or certificate?",
+        "a": "No. Your original passport is required; receipts are not, because the price comes from the XRF test."
+      },
+      {
+        "q": "Can my Thai partner sell my gold for me?",
+        "a": "The seller must be the owner and show their own original ID. If the gold is yours, come with your passport."
+      }
+    ]
+  },
+  {
+    "slug": "areas",
+    "thPath": null,
+    "title": "Gold Buyer Near Jomtien, Walking Street, Pratumnak & Naklua | Pattaya",
+    "description": "Which of our 2 Pattaya gold shops is closest to you: Jomtien, Pratumnak, Walking Street, Beach Road, Terminal 21, Naklua, Thepprasit. Distances and tips.",
+    "h1": "Selling Gold Near Jomtien, Walking Street, Pratumnak and Naklua",
+    "breadcrumb": "Shops by area",
+    "keywords": [
+      "gold shop Jomtien",
+      "sell gold Walking Street Pattaya",
+      "gold buyer Naklua",
+      "gold shop near Terminal 21 Pattaya",
+      "gold shop Pratumnak"
+    ],
+    "blocks": [
+      {
+        "type": "summary",
+        "label": "In short",
+        "items": [
+          "We have **2 shops in Pattaya**: **South Pattaya** (South Pattaya Road) and **Noen Plap Wan** (Soi Noen Plap Wan, off Sukhumvit side).",
+          "**Jomtien, Pratumnak, Walking Street, Thepprasit:** South Pattaya shop is closer.",
+          "**North Pattaya, Terminal 21, Naklua, Wongamat:** Noen Plap Wan shop is closer.",
+          "Both open **every day**: Noen Plap Wan 10:00-20:00, South Pattaya 10:30-20:00. No appointment."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Which shop is closer to where you are staying"
+      },
+      {
+        "type": "table",
+        "caption": "Straight-line distance from each area (km). Driving distance is longer.",
+        "head": [
+          "Area",
+          "Closer shop",
+          "South Pattaya",
+          "Noen Plap Wan"
+        ],
+        "rows": [
+          [
+            "Thepprasit Road",
+            "South Pattaya",
+            "1.5",
+            "3.3"
+          ],
+          [
+            "Central Pattaya / Beach Road",
+            "South Pattaya",
+            "2.2",
+            "2.6"
+          ],
+          [
+            "Walking Street",
+            "South Pattaya",
+            "2.4",
+            "3.7"
+          ],
+          [
+            "Pratumnak Hill",
+            "South Pattaya",
+            "3.0",
+            "4.9"
+          ],
+          [
+            "Jomtien Beach",
+            "South Pattaya",
+            "4.2",
+            "6.3"
+          ],
+          [
+            "Na Jomtien",
+            "South Pattaya",
+            "10.0",
+            "11.3"
+          ],
+          [
+            "North Pattaya / Terminal 21",
+            "Noen Plap Wan",
+            "3.6",
+            "2.9"
+          ],
+          [
+            "Naklua / Wongamat",
+            "Noen Plap Wan",
+            "4.8",
+            "3.9"
+          ]
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "South Pattaya shop"
+      },
+      {
+        "type": "p",
+        "text": "**225/136 South Pattaya Road (Pattaya Tai), Nong Prue.** Open daily 10:30-20:00. The easiest shop for people staying in Jomtien, Pratumnak, around Walking Street and along Thepprasit Road. Thai address for your driver: 225/136 ถ.พัทยาใต้ ต.หนองปรือ"
+      },
+      {
+        "type": "h2",
+        "text": "Noen Plap Wan shop"
+      },
+      {
+        "type": "p",
+        "text": "**13/228 Soi Noen Plap Wan, Pattaya City.** Open daily 10:00-20:00. The easiest shop from North Pattaya, Terminal 21, the bus station area, Naklua and Wongamat. Thai address for your driver: 13/228 ซอยเนินพลับหวาน เมืองพัทยา"
+      },
+      {
+        "type": "h2",
+        "text": "Getting there"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "**Taxi or ride-hailing app:** show the Thai address above, or open directions from our [main English page](/en)",
+          "**Motorbike taxi:** fine for short trips; keep your gold in a closed bag",
+          "**Large amounts:** call 092-883-9799 before you come and consider a bank transfer instead of carrying cash back"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Before you leave your hotel"
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Bring your **original passport**. Copies are not accepted.",
+          "Check [today's gold price per gram](/en/gold-price-today) to know roughly what to expect.",
+          "Not sure the trip is worth it? Send photos and the weight on LINE for a free estimate first.",
+          "Read the [questions foreigners ask most](/en/faq)."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Which gold shop is closest to Jomtien?",
+        "a": "Our South Pattaya shop on South Pattaya Road, about 4 km in a straight line from Jomtien Beach. Open daily 10:30-20:00."
+      },
+      {
+        "q": "Is there a gold buyer near Walking Street?",
+        "a": "Our South Pattaya shop is about 2.4 km from Walking Street in a straight line, open daily until 20:00."
+      },
+      {
+        "q": "Which shop is closer to Terminal 21 and Naklua?",
+        "a": "The Noen Plap Wan shop on Soi Noen Plap Wan, open daily 10:00-20:00."
+      },
+      {
+        "q": "Do I need an appointment?",
+        "a": "No. Walk in any day during opening hours. For large amounts, call 092-883-9799 first."
+      }
+    ]
+  },
+  {
+    "slug": "faq",
+    "thPath": null,
+    "title": "Selling Gold in Pattaya as a Foreigner: Questions & Answers",
+    "description": "Answers for foreigners selling gold in Pattaya: passport, tourists, foreign karat gold, how the price is set, cash or transfer, XRF testing, safety.",
+    "h1": "Selling Gold in Pattaya as a Foreigner: Your Questions Answered",
+    "breadcrumb": "Questions & answers",
+    "keywords": [
+      "can foreigners sell gold in Thailand",
+      "sell gold Pattaya passport",
+      "sell gold Thailand tourist",
+      "is it safe to sell gold in Pattaya",
+      "gold price Pattaya how calculated"
+    ],
+    "blocks": [
+      {
+        "type": "summary",
+        "label": "The short answers",
+        "items": [
+          "**Foreigners and tourists can sell gold** in Thailand. Bring your original passport.",
+          "**Any karat is accepted** here, including 9K-22K from abroad, broken pieces and scrap.",
+          "**Price = weight × XRF-measured purity** at the Thai Gold Traders Association price of the day.",
+          "**Paid in Thai baht**, cash on the spot or transfer to a Thai bank account."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "These are the questions foreign customers ask us most often at the counter and on LINE. For the full step-by-step guide, see [selling gold in Pattaya](/en)."
+      },
+      {
+        "type": "h2",
+        "text": "Guides by topic"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "[Selling 9K, 14K, 18K and Italian gold](/en/sell-k-gold)",
+          "[Gold price today, per gram by karat](/en/gold-price-today)",
+          "[Free XRF gold test](/en/xrf-gold-test)",
+          "[Gold melting for scrap and broken gold](/en/gold-melting)",
+          "[Selling a luxury watch](/en/sell-luxury-watch)",
+          "[Which shop is closest to you](/en/areas)"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Can foreigners sell gold in Thailand?",
+        "a": "Yes. Bring your original passport. Tourists can sell too; you do not need a long-stay visa."
+      },
+      {
+        "q": "Why do you need my passport?",
+        "a": "Thai shops must record who they buy second-hand goods from. The same rule applies to Thai customers with their ID card. Copies and phone photos are not accepted."
+      },
+      {
+        "q": "I only have a pink card or work permit. Can I sell?",
+        "a": "Please call us at 092-883-9799 before you come so we can confirm."
+      },
+      {
+        "q": "Can I sell gold that belongs to my Thai partner?",
+        "a": "The owner should come and show their own original Thai ID card."
+      },
+      {
+        "q": "Do you buy gold bought abroad without a receipt?",
+        "a": "Yes. Receipts are not needed; the price comes from the XRF test of the gold itself."
+      },
+      {
+        "q": "How is the price calculated?",
+        "a": "Weight multiplied by the purity measured on the XRF machine, based on the Thai Gold Traders Association price of the day. You see the weight and purity before we make an offer."
+      },
+      {
+        "q": "Can you tell me the price over the phone?",
+        "a": "Send photos and the weight on LINE for a free estimate. The final price is confirmed after weighing and testing at the shop, at the price of that moment."
+      },
+      {
+        "q": "Why is the offer lower than what I paid?",
+        "a": "Retail prices include design, brand, taxes and the shop's margin. When selling, in any country, only the gold content is paid."
+      },
+      {
+        "q": "Do you pay in US dollars or euros?",
+        "a": "No. Payment is in Thai baht, cash or transfer to a Thai bank account. Use a money exchange afterwards if you need other currencies."
+      },
+      {
+        "q": "Is the XRF test free if I do not sell?",
+        "a": "Yes. If you do not like the offer, you take your gold back and pay nothing."
+      },
+      {
+        "q": "Does the test damage my jewelry?",
+        "a": "No. XRF does not scratch the piece or use acid."
+      },
+      {
+        "q": "Can I take the money out of Thailand?",
+        "a": "Rules on carrying or transferring money abroad are set by Thai customs and your bank. Please ask your bank directly."
+      },
+      {
+        "q": "Is it safe to sell gold in Pattaya?",
+        "a": "Sell at a real shop you can find on Google Maps, stay while your gold is weighed and tested, and ignore street buyers. For large amounts, ask for a bank transfer."
+      },
+      {
+        "q": "Are you open on Sundays and holidays?",
+        "a": "Yes, every day. Noen Plap Wan 10:00-20:00, South Pattaya 10:30-20:00."
+      }
+    ]
+  },
 ];
 
 export function getEnPage(slug) {
@@ -246,6 +673,6 @@ export function getEnPage(slug) {
 
 /* หน้าไทย → หน้าอังกฤษที่ตรงกัน (สำหรับ hreflang ฝั่งไทย) */
 export const EN_FOR_TH = {
-  ...Object.fromEntries(EN_PAGES.map((p) => [p.thPath, `/en/${p.slug}`])),
+  ...Object.fromEntries(EN_PAGES.filter((p) => p.thPath).map((p) => [p.thPath, `/en/${p.slug}`])),
   "/rakha-thong-wan-nee": "/en/gold-price-today",
 };
