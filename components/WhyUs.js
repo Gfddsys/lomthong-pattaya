@@ -102,7 +102,7 @@ export default function WhyUs() {
                     <Icon />
                   </div>
                   <div className="why-feature-body">
-                    <h4>{feature.title}</h4>
+                    <h3>{feature.title}</h3>
                     <p>{feature.description}</p>
                   </div>
                 </article>

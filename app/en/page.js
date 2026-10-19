@@ -16,7 +16,7 @@ const PAGE_URL = `${SITE_URL}/en`;
 const COVER_IMAGE = getUploadedImage("hero", "/images/hero.png");
 const TITLE = "Sell Gold in Pattaya | Free XRF Test, Cash Paid on the Spot";
 const DESCRIPTION =
-  "Sell gold in Pattaya with your passport: 9K, 14K, 18K, 22K and Italian gold, broken jewelry, scrap gold and luxury watches. Free XRF purity test in front of you, cash in Thai baht. Open daily until 20:00.";
+  "Sell gold in Pattaya with your passport: 9K-22K, Italian and broken gold, scrap and luxury watches. Free XRF test on the spot, cash in Thai baht. Open daily.";
 
 export const metadata = {
   title: { absolute: TITLE },

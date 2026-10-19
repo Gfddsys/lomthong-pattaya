@@ -913,7 +913,7 @@ button {
   z-index: 1;
 }
 
-.why-feature h4 {
+.why-feature h3 {
   font-size: var(--font-size-lg);
   font-weight: 700;
   margin-bottom: var(--space-xs);
