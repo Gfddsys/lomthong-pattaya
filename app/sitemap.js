@@ -3,22 +3,42 @@ import { BRANCHES } from "../data/branches";
 import { AREAS } from "../data/areas";
 import { getAutoArticles } from "../lib/articles";
 import { SITE_URL } from "@/data/site";
+import { EN_PAGES, EN_FOR_TH } from "@/data/enPages";
 
 export default function sitemap() {
   const baseUrl = SITE_URL;
   // วันแก้ไขเนื้อหาจริงครั้งล่าสุด — อัปเดตค่านี้เมื่อมีการแก้เนื้อหาเว็บครั้งใหญ่
   // (อย่าใช้ new Date() เพราะจะทำให้ lastmod ขยับทุกครั้งที่ regenerate = โกหก Googlebot)
-  const LASTMOD = new Date("2026-07-12");
-  const AREAS_LASTMOD = new Date("2026-10-03"); // วันที่เพิ่มหน้าพื้นที่บริการ
+  const LASTMOD = new Date("2026-10-19"); // 19 ต.ค. ขยายหน้าบริการ + หน้าสาขา
+  const AREAS_LASTMOD = new Date("2026-10-19"); // 19 ต.ค. เติมเนื้อหาหน้าพื้นที่ + เพิ่มชลบุรี
   const EN_LASTMOD = new Date("2026-10-06"); // วันที่เพิ่มหน้าภาษาอังกฤษ /en
   // หน้าแรกภาษาไทย ↔ หน้าภาษาอังกฤษ เป็นคู่ภาษากัน (hreflang)
   const LANGS = { th: baseUrl, en: `${baseUrl}/en` };
 
-  const servicePages = servicesData.map((service) => ({
-    url: `${baseUrl}/services/${service.slug}`,
-    lastModified: LASTMOD,
+  // คู่ภาษา ไทย ↔ อังกฤษ ของหน้าที่มีฉบับอังกฤษ (data/enPages.js)
+  const pairLangs = (thPath) => ({ th: `${baseUrl}${thPath}`, en: `${baseUrl}${EN_FOR_TH[thPath]}` });
+
+  const servicePages = servicesData.map((service) => {
+    const path = `/services/${service.slug}`;
+    return {
+      url: `${baseUrl}${path}`,
+      lastModified: LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      ...(EN_FOR_TH[path] && { alternates: { languages: pairLangs(path) } }),
+    };
+  });
+
+  const EN_GUIDES_LASTMOD = new Date("2026-10-19"); // วันที่เพิ่มหน้าอังกฤษชุดที่ 2
+  const enGuidePages = [
+    ...EN_PAGES.map((p) => ({ url: `${baseUrl}/en/${p.slug}`, langs: pairLangs(p.thPath) })),
+    { url: `${baseUrl}/en/gold-price-today`, langs: pairLangs("/rakha-thong-wan-nee") },
+  ].map(({ url, langs }) => ({
+    url,
+    lastModified: EN_GUIDES_LASTMOD,
     changeFrequency: "monthly",
-    priority: 0.8,
+    priority: 0.7,
+    alternates: { languages: langs },
   }));
 
   // บทความอัตโนมัติจาก content/articles/*.json — เพิ่มเข้า sitemap เองโดยไม่ต้องแก้ไฟล์นี้
@@ -70,7 +90,9 @@ export default function sitemap() {
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,
+      alternates: { languages: pairLangs("/rakha-thong-wan-nee") },
     },
+    ...enGuidePages,
     ...branchPages,
     ...areaPages,
     ...servicePages,

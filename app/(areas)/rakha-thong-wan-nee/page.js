@@ -23,7 +23,10 @@ export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
   keywords: ["ราคาทองวันนี้", "ราคาทองวันนี้ พัทยา", "ราคาทองคำวันนี้", "ราคาทองรูปพรรณวันนี้", "ราคารับซื้อทองวันนี้", "คำนวณราคาขายทอง"],
-  alternates: { canonical: PAGE_PATH },
+  alternates: {
+    canonical: PAGE_PATH,
+    languages: { th: PAGE_PATH, en: "/en/gold-price-today", "x-default": PAGE_PATH },
+  },
   openGraph: { title: TITLE, description: DESCRIPTION, type: "website" },
 };
 

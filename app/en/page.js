@@ -165,12 +165,14 @@ export default function SellGoldPattayaEn() {
           <li>Silver jewelry, silverware and silver bars</li>
           <li>
             Luxury watches, valued as pre-owned watches (see{" "}
-            <Link href="/services/watch-buying" hrefLang="th">watch buying</Link>, in Thai)
+            <Link href="/en/sell-luxury-watch">selling a luxury watch</Link>)
           </li>
         </ul>
         <p>
           Jewelry with gemstones is valued on its gold content; stones are assessed separately. Not sure if a
-          piece is real gold or plated? The XRF test tells you in minutes, and it is free.
+          piece is real gold or plated? The <Link href="/en/xrf-gold-test">XRF test</Link> tells you in minutes,
+          and it is free. Many small or broken pieces can be <Link href="/en/gold-melting">melted into one bar</Link>{" "}
+          and tested once.
         </p>
 
         <h2>What to bring</h2>
@@ -190,7 +192,8 @@ export default function SellGoldPattayaEn() {
         <p>
           Price = <strong>weight × purity measured on the XRF machine</strong>, based on the Thai Gold Traders
           Association price of the day. The gold price changes daily, so we cannot quote a fixed number in
-          advance, but you will see the weight and purity on screen before we make an offer.
+          advance, but you will see the weight and purity on screen before we make an offer. Check{" "}
+          <Link href="/en/gold-price-today">today&apos;s gold price per gram</Link> to estimate before you come.
         </p>
         <div className="blog-table-wrap">
           <table className="blog-table">

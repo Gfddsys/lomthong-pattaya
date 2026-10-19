@@ -1,3 +1,4 @@
+import { EN_FOR_TH } from "@/data/enPages";
 import { servicesData } from "../../../data/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -53,6 +54,10 @@ export async function generateMetadata({ params }) {
     // สำคัญ: ต้องกำหนด canonical ของหน้านี้เอง ไม่งั้นจะสืบทอด canonical ของหน้าแรกจาก root layout มาแทน
     alternates: {
       canonical: `/services/${slug}`,
+      // มีหน้าอังกฤษคู่กัน → ประกาศ hreflang ทั้งสองฝั่ง (ฝั่งอังกฤษอยู่ที่ app/en/[slug])
+      ...(EN_FOR_TH[`/services/${slug}`] && {
+        languages: { th: `/services/${slug}`, en: EN_FOR_TH[`/services/${slug}`], "x-default": `/services/${slug}` },
+      }),
     },
   };
 }

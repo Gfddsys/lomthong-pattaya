@@ -35,7 +35,7 @@ export function Section({ block, id }) {
             marginBottom: "1.8rem",
           }}
         >
-          <p style={{ marginBottom: "0.6rem", fontWeight: 700 }}>สรุปสั้นๆ</p>
+          <p style={{ marginBottom: "0.6rem", fontWeight: 700 }}>{block.label ?? "สรุปสั้นๆ"}</p>
           <ul style={{ marginBottom: 0 }}>
             {block.items.map((item, i) => (
               <li key={i}>
