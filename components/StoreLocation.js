@@ -132,7 +132,7 @@ export default function StoreLocation() {
           <div className="store-areas-links">
             {AREAS.map((a) => (
               <Link key={a.slug} href={`/area/${a.slug}`}>
-                รับซื้อทอง {a.name}
+                {a.label ?? `รับซื้อทอง ${a.name}`}
               </Link>
             ))}
           </div>

@@ -37,8 +37,9 @@ export async function generateMetadata({ params }) {
   const area = getArea(slug);
   if (!area) return {};
   const [nearest] = branchesByDistance(area);
-  const title = `รับซื้อทอง ${area.name} · ขายทอง หลอมทอง ใกล้${area.name}`;
-  const description = `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${nearest.opens}-${nearest.closes} น. โทร ${CONTACT.phoneDisplay}`;
+  // พื้นที่ที่เน้นคำค้นอื่น (เช่น "หลอมทอง ชลบุรี") ตั้ง title/description/h1/label เองใน data/areas.js
+  const title = area.title ?? `รับซื้อทอง ${area.name} · ขายทอง หลอมทอง ใกล้${area.name}`;
+  const description = area.description ?? `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${nearest.opens}-${nearest.closes} น. โทร ${CONTACT.phoneDisplay}`;
   return {
     title,
     description,
@@ -56,6 +57,7 @@ export default async function AreaPage({ params }) {
   const branches = branchesByDistance(area);
   const nearest = branches[0];
   const pageUrl = `${SITE_URL}/area/${area.slug}`;
+  const label = area.label ?? `รับซื้อทอง ${area.name}`;
 
   // Service + areaServed — บอก Google ว่าธุรกิจหลัก (entity เดียวกับ root layout) ให้บริการคนในพื้นที่นี้
   // ไม่ประกาศ LocalBusiness ใหม่ที่พื้นที่นี้ เพราะร้านไม่มีหน้าร้านอยู่ที่นี่จริง
@@ -93,7 +95,7 @@ export default async function AreaPage({ params }) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "หน้าแรก", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: `รับซื้อทอง ${area.name}`, item: pageUrl },
+      { "@type": "ListItem", position: 2, name: label, item: pageUrl },
     ],
   };
 
@@ -106,11 +108,11 @@ export default async function AreaPage({ params }) {
       <nav className="blog-article-nav" aria-label="Breadcrumb">
         <Link href="/">หน้าแรก</Link>
         <span>/</span>
-        <span>รับซื้อทอง {area.name}</span>
+        <span>{label}</span>
       </nav>
 
       <header className="blog-article-header">
-        <h1>รับซื้อทอง {area.name} — ขายทองใกล้{area.name} ได้ราคาตามเนื้อทองจริง</h1>
+        <h1>{area.h1 ?? `รับซื้อทอง ${area.name} — ขายทองใกล้${area.name} ได้ราคาตามเนื้อทองจริง`}</h1>
         <div className="blog-article-meta">
           <span>📍 ใกล้สุด: {nearest.shortName} (~{nearest.km.toFixed(1)} กม.)</span>
           <span>🔬 ตรวจ XRF ฟรี</span>
