@@ -14,6 +14,7 @@ const SERVICE_IMG = {
   'watch-buying': ['watch', '/images/blog-lomthong.png'],
   'online-valuation': ['valuation', '/images/blog-gold-price.png'],
   'silver-buying': ['silver', '/images/gallery.png'],
+  'khai-fak-thong': ['about-shop', '/images/gallery.png'],
 };
 
 export default function Services() {

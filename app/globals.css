@@ -3382,3 +3382,9 @@ a.contact-item--link:hover {
   content: none !important;
   display: none !important;
 }
+
+/* เนื้อหาเต็มในหน้าบริการ ใช้สไตล์เดียวกับบทความ แต่จำกัดความกว้างให้อ่านง่าย */
+.service-rich {
+  max-width: 820px;
+  margin: 3.5rem auto 0;
+}

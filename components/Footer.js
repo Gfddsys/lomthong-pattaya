@@ -23,7 +23,7 @@ export default function Footer() {
               ร้านรับหลอมทอง รับซื้อทอง นาฬิกาแบรนด์เนม และเครื่องประดับครบวงจร
               ในพื้นที่พัทยา ศรีราชา ชลบุรี บางละมุง สัตหีบ
               ให้ราคาสูงตามสมาคมค้าทองคำ ตรวจสอบต่อหน้า จ่ายเงินสดทันที
-              บริการด้วยความซื่อสัตย์ โปร่งใส
+              บริการด้วยความซื่อสัตย์ โปร่งใส มากว่า 10 ปี
             </p>
             <a
               href={CONTACT.lineUrl}
@@ -57,7 +57,7 @@ export default function Footer() {
               <li><Link href="/#testimonials" className="footer-link">รีวิวลูกค้า</Link></li>
               <li><Link href="/reviews" className="footer-link">เขียนรีวิวให้ร้าน</Link></li>
               <li><Link href="/rakha-thong-wan-nee" className="footer-link">ราคาทองวันนี้</Link></li>
-              <li><Link href="/rap-lomthong-pattaya" className="footer-link">รับหลอมทองพัทยา</Link></li>
+              <li><Link href="/services/gold-melting" className="footer-link">รับหลอมทองพัทยา</Link></li>
               <li><Link href="/en" hrefLang="en" className="footer-link">English: Sell gold in Pattaya</Link></li>
               <li><Link href="/blog" className="footer-link">บทความ</Link></li>
               <li><Link href="/#contact" className="footer-link">ติดต่อเรา</Link></li>

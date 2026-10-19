@@ -38,6 +38,12 @@ const PATHS = {
       <path d="M10.5 18.5h3M9.5 8h5M9.5 11.5h3.5" />
     </>
   ),
+  'khai-fak-thong': (
+    <>
+      <path d="M6.5 3h8l3 3v15h-11z" />
+      <path d="M14.5 3v3h3M9 10.5h6M9 13.5h6M9 16.5l1.6 1.6 3.4-3.6" />
+    </>
+  ),
   'silver-buying': (
     <>
       <ellipse cx="12" cy="6" rx="7" ry="2.5" />

@@ -39,7 +39,6 @@ const CTA_LINKS = [
   ...servicesData.map((s) => `/services/${s.slug}`),
   ...BRANCHES.map((b) => `/branch/${b.slug}`),
   ...AREAS.map((a) => `/area/${a.slug}`),
-  "/rap-lomthong-pattaya",
   "/rakha-thong-wan-nee",
 ];
 

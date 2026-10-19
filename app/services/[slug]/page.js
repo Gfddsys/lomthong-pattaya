@@ -6,6 +6,7 @@ import { getUploadedImage } from "@/lib/getImage";
 import { SITE_URL } from "@/data/site";
 import ServiceIcon from "@/components/ServiceIcon";
 import VideoShorts from "@/components/VideoShorts";
+import { Section } from "@/components/ContentBlocks";
 
 // จับคู่บริการแต่ละอันกับโฟลเดอร์รูปใน public/images/uploads/
 // วางรูปจริงในโฟลเดอร์ที่ตรงกัน ระบบจะดึงมาใช้แทนรูปตัวอย่างอัตโนมัติ
@@ -17,6 +18,7 @@ const SERVICE_IMAGE_SLOT = {
   "watch-buying": "watch",
   "online-valuation": "valuation",
   "silver-buying": "silver",
+  "khai-fak-thong": "about-shop",
 };
 
 // สร้างหน้าบริการทั้งหมดเป็น static ตอน build (เดิมเป็น dynamic = render ใหม่ทุกครั้งที่มีคนเข้า ช้ากว่า)
@@ -203,6 +205,15 @@ export default async function ServicePage({ params }) {
             </div>
           </div>
         </div>
+
+        {/* เนื้อหาเต็มของบริการ (ขั้นตอน ตาราง วิธีคิดราคา) — ใช้บล็อกแบบเดียวกับบทความ */}
+        {service.blocks && service.blocks.length > 0 && (
+          <div className="blog-article-content service-rich">
+            {service.blocks.map((block, i) => (
+              <Section key={i} block={block} />
+            ))}
+          </div>
+        )}
 
         <VideoShorts page={service.slug} title={`คลิปงาน${service.title}จากหน้าร้าน`} pageUrl={`/services/${service.slug}`} />
 

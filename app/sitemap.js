@@ -71,12 +71,6 @@ export default function sitemap() {
       changeFrequency: "daily",
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/rap-lomthong-pattaya`,
-      lastModified: LASTMOD,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
     ...branchPages,
     ...areaPages,
     ...servicePages,

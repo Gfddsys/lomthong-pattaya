@@ -36,7 +36,7 @@ const MERGED_ARTICLES = {
   "where-to-sell-broken-gold-pattaya": ["thong-khat-thong-hak-rap-sue-mai", "thong-kao-pattaya-khay-thi-nai"],
   // กลุ่มตรวจทองฟรี
   "xrf-gold-testing-pattaya-free": ["borikar-truat-thong-free-pattaya"],
-  // กลุ่มหลอมทอง (คำว่า "หลอมทองพัทยา" ให้หน้า /rap-lomthong-pattaya เป็นเจ้าของ)
+  // กลุ่มหลอมทอง (คำว่า "รับหลอมทองพัทยา" ให้หน้า /services/gold-melting เป็นเจ้าของ)
   "pattaya-gold-melting-service-time": ["lomthong-khao-jai-ngai", "lomthong-pattaya-best-price", "lomthong-process-pattaya"],
   // กลุ่มร้านไหนดี / ขายที่ไหนราคาสูง
   "ran-thong-pattaya-nai-di": ["khai-thong-thi-nai-rakha-sung-pattaya", "rap-sue-thong-pattaya"],
@@ -48,6 +48,8 @@ const MOVED_PAGES = {
   "/blog/gold-price-trend": "/rakha-thong-wan-nee",
   // บทความรวมหลายพื้นที่ซ้อนกับหน้าพื้นที่บริการ /area/* ที่ละเอียดกว่า
   "/blog/rap-sue-thong-jomtien-naklua-banglamung": "/area/jomtien",
+  // หน้ารับหลอมทองพัทยาซ้ำกับหน้าบริการรับหลอมทอง (แย่งคำค้นกันเอง) รวมเนื้อหาเข้าหน้าบริการแล้ว
+  "/rap-lomthong-pattaya": "/services/gold-melting",
 };
 
 // ลิงก์สั้นที่พิมพ์อยู่บนป้าย QR ขอรีวิวที่เคาน์เตอร์ → พาเข้าหน้ารีวิวบนเว็บก่อน แล้วลูกค้าค่อยกดไป Google Maps
