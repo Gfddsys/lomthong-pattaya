@@ -11,7 +11,7 @@ export default function sitemap() {
   // วันแก้ไขเนื้อหาจริงครั้งล่าสุด — อัปเดตค่านี้เมื่อมีการแก้เนื้อหาเว็บครั้งใหญ่
   // (อย่าใช้ new Date() เพราะจะทำให้ lastmod ขยับทุกครั้งที่ regenerate = โกหก Googlebot)
   const LASTMOD = new Date("2026-10-19"); // 19 ต.ค. ขยายหน้าบริการ + หน้าสาขา
-  const AREAS_LASTMOD = new Date("2026-10-19"); // 19 ต.ค. เติมเนื้อหาหน้าพื้นที่ + เพิ่มชลบุรี
+  const AREAS_LASTMOD = new Date("2026-10-20"); // 20 ต.ค. เพิ่ม 4 ย่าน (หนองปรือ พัทยากลาง ห้วยใหญ่ แหลมฉบัง)
   const EN_LASTMOD = new Date("2026-10-06"); // วันที่เพิ่มหน้าภาษาอังกฤษ /en
   // หน้าแรกภาษาไทย ↔ หน้าภาษาอังกฤษ เป็นคู่ภาษากัน (hreflang)
   const LANGS = { th: baseUrl, en: `${baseUrl}/en` };
