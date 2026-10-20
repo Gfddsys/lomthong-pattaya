@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
-import GoldPrice from './GoldPrice';
+import PriceBoard from './PriceBoard';
 import { getUploadedImage } from '@/lib/getImage';
 
 export default function Hero() {
@@ -74,8 +74,12 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Gold Price Widget */}
-          <GoldPrice isHero={true} />
+          {/* ป้ายราคาทอง/แท่งเงิน (ภาพป้ายหน้าร้าน + ราคาจริงอัปเดตทุก 5 นาที) */}
+          <div className="hero-price-board">
+            <h2 className="hero-price-board-title">ราคาทองคำ<span>ประจำวัน</span></h2>
+            <p className="hero-price-board-sub">อ้างอิงจากสมาคมค้าทองคำแห่งประเทศไทย</p>
+            <PriceBoard />
+          </div>
           {/* ลิงก์จากหน้าแรก (หน้าที่แข็งแรงที่สุด) ไปหน้าราคาทอง ช่วยให้หน้าราคาทองติดคำค้น "ราคาทองวันนี้ พัทยา" */}
           <Link href="/rakha-thong-wan-nee" className="hero-price-link">
             ดูราคาทองวันนี้ทั้งหมด + คำนวณราคาขายทองของคุณ →

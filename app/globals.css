@@ -3427,3 +3427,9 @@ a.contact-item--link:hover {
 .near-services span { font-size: var(--font-size-sm); color: var(--color-text-light); }
 .store-areas-near { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-sm) var(--space-md); margin: 0 0 var(--space-lg); text-align: center; }
 .store-areas-near span { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+
+/* ===== ป้ายราคาทองในหน้าแรก (components/PriceBoard.js) ===== */
+.hero-price-board { width: 100%; max-width: 1040px; margin: 2.5rem auto 0; position: relative; z-index: 10; }
+.hero-price-board-title { text-align: center; font-size: 1.6rem; font-weight: 800; color: #1a1a1a; }
+.hero-price-board-title span { color: var(--color-gold-dark); }
+.hero-price-board-sub { text-align: center; font-size: 0.9rem; color: var(--color-text-muted); margin: 0.4rem 0 1.2rem; }

@@ -5,6 +5,7 @@ import { CONTACT } from "@/data/contact";
 import GoldCalculator from "@/components/GoldCalculator";
 import EmbedCode from "@/components/EmbedCode";
 import AutoRefresh from "@/components/AutoRefresh";
+import PriceBoard from "@/components/PriceBoard";
 
 /* ============================================
    ราคาทองวันนี้ พัทยา — หน้าราคาทอง + เครื่องคิดเลข + โค้ดกล่องราคาให้เว็บอื่นติด
@@ -106,6 +107,13 @@ export default async function RakhaThongWanNee() {
           )}
         </div>
       </header>
+
+      {/* ป้ายราคาแบบหน้าร้าน ใช้ราคาชุดเดียวกับตารางด้านล่าง แล้วอัปเดตเองทุก 5 นาที */}
+      {p && (
+        <div style={{ margin: "0 0 var(--space-xl)" }}>
+          <PriceBoard initialData={p} />
+        </div>
+      )}
 
       <div className="blog-article-content">
         {p ? (
