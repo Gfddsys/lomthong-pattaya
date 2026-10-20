@@ -3433,3 +3433,21 @@ a.contact-item--link:hover {
 .hero-price-board-title { text-align: center; font-size: 1.6rem; font-weight: 800; color: #1a1a1a; }
 .hero-price-board-title span { color: var(--color-gold-dark); }
 .hero-price-board-sub { text-align: center; font-size: 0.9rem; color: var(--color-text-muted); margin: 0.4rem 0 1.2rem; }
+
+/* ===== สไลด์รีวิว (components/ReviewSlider.js) — ไม่มีขอบจางขาว ไม่มีเงาการ์ด ===== */
+.review-slider { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 8px 0 18px; cursor: grab; outline: none; }
+.review-slider::-webkit-scrollbar { display: none; }
+.review-track { display: flex; width: max-content; }
+.review-track-dup { display: contents; }
+.review-slide {
+  flex: 0 0 auto; width: 320px; margin-right: var(--space-lg);
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.1rem 1.2rem 1rem; text-decoration: none; color: inherit;
+  border-left: 3px solid var(--color-gold); background: transparent; box-shadow: none; border-radius: 0;
+  transition: border-color var(--transition-base);
+}
+.review-slide:hover { border-left-color: var(--color-primary); }
+.review-slide-text { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--color-text-light); flex: 1; }
+.review-slide .testimonial-verified { margin-top: 0.2rem; }
+@media (max-width: 600px) { .review-slide { width: 270px; margin-right: var(--space-md); } }
+.review-slide .testimonial-head, .review-slide .testimonial-stars { margin: 0; }
