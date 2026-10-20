@@ -712,7 +712,7 @@ export const servicesData = [
     excerpt: 'รับซื้อ-ขายนาฬิกาแบรนด์เนมทุกรุ่น Rolex Omega Cartier Gucci พัทยา ชลบุรี ให้ราคาสูง',
     image: '/images/blog-lomthong.png', // Placeholder — วางรูปนาฬิกาจริงได้ที่ public/images/uploads/watch/
     metaTitle: 'ร้านรับซื้อนาฬิกา พัทยา นาฬิกาแบรนด์เนม Rolex Omega มือสอง',
-    metaDescription: "ร้านรับซื้อนาฬิกาแบรนด์เนมมือสอง พัทยา Rolex Omega Cartier Patek Philippe AP Hublot Tag Heuer ประเมินฟรี มีหรือไม่มีกล่องก็รับ ส่งรูปทาง LINE ได้ จ่ายเงินสดทันที",
+    metaDescription: "ร้านรับซื้อนาฬิกา พัทยา แบรนด์เนมมือสอง Rolex Omega Cartier Tag Heuer รวมถึง Casio G-Shock ประเมินฟรี มีหรือไม่มีกล่องก็รับ ส่งรูปทาง LINE จ่ายเงินสดทันที",
     fullDescription: 'อยากขายนาฬิกาแบรนด์เนมให้ได้ราคาดี? เรารับซื้อนาฬิกาหรูมือสองทุกแบรนด์ทุกรุ่น ทั้ง Rolex (โรเล็กซ์), Omega (โอเมก้า), Patek Philippe, Audemars Piguet (AP), Cartier (คาร์เทียร์), Hublot, Tag Heuer, Gucci (กุชชี่), Tudor, Panerai, IWC, Longines รวมถึงแบรนด์อื่นๆ ไม่ว่าจะมีกล่อง มีใบรับประกัน หรือไม่มีก็รับซื้อ ประเมินราคาฟรีโดยผู้เชี่ยวชาญนาฬิกาโดยเฉพาะ ให้ราคาสูงตามรุ่นและสภาพจริง อ้างอิงราคาตลาดสากล จ่ายเงินสดทันที บริการลูกค้าทั่วพัทยา ชลบุรี บางละมุง ศรีราชา สัตหีบ และพื้นที่ใกล้เคียง',
     whyUs: [
       'รับซื้อนาฬิกาแบรนด์เนมทุกรุ่น ทั้งมีกล่อง-ใบ หรือไม่มีก็ได้',
@@ -732,7 +732,8 @@ export const servicesData = [
       },
       {"type": "h2", "text": "รับซื้อนาฬิกาแบรนด์เนมทุกยี่ห้อ ทั้งมือสองและนาฬิกาเก่า"},
       {"type": "p", "text": "ร้านรับซื้อนาฬิกาหรูมือสองหลายยี่ห้อ ทั้งรุ่นใหม่และ**นาฬิกาเก่า**ที่เก็บไว้นาน เครื่องไม่เดินก็รับ ราคาประเมินตามรุ่นและสภาพจริง แบรนด์ที่ลูกค้านำมาบ่อย:"},
-      {"type": "ul", "items": ["[รับซื้อ Rolex (โรเล็กซ์)](/rap-sue-nalika/rolex) Submariner, Datejust, Day-Date, GMT-Master II, Daytona", "**Omega**, **Tudor**, **Longines**, **Tag Heuer**", "**Cartier**, **Patek Philippe**, **Audemars Piguet (AP)**, **Hublot**, **Panerai**, **IWC**", "ยี่ห้ออื่นที่ไม่อยู่ในรายการ ส่งรูปมาถามทาง LINE ก่อนได้"]},
+      {"type": "ul", "items": ["[รับซื้อ Rolex (โรเล็กซ์)](/rap-sue-nalika/rolex) Submariner, Datejust, Day-Date, GMT-Master II, Daytona", "**Omega**, **Tudor**, **Longines**, **Tag Heuer**", "**Cartier**, **Patek Philippe**, **Audemars Piguet (AP)**, **Hublot**, **Panerai**, **IWC**", "**Casio** และ **G-Shock** ก็รับซื้อ ราคาประเมินตามรุ่นและสภาพจริง",
+          "ยี่ห้ออื่นที่ไม่อยู่ในรายการ ส่งรูปมาถามทาง LINE ก่อนได้"]},
       {
         "type": "h2",
         "text": "ราคานาฬิกามือสองขึ้นกับอะไร"
@@ -842,6 +843,10 @@ export const servicesData = [
       {
         "q": "ได้เงินเลยไหม",
         "a": "ได้ ตกลงราคาแล้วจ่ายเงินสดทันที หรือเลือกโอนเข้าบัญชีก็ได้"
+      },
+      {
+        "q": "รับซื้อนาฬิกา Casio G-Shock ไหม",
+        "a": "รับ นาฬิกา Casio และ G-Shock ก็รับซื้อ ราคาประเมินตามรุ่นและสภาพจริง ส่งรูปมาถามราคาทาง LINE @hengsiri ก่อนได้"
       },
       {
         "q": "รับซื้อนาฬิกาเก่า นาฬิกาที่เก็บไว้นานไหม",
