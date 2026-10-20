@@ -5,6 +5,7 @@
    รันโดย GitHub Actions (.github/workflows/auto-article.yml) ทุก 3 วัน
    รันเองก็ได้:  ANTHROPIC_API_KEY=... node scripts/auto-article.mjs
    ทดสอบด่านตรวจโดยไม่เรียก AI:  node scripts/auto-article.mjs --check <ไฟล์.json>
+   ดูคิวหัวข้อที่ยังไม่ได้เขียน:   node scripts/auto-article.mjs --queue
 
    ด่านตรวจก่อนบันทึก (ไม่ผ่าน = ให้ AI แก้ใหม่ สูงสุด 3 รอบ ถ้ายังไม่ผ่าน = ไม่ขึ้นเว็บ):
    1. โครงสร้างครบ (slug, sections, faq ฯลฯ)
@@ -23,6 +24,7 @@ import { CONTACT } from "../data/contact.js";
 import { BRANCHES } from "../data/branches.js";
 import { AREAS } from "../data/areas.js";
 import { servicesData } from "../data/services.js";
+import { TOPIC_QUEUE } from "../data/topicQueue.js";
 import { RULES, findSlopHits, structureWarnings } from "./slop-rules.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -214,8 +216,21 @@ export function validate(a, existing) {
   return problems;
 }
 
+/* ---------- คิวหัวข้อ (data/topicQueue.js) — ตัดหัวข้อที่มีบทความแล้วออกเอง ---------- */
+export function remainingTopics(existing) {
+  return TOPIC_QUEUE.filter(
+    (t) =>
+      !existing.some(
+        (e) => (e.keyword && similarity(e.keyword, t.keyword) >= 0.5) || similarity(e.title, t.keyword) >= SIMILARITY_LIMIT,
+      ),
+  );
+}
+
 /* ---------- prompt ---------- */
 function buildPrompt(existing) {
+  const queue = remainingTopics(existing)
+    .map((t, i) => `${i + 1}. คีย์เวิร์ดหลัก "${t.keyword}" — ${t.angle} (ที่มา: ${t.evidence})`)
+    .join("\n");
   const branches = BRANCHES.map((b) => `- ${b.name}: ${b.address} (${b.hours})`).join("\n");
   const services = servicesData.map((s) => `- ${s.title}`).join("\n");
   const titles = existing.map((e) => `- ${e.title}`).join("\n");
@@ -240,7 +255,12 @@ ${titles}
 
 หน้าที่มีอยู่แล้วและไม่ต้องเขียนเป็นบทความ: หน้าสาขา (${BRANCHES.map((b) => b.area).join(", ")}) และหน้าพื้นที่บริการ (${AREAS.map((a) => a.name).join(", ")})
 
+<คิวหัวข้อที่เจ้าของร้านอยากให้เขียนก่อน>
+${queue || "(เขียนครบทุกหัวข้อในคิวแล้ว ให้เลือกหัวข้อเองตามงานด้านล่าง)"}
+</คิวหัวข้อที่เจ้าของร้านอยากให้เขียนก่อน>
+
 <งาน>
+ถ้าคิวด้านบนยังมีหัวข้อ ให้เขียน**หัวข้อแรกในคิว** ใช้คีย์เวิร์ดหลักตามที่ให้ (ปรับคำให้เป็นธรรมชาติได้เล็กน้อย) และเขียนตามมุมที่กำหนด ถ้าคิวว่าง ให้ทำตามนี้:
 เลือกหัวข้อใหม่ 1 หัวข้อ ที่คนกำลังจะขายทองหรือหลอมทองในพัทยาค้นหาจริง และต้องตอบคนละคำถามกับทุกบทความในรายการด้านบน ไม่ใช่แค่เปลี่ยนคำ
 บทความในรายการมีเรื่องเวลาเปิดร้าน วันอาทิตย์ เงินสด/โอน บัตรประชาชน และใบเสร็จ หลายบทความแล้ว ให้เลือกเรื่องอื่น เช่น ความรู้เรื่องทองชนิดต่างๆ การคำนวณราคา การดูแลทอง การเตรียมตัวก่อนขาย สถานการณ์เฉพาะของคนขายทอง (มรดก ทองหลุดจำนำ ย้ายบ้าน) หรือเรื่องนาฬิกา เครื่องเงิน กรอบพระ
 1 บทความ = 1 เจตนาค้นหา แล้วเขียนให้ครบ
@@ -330,6 +350,13 @@ async function generate(existing) {
 /* ---------- main ---------- */
 async function main() {
   const existing = loadExisting();
+
+  // ดูคิวหัวข้อที่ยังไม่ได้เขียน (data/topicQueue.js) ไม่เรียก AI
+  if (process.argv[2] === "--queue") {
+    const q = remainingTopics(existing);
+    console.log(q.length ? q.map((t, i) => `${i + 1}. ${t.keyword}`).join("\n") : "(คิวว่าง)");
+    process.exit(0);
+  }
 
   // โหมดทดสอบด่านตรวจกับไฟล์ที่มีอยู่ ไม่เรียก AI
   if (process.argv[2] === "--check") {
