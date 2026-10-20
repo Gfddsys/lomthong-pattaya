@@ -15,9 +15,9 @@ import { EN_PAGES } from "@/data/enPages";
 
 const PAGE_URL = `${SITE_URL}/en`;
 const COVER_IMAGE = getUploadedImage("hero", "/images/hero.png");
-const TITLE = "Sell Gold in Pattaya | Free XRF Test, Cash Paid on the Spot";
+const TITLE = "Sell Gold in Pattaya | Gold Buyer, Free XRF Test, Cash Paid";
 const DESCRIPTION =
-  "Sell gold in Pattaya with your passport: 9K-22K, Italian and broken gold, scrap and luxury watches. Free XRF test on the spot, cash in Thai baht. Open daily.";
+  "Gold buyer in Pattaya with 2 shops. Sell 9K-22K, Italian and broken gold or luxury watches with your passport. Free XRF test, cash in Thai baht. Open daily.";
 
 export const metadata = {
   title: { absolute: TITLE },
@@ -55,6 +55,10 @@ const PURITY = [
 ];
 
 const FAQ = [
+  {
+    q: "Where can I sell gold in Pattaya?",
+    a: "At a real gold buyer with a shop you can find on Google Maps, where your gold is weighed and tested in front of you. Our two shops are on South Pattaya Road (closest to Jomtien, Pratumnak and Walking Street) and Soi Noen Plap Wan (closest to North Pattaya and Naklua), both open daily.",
+  },
   {
     q: "Can I sell gold in Pattaya as a foreigner?",
     a: "Yes. Bring your original passport. Tourists can sell too; you do not need a long-stay visa.",
@@ -143,7 +147,7 @@ export default function SellGoldPattayaEn() {
         <p>
           Many people who live in or visit Pattaya bring gold from home: a chain bought in Italy, a ring from
           the UK, a bracelet from Dubai. When the day comes to turn it into baht, the small gold shop down the
-          street often says no. This page explains why, and how selling works at our two shops in Pattaya.
+          street often says no. This page explains why, and how selling works with us, a gold buyer with two shops in Pattaya.
         </p>
 
         <h2>Why some Thai gold shops refuse foreign gold</h2>
@@ -257,7 +261,7 @@ export default function SellGoldPattayaEn() {
           <li>Ask whether the price quoted is the final amount you will receive.</li>
         </ol>
 
-        <h2>Our two shops in Pattaya</h2>
+        <h2>Where to sell gold in Pattaya: our two shops</h2>
         <p>Both shops are open every day, including weekends and public holidays: Noen Plap Wan from 10:00 to 20:00, South Pattaya from 10:30 to 20:00. No appointment needed.</p>
         <div className="en-branches">
           {BRANCHES.map((b) => (
