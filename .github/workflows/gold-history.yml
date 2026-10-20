@@ -1,0 +1,44 @@
+# บันทึกราคาทองประจำวัน → data/gold-history.json → หน้า "ราคาทองย้อนหลัง" (/rakha-thong-yon-lang)
+# รันเองทุกวัน 17:30 น. เวลาไทย (10:30 UTC) · สั่งรันเองได้ที่แท็บ Actions → "บันทึกราคาทองรายวัน" → Run workflow
+# ไม่ต้องใช้ API key (ดึงจาก feed ราคาทองเดียวกับหน้าเว็บ)
+
+name: บันทึกราคาทองรายวัน
+
+on:
+  schedule:
+    - cron: "30 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-history
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: ดึงราคาแล้วบันทึก
+        id: rec
+        run: node scripts/record-gold-price.mjs
+
+      - name: Commit + push
+        env:
+          DAY: ${{ steps.rec.outputs.date }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/gold-history.json
+          git diff --cached --quiet && { echo "ไม่มีอะไรเปลี่ยน"; exit 0; }
+          git commit -m "ราคาทองย้อนหลัง: $DAY"
+          git pull --rebase origin master
+          git push origin HEAD:master

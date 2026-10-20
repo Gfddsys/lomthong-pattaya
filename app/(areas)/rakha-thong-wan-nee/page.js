@@ -6,6 +6,7 @@ import GoldCalculator from "@/components/GoldCalculator";
 import EmbedCode from "@/components/EmbedCode";
 import AutoRefresh from "@/components/AutoRefresh";
 import PriceBoard from "@/components/PriceBoard";
+import { HISTORY_READY } from "@/data/goldHistory";
 
 /* ============================================
    ราคาทองวันนี้ พัทยา — หน้าราคาทอง + เครื่องคิดเลข + โค้ดกล่องราคาให้เว็บอื่นติด
@@ -147,6 +148,11 @@ export default async function RakhaThongWanNee() {
         <p className="gp-source">
           ทองคำแท่งอ้างอิงราคาประกาศของ<strong>สมาคมค้าทองคำ</strong> ทองรูปพรรณเป็นราคาที่คำนวณโดยประมาณ
           หน้านี้ดึงราคาใหม่อัตโนมัติทุก 5 นาที
+          {HISTORY_READY && (
+            <>
+              {" "}· ดู <Link href="/rakha-thong-yon-lang">ราคาทองย้อนหลังรายวัน</Link>
+            </>
+          )}
         </p>
 
         <h2>ราคาทองวันนี้ ขายทองเก่าได้เท่าไร</h2>
