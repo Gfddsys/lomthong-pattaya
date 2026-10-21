@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { reviewCount } from "@/data/reviewStats";
-import { BRANCHES, getBranch } from "@/data/branches";
+import { BRANCHES, getBranch, hoursShort, openingHoursSpec } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
 import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
@@ -19,7 +19,7 @@ function branchFaq(b) {
     },
     {
       q: `${b.shortName} เปิดกี่โมง เปิดวันอาทิตย์ไหม`,
-      a: `${b.hours} รวมวันเสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ์`,
+      a: `${b.hours} รวมวันเสาร์ อาทิตย์ วันหยุดนักขัตฤกษ์โทรถามก่อนได้ที่ ${CONTACT.phoneDisplay}`,
     },
     {
       q: "ขายทองต้องใช้เอกสารอะไรบ้าง",
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }) {
   const b = getBranch(slug);
   if (!b) return {};
   const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
-  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${b.opens}-${b.closes} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,
     description,
@@ -80,14 +80,7 @@ export default async function BranchPage({ params }) {
     },
     geo: { "@type": "GeoCoordinates", latitude: b.lat, longitude: b.lng },
     priceRange: "฿",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
-      ],
-      opens: b.opens,
-      closes: b.closes,
-    },
+    openingHoursSpecification: openingHoursSpec(b),
     hasMap: b.mapUrl,
     sameAs: [b.mapUrl, b.facebookUrl],
   };
@@ -136,7 +129,7 @@ export default async function BranchPage({ params }) {
         <div className="blog-article-meta">
           <span>📍 {b.shortName}</span>
           <span>⭐ Google รีวิว {reviewCount(b.slug)}</span>
-          <span>🕐 ทุกวัน {b.opens}-{b.closes}</span>
+          <span>🕐 {hoursShort(b)}</span>
         </div>
       </header>
 

@@ -60,7 +60,7 @@ export default function EnLayout({ children }) {
                 ))}
                 <li>
                   <span aria-hidden="true">🕐</span>
-                  <span>Open daily: Noen Plap Wan 10:00–20:00, South Pattaya 10:30–20:00</span>
+                  <span>Open daily: Noen Plap Wan 10:00–20:00, South Pattaya Mon–Fri 10:30–20:00, Sat–Sun 10:00–18:00</span>
                 </li>
               </ul>
             </div>

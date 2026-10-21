@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
+import { hoursOn } from '@/data/branches';
 
 /* ============================================
    หาสาขาที่ใกล้ที่สุด + สถานะเปิด/ปิดตอนนี้ (หน้า "ร้านหลอมทองใกล้ฉัน")
@@ -11,7 +12,7 @@ import { CONTACT } from '@/data/contact';
    - ระยะเป็นระยะเส้นตรง ระยะขับรถจริงไกลกว่านี้ → บอกลูกค้าชัดเจน
    - สถานะเปิด/ปิดคิดตามเวลาไทย (Asia/Bangkok) ฝั่งเครื่องลูกค้าเท่านั้น (server snapshot = null)
      เพราะเวลาฝั่ง server กับเครื่องลูกค้าไม่ตรงกัน ถ้า render ตอน SSR จะเกิด hydration mismatch
-   - ร้านเปิดทุกวัน ใช้เวลาเปิดปิดเดียวกันทุกวัน (data/branches.js)
+   - ร้านเปิดทุกวัน แต่บางสาขาเวลาเสาร์-อาทิตย์ต่างจากวันธรรมดา → ดูตาม schedule ใน data/branches.js
 */
 
 const toMin = (hhmm) => {
@@ -19,27 +20,35 @@ const toMin = (hhmm) => {
   return h * 60 + m;
 };
 
+const WEEKDAY = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+// นาทีนับจากต้นสัปดาห์ (อาทิตย์ 00:00) เวลาไทย — เป็นตัวเลขตัวเดียวให้ useSyncExternalStore เทียบค่าได้
 function bangkokMinutesNow() {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Asia/Bangkok',
+    weekday: 'short',
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
   }).formatToParts(new Date());
+  const d = WEEKDAY[parts.find((p) => p.type === 'weekday').value];
   const h = Number(parts.find((p) => p.type === 'hour').value) % 24;
   const m = Number(parts.find((p) => p.type === 'minute').value);
-  return h * 60 + m;
+  return d * 1440 + h * 60 + m;
 }
 
-function openStatus(b, now) {
-  const open = toMin(b.opens);
-  const close = toMin(b.closes);
-  if (now < open) return { open: false, text: `ยังไม่เปิด · เปิด ${b.opens} น.` };
+function openStatus(b, weekMin) {
+  const day = Math.floor(weekMin / 1440);
+  const now = weekMin % 1440;
+  const today = hoursOn(b, day);
+  const open = toMin(today.opens);
+  const close = toMin(today.closes);
+  if (now < open) return { open: false, text: `ยังไม่เปิด · เปิด ${today.opens} น.` };
   if (now < close) {
     const left = close - now;
-    return { open: true, text: left <= 60 ? `เปิดอยู่ · ใกล้ปิด (${b.closes} น.)` : `เปิดอยู่ · ปิด ${b.closes} น.` };
+    return { open: true, text: left <= 60 ? `เปิดอยู่ · ใกล้ปิด (${today.closes} น.)` : `เปิดอยู่ · ปิด ${today.closes} น.` };
   }
-  return { open: false, text: `ปิดแล้ว · เปิดพรุ่งนี้ ${b.opens} น.` };
+  return { open: false, text: `ปิดแล้ว · เปิดพรุ่งนี้ ${hoursOn(b, (day + 1) % 7).opens} น.` };
 }
 
 function distanceKm(lat1, lng1, lat2, lng2) {

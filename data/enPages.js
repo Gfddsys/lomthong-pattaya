@@ -88,7 +88,7 @@ export const EN_PAGES = [
       {
         type: "ul",
         items: [
-          "**South Pattaya**: 225/136 South Pattaya Road, open daily 10:30-20:00. Closest to Jomtien and Pratumnak.",
+          "**South Pattaya**: 225/136 South Pattaya Road, open daily (Mon-Fri 10:30-20:00, Sat-Sun 10:00-18:00). Closest to Jomtien and Pratumnak.",
           "**Noen Plap Wan**: 13/228 Soi Noen Plap Wan, open daily 10:00-20:00. Closest to North Pattaya and Naklua.",
           "A lot of gold? Call 092-883-9799 or message us on LINE before you come.",
         ],
@@ -433,7 +433,7 @@ export const EN_PAGES = [
           "We have **2 shops in Pattaya**: **South Pattaya** (South Pattaya Road) and **Noen Plap Wan** (Soi Noen Plap Wan, off Sukhumvit side).",
           "**Jomtien, Pratumnak, Walking Street, Thepprasit:** South Pattaya shop is closer.",
           "**North Pattaya, Terminal 21, Naklua, Wongamat:** Noen Plap Wan shop is closer.",
-          "Both open **every day**: Noen Plap Wan 10:00-20:00, South Pattaya 10:30-20:00. No appointment."
+          "Both open **every day**: Noen Plap Wan 10:00-20:00, South Pattaya Mon-Fri 10:30-20:00, Sat-Sun 10:00-18:00. No appointment."
         ]
       },
       {
@@ -506,7 +506,7 @@ export const EN_PAGES = [
       },
       {
         "type": "p",
-        "text": "**225/136 South Pattaya Road (Pattaya Tai), Nong Prue.** Open daily 10:30-20:00. The easiest shop for people staying in Jomtien, Pratumnak, around Walking Street and along Thepprasit Road. Thai address for your driver: 225/136 ถ.พัทยาใต้ ต.หนองปรือ"
+        "text": "**225/136 South Pattaya Road (Pattaya Tai), Nong Prue.** Open daily (Mon-Fri 10:30-20:00, Sat-Sun 10:00-18:00). The easiest shop for people staying in Jomtien, Pratumnak, around Walking Street and along Thepprasit Road. Thai address for your driver: 225/136 ถ.พัทยาใต้ ต.หนองปรือ"
       },
       {
         "type": "h2",
@@ -545,7 +545,7 @@ export const EN_PAGES = [
     "faq": [
       {
         "q": "Which gold shop is closest to Jomtien?",
-        "a": "Our South Pattaya shop on South Pattaya Road, about 4 km in a straight line from Jomtien Beach. Open daily 10:30-20:00."
+        "a": "Our South Pattaya shop on South Pattaya Road, about 4 km in a straight line from Jomtien Beach. Open daily (Mon-Fri 10:30-20:00, Sat-Sun 10:00-18:00)."
       },
       {
         "q": "Is there a gold buyer near Walking Street?",
@@ -661,7 +661,7 @@ export const EN_PAGES = [
       },
       {
         "q": "Are you open on Sundays and holidays?",
-        "a": "Yes, every day. Noen Plap Wan 10:00-20:00, South Pattaya 10:30-20:00."
+        "a": "Yes, every day. Noen Plap Wan 10:00-20:00, South Pattaya Mon-Fri 10:30-20:00, Sat-Sun 10:00-18:00."
       }
     ]
   },

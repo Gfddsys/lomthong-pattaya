@@ -31,6 +31,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ARTICLE_DIR = path.join(ROOT, "content", "articles");
 const STATIC_BLOG_DIR = path.join(ROOT, "app", "blog");
 const MAX_ATTEMPTS = 3;
+// เวลาที่บทความพูดถึงได้ = เวลาเปิด/ปิดของทุกสาขา (data/branches.js)
+const SHOP_TIMES = new Set(BRANCHES.flatMap((b) => b.schedule.flatMap((s) => [s.opens, s.closes])));
 // หัวข้อที่คล้ายบทความเดิมเกินค่านี้ = ซ้ำ (วัดจากตัวอักษรคู่ที่ซ้ำกันในชื่อบทความ 0-1)
 // ตั้งจากการเทียบบทความเดิม: คู่ที่ซ้ำจริง (วันอาทิตย์ / เงินสด / ใบเสร็จ / บัตรประชาชน) ได้ 0.34-0.68
 const SIMILARITY_LIMIT = 0.34;
@@ -193,7 +195,7 @@ export function validate(a, existing) {
     if (m[0].replace(/\D/g, "") !== shopPhone) problems.push(`เบอร์โทร "${m[0]}" ไม่ใช่เบอร์ร้าน (${CONTACT.phoneDisplay})`);
   }
   for (const m of text.matchAll(/(\d{1,2})[:.](\d{2})\s*น/g)) {
-    if (!["10:00", "10:30", "20:00"].includes(`${m[1].padStart(2, "0")}:${m[2]}`)) problems.push(`เวลา "${m[0]}" ไม่ตรงเวลาเปิดร้าน (เนินพลับหวาน 10:00-20:00 น. / พัทยาใต้ 10:30-20:00 น.)`);
+    if (!SHOP_TIMES.has(`${m[1].padStart(2, "0")}:${m[2]}`)) problems.push(`เวลา "${m[0]}" ไม่ตรงเวลาเปิดร้าน (${BRANCHES.map((b) => `${b.shortName} ${b.hours}`).join(" / ")})`);
   }
   const FALSE_CLAIMS = [
     [/ประสบการณ์(กว่า|มากกว่า)?\s*\d+\s*ปี/, "ห้ามอ้างจำนวนปีประสบการณ์"],

@@ -262,7 +262,7 @@ export default function SellGoldPattayaEn() {
         </ol>
 
         <h2>Where to sell gold in Pattaya: our two shops</h2>
-        <p>Both shops are open every day, including weekends and public holidays: Noen Plap Wan from 10:00 to 20:00, South Pattaya from 10:30 to 20:00. No appointment needed.</p>
+        <p>Both shops are open every day, including weekends and public holidays: Noen Plap Wan from 10:00 to 20:00, South Pattaya from 10:30 to 20:00 on weekdays and 10:00 to 18:00 on Saturday and Sunday. No appointment needed.</p>
         <div className="en-branches">
           {BRANCHES.map((b) => (
             <div key={b.slug} className="en-branch">

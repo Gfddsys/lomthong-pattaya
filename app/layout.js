@@ -2,7 +2,7 @@ import "./globals.css";
 import { Prompt } from "next/font/google";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
-import { BRANCHES } from "@/data/branches";
+import { BRANCHES, openingHoursSpec } from "@/data/branches";
 import { SITE_URL } from "@/data/site";
 import ScrollAnimation from "@/components/ScrollAnimation";
 
@@ -163,20 +163,7 @@ const schemaData = {
       hasMap: b.mapUrl,
       sameAs: [b.mapUrl, b.facebookUrl],
       priceRange: "฿",
-      openingHoursSpecification: {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-        opens: b.opens,
-        closes: b.closes,
-      },
+      openingHoursSpecification: openingHoursSpec(b),
     })),
     {
       "@type": "WebSite",
