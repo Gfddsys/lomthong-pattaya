@@ -203,13 +203,17 @@ export function validate(a, existing) {
     [/ลูกค้า(กว่า|มากกว่า|แล้ว)\s*[\d,]+/, "ห้ามแต่งจำนวนลูกค้า"],
     [/รางวัล/, "ห้ามอ้างรางวัล"],
     [/[\d,]{5,}\s*บาท|บาทละ\s*[\d,]{4,}/, "ห้ามใส่ราคาทองเป็นตัวเลขตายตัว (ราคาเปลี่ยนทุกวัน)"],
-    [/(\d+)\s*สาขา/, null], // ตรวจด้านล่าง
+    [/(\d+)\s*สาขา(?:\s*ใน\s*(พัทยา|ชลบุรี))?/, null], // ตรวจด้านล่าง ("2 สาขาในพัทยา" นับเฉพาะสาขาในเมืองนั้น)
   ];
   for (const [re, msg] of FALSE_CLAIMS) {
     const m = text.match(re);
     if (!m) continue;
     if (msg) problems.push(`${msg}: "${m[0]}"`);
-    else if (Number(m[1]) !== BRANCHES.length) problems.push(`ร้านมี ${BRANCHES.length} สาขา ไม่ใช่ "${m[0]}"`);
+    else {
+      // "ในชลบุรี" = ทั้งจังหวัด (พัทยาก็อยู่ในชลบุรี) → นับทุกสาขา
+      const n = m[2] === "พัทยา" ? BRANCHES.filter((b) => b.city === "พัทยา").length : BRANCHES.length;
+      if (Number(m[1]) !== n) problems.push(`ร้านมี ${n} สาขา${m[2] ? `ใน${m[2]}` : ""} ไม่ใช่ "${m[0]}"`);
+    }
   }
 
   // 4) สำนวน AI
