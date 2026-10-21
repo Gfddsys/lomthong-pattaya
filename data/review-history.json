@@ -1,11 +1,17 @@
 [
   {
     "date": "2026-10-21",
-    "time": "20:00",
+    "time": "23:25",
     "source": "manual",
     "branches": {
-      "pattaya-tai": { "count": 35, "rating": 5 },
-      "noen-plap-wan": { "count": 53, "rating": 5 }
+      "pattaya-tai": {
+        "count": 40,
+        "rating": 5
+      },
+      "noen-plap-wan": {
+        "count": 57,
+        "rating": 5
+      }
     }
   }
 ]
