@@ -6,7 +6,8 @@ import { CONTACT } from "@/data/contact";
 /* ============================================
    ราคาทองย้อนหลัง พัทยา — สรุปราคาประกาศจริงรายวัน/รายเดือน (ไม่มีการทำนาย)
    ============================================
-   ข้อมูล: data/gold-history.json บันทึกทุกวัน 17:30 น. โดย .github/workflows/gold-history.yml
+   ข้อมูล: data/gold-history.json บันทึกวันละครั้งช่วงเย็น โดย .github/workflows/gold-history.yml
+   (ตั้งไว้ 17:30 แต่ GitHub รันตามเวลาจริงช้าได้หลายชั่วโมง → แสดงเวลาที่บันทึกจริงของแต่ละวันในตาราง)
    ⚠️ ข้อมูลน้อยกว่า HISTORY_MIN_DAYS วัน (data/goldHistory.js) = noindex + ไม่อยู่ใน sitemap (กัน Google เห็นเป็นหน้าบาง)
       ครบแล้วจะเปิดเองตอน deploy ถัดไป (การบันทึกแต่ละวันคือ push → Vercel build ใหม่อยู่แล้ว)
 */
@@ -14,7 +15,7 @@ import { CONTACT } from "@/data/contact";
 const PATH = "/rakha-thong-yon-lang";
 const TITLE = "ราคาทองย้อนหลัง รายวัน รายเดือน ทองคำแท่ง ทองรูปพรรณ";
 const DESCRIPTION =
-  "ราคาทองย้อนหลังรายวัน อ้างอิงราคาประกาศสมาคมค้าทองคำ บันทึกทุกวัน 17:30 น. ดูราคาสูงสุด ต่ำสุด และการเปลี่ยนแปลงของแต่ละเดือน ทั้งทองคำแท่งและทองรูปพรรณ";
+  "ราคาทองย้อนหลังรายวัน อ้างอิงราคาประกาศสมาคมค้าทองคำ บันทึกทุกวันช่วงเย็น ดูราคาสูงสุด ต่ำสุด และการเปลี่ยนแปลงของแต่ละเดือน ทั้งทองคำแท่งและทองรูปพรรณ";
 
 export const metadata = {
   title: TITLE,
@@ -72,7 +73,7 @@ export default function RakhaThongYonLang() {
       <header className="blog-article-header">
         <h1>ราคาทองย้อนหลัง รายวัน และสรุปรายเดือน</h1>
         <div className="blog-article-meta">
-          <span>📅 บันทึกทุกวัน 17:30 น.</span>
+          <span>📅 บันทึกวันละครั้งช่วงเย็น</span>
           <span>📊 อ้างอิงราคาประกาศสมาคมค้าทองคำ</span>
           <span>🗂 รวม {history.length} วัน{!ready && ` (เปิดให้ค้นหาเมื่อครบ ${HISTORY_MIN_DAYS} วัน)`}</span>
         </div>
@@ -80,12 +81,12 @@ export default function RakhaThongYonLang() {
 
       <div className="blog-article-content">
         <p>
-          หน้านี้บันทึก<strong>ราคาทองที่ประกาศจริง</strong>ทุกวันเวลา 17:30 น. ทั้งราคารับซื้อและขายออกของทองคำแท่ง 96.5%
+          หน้านี้บันทึก<strong>ราคาทองที่ประกาศจริง</strong>วันละครั้งช่วงเย็น ทั้งราคารับซื้อและขายออกของทองคำแท่ง 96.5%
           และทองรูปพรรณ (ราคาประมาณ) เพื่อให้คุณดูย้อนหลังได้ว่าราคาขึ้นลงอย่างไรก่อนตัดสินใจขายทอง
           ไม่มีการทำนายราคา ดูราคาล่าสุดแบบอัปเดตทุก 5 นาทีได้ที่ <Link href="/rakha-thong-wan-nee">ราคาทองวันนี้</Link>
         </p>
 
-        {months.length === 0 && <p>กำลังเริ่มเก็บข้อมูล ราคาวันแรกจะขึ้นหลัง 17:30 น.</p>}
+        {months.length === 0 && <p>กำลังเริ่มเก็บข้อมูล ราคาวันแรกจะขึ้นช่วงเย็นวันนี้</p>}
 
         {months.map((ym, idx) => {
           const rows = byMonth[ym];
@@ -119,7 +120,7 @@ export default function RakhaThongYonLang() {
                   <tbody>
                     {[...rows].reverse().map((r) => (
                       <tr key={r.date}>
-                        <td>{dayLabel(r.date)}</td>
+                        <td>{dayLabel(r.date)} <span style={{ color: "var(--color-text-muted)", fontSize: "0.85em" }}>{r.time} น.</span></td>
                         <td>{fmt(r.barBuy)}</td>
                         <td>{fmt(r.barSell)}</td>
                         <td>{fmt(r.ornamentBuy)}</td>
@@ -130,7 +131,7 @@ export default function RakhaThongYonLang() {
               </div>
               {idx === 0 && (
                 <p className="gp-source">
-                  * ทองรูปพรรณเป็นราคาคำนวณโดยประมาณ ราคาหน้าร้านแต่ละร้านอาจต่างกัน ราคาที่บันทึกคือราคา ณ เวลา 17:30 น.
+                  * ทองรูปพรรณเป็นราคาคำนวณโดยประมาณ ราคาหน้าร้านแต่ละร้านอาจต่างกัน ราคาที่บันทึกคือราคา ณ เวลาที่ระบุในตาราง
                   ของแต่ละวัน วันนั้นสมาคมอาจปรับราคาหลายครั้ง
                 </p>
               )}
