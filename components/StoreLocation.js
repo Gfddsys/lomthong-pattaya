@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
+import { reviewCount } from '@/data/reviewStats';
 import { BRANCHES } from '@/data/branches';
 import { AREAS } from '@/data/areas';
 import MapEmbed from '@/components/MapEmbed';
@@ -79,7 +80,7 @@ export default function StoreLocation() {
               <div className="store-info">
                 <h3>
                   {b.shortName}
-                  <span className="store-review-badge">★ Google รีวิว {b.reviews}</span>
+                  <span className="store-review-badge">★ Google รีวิว {reviewCount(b.slug)}</span>
                 </h3>
 
                 <ul className="store-details">

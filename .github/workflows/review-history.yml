@@ -1,0 +1,47 @@
+# บันทึกจำนวนรีวิว Google ทั้ง 2 สาขา → data/review-history.json (สถิติรีวิวหลังบ้าน)
+# รันเองทุกวัน 09:00 น. เวลาไทย (02:00 UTC) · สั่งรันเองได้ที่แท็บ Actions → "บันทึกจำนวนรีวิวรายวัน" → Run workflow
+# ต้องตั้ง secret GOOGLE_PLACES_API_KEY ก่อน (Settings → Secrets → Actions) ไม่มีคีย์ = ข้าม ไม่ error
+
+name: บันทึกจำนวนรีวิวรายวัน
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: review-history
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: ดึงจำนวนรีวิวแล้วบันทึก
+        id: rec
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+        run: node scripts/record-reviews.mjs
+
+      - name: Commit + push
+        env:
+          DAY: ${{ steps.rec.outputs.date }}
+          TOTAL: ${{ steps.rec.outputs.total }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/review-history.json
+          git diff --cached --quiet && { echo "ไม่มีอะไรเปลี่ยน"; exit 0; }
+          git commit -m "สถิติรีวิว: $DAY รวม $TOTAL"
+          git pull --rebase origin master
+          git push origin HEAD:master

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { reviewCount } from "@/data/reviewStats";
 import { BRANCHES, getBranch } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
 import { servicesData } from "@/data/services";
@@ -134,7 +135,7 @@ export default async function BranchPage({ params }) {
         <h1>ร้านทอง {b.area} — รับซื้อทอง หลอมทอง</h1>
         <div className="blog-article-meta">
           <span>📍 {b.shortName}</span>
-          <span>⭐ Google รีวิว {b.reviews}</span>
+          <span>⭐ Google รีวิว {reviewCount(b.slug)}</span>
           <span>🕐 ทุกวัน {b.opens}-{b.closes}</span>
         </div>
       </header>

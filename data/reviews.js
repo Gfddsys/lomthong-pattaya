@@ -8,11 +8,13 @@
    ไม่ใส่วันที่ เพราะ "x เดือนที่แล้ว" จะเพี้ยนไปเรื่อย ๆ
    ⚠️ ห้ามแต่งรีวิวเพิ่ม ห้ามแก้ข้อความลูกค้า ถ้าจะเพิ่มให้คัดลอกจาก Google Maps จริงเท่านั้น
 */
+import { REVIEW_TOTAL, REVIEW_CHECKED_AT } from "./reviewStats";
 
+// จำนวนรวม + วันที่ตรวจ มาจากสถิติรีวิวรายวัน (data/reviewStats.js) ไม่ต้องแก้มือ
 export const REVIEW_TOTALS = {
-  count: 88,
+  count: REVIEW_TOTAL,
   rating: "5.0",
-  checkedAt: "21 ต.ค. 2569",
+  checkedAt: REVIEW_CHECKED_AT,
 };
 
 export const REVIEWS = [
