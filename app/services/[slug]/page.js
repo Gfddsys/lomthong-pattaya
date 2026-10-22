@@ -19,7 +19,7 @@ const SERVICE_IMAGE_SLOT = {
   "watch-buying": "watch",
   "online-valuation": "valuation",
   "silver-buying": "silver",
-  "khai-fak-thong": "about-shop",
+  "khai-fak-thong": "khai-fak",
 };
 
 // สร้างหน้าบริการทั้งหมดเป็น static ตอน build (เดิมเป็น dynamic = render ใหม่ทุกครั้งที่มีคนเข้า ช้ากว่า)
