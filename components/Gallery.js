@@ -2,7 +2,10 @@ import Image from 'next/image';
 import { getUploadedImages } from '@/lib/getImage';
 
 export default function Gallery() {
+  // ลำดับชื่อตรงกับลำดับไฟล์ในโฟลเดอร์ (เรียงตามชื่อไฟล์: 0-a, 0-b มาก่อน)
   const titles = [
+    'จ่ายเงินสดทันทีหลังตกลงราคา',
+    'รับซื้อนาฬิกาแบรนด์เนม',
     'ผลงานหลอมทองคำแท่ง',
     'ทองรูปพรรณ',
     'ทองเก่าก่อนหลอม',

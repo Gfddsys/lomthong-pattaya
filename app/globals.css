@@ -3563,3 +3563,19 @@ a.contact-item--link:hover {
   font-size: 0.8rem;
   color: var(--color-text-muted);
 }
+
+/* ---------- รูปจริงในร้าน หน้าสาขา (app/branch/[slug]) ---------- */
+.branch-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: var(--space-xl);
+}
+
+.branch-photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(92, 0, 0, 0.1);
+}

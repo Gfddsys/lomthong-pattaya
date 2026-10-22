@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { reviewCount } from "@/data/reviewStats";
@@ -7,6 +8,7 @@ import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
 import SocialLinks from "@/components/SocialLinks";
+import { getUploadedImages } from "@/lib/getImage";
 
 
 /* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
@@ -58,6 +60,8 @@ export default async function BranchPage({ params }) {
   const { slug } = await params;
   const b = getBranch(slug);
   if (!b) notFound();
+  // รูปจริงในร้าน วางที่ public/images/uploads/branch-<slug>/ (ไม่มีรูป = ไม่แสดงส่วนนี้)
+  const photos = getUploadedImages(`branch-${b.slug}`).slice(0, 2);
 
   const schema = {
     "@context": "https://schema.org",
@@ -67,7 +71,7 @@ export default async function BranchPage({ params }) {
     name: b.name,
     alternateName: b.gbpName,
     parentOrganization: { "@id": `${SITE_URL}/#business` },
-    image: `${SITE_URL}/images/og-cover.jpg`,
+    image: photos.length ? photos.map((p) => `${SITE_URL}${p}`) : `${SITE_URL}/images/og-cover.jpg`,
     url: `${SITE_URL}/branch/${b.slug}`,
     telephone: CONTACT.phoneDisplay,
     address: {
@@ -132,6 +136,23 @@ export default async function BranchPage({ params }) {
           <span>🕐 {hoursShort(b)}</span>
         </div>
       </header>
+
+      {photos.length > 0 && (
+        <div className="branch-photos">
+          {photos.map((src, i) => (
+            <div key={src} className="branch-photo">
+              <Image
+                src={src}
+                alt={i === 0 ? `ร้านเฮงศิริ หลอมทองพัทยา พร้อมให้บริการรับซื้อทอง ${b.area}` : `เคาน์เตอร์ตรวจทองต่อหน้าลูกค้า ร้านเฮงศิริ หลอมทองพัทยา`}
+                fill
+                sizes="(max-width: 768px) 50vw, 400px"
+                style={{ objectFit: "cover" }}
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="store-map" style={{ marginBottom: "var(--space-2xl)" }}>
         <iframe
