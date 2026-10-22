@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
 import PriceBoard from './PriceBoard';
-import BranchRatings from './BranchRatings';
 import { getUploadedImage } from '@/lib/getImage';
 
 export default function Hero() {
@@ -74,9 +73,6 @@ export default function Hero() {
               รับซื้อทองเก่าให้ราคาสูงพิเศษ
             </a>
           </div>
-
-          {/* ดาว + จำนวนรีวิว Google ของแต่ละสาขา ให้ลูกค้าเห็นความน่าเชื่อถือก่อนเลื่อนลง */}
-          <BranchRatings variant="hero" />
 
           {/* ป้ายราคาทอง/แท่งเงิน (ภาพป้ายหน้าร้าน + ราคาจริงอัปเดตทุก 5 นาที) */}
           <div className="hero-price-board">
