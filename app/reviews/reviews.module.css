@@ -149,6 +149,35 @@
   color: var(--color-text-muted);
 }
 
+/* ดาว + จำนวนรีวิวใต้ที่อยู่ */
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: -6px 0 14px;
+  font-size: 1rem;
+}
+
+.ratingStars {
+  color: #e0a800;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+}
+
+.rating b {
+  color: var(--color-text);
+}
+
+.ratingCount {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--tint);
+  border: 1px solid var(--tint-border);
+  color: var(--accent);
+  font-weight: 700;
+}
+
 .option {
   border: 1px solid var(--tint-border);
   background: var(--tint);

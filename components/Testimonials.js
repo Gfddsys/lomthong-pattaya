@@ -3,6 +3,7 @@ import { CONTACT } from '@/data/contact';
 import { BRANCHES, mapsAppUrl } from '@/data/branches';
 import { REVIEWS, REVIEW_TOTALS } from '@/data/reviews';
 import ReviewSlider from './ReviewSlider';
+import BranchRatings from './BranchRatings';
 
 /* โลโก้ Google 4 สี (SVG) เพื่อสื่อว่าเป็นรีวิวจริงบน Google */
 const GoogleG = ({ size = 18 }) => (
@@ -44,6 +45,7 @@ export default function Testimonials() {
             <span className="reviews-google-chip-stars" aria-hidden="true">★★★★★</span>
             <span>รีวิวจริงจากลูกค้าบน Google</span>
           </a>
+          <BranchRatings />
           <div className="gold-divider"></div>
         </div>
 

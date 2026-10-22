@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BRANCHES, mapsAppUrl, reviewUrl } from "@/data/branches";
+import { reviewCount, reviewRating } from "@/data/reviewStats";
 import styles from "./reviews.module.css";
 
 /* การ์ดรีวิวของแต่ละสาขา ใช้ทั้งหน้า /reviews (ทุกสาขา) และ /reviews/<slug> (สาขาเดียว)
@@ -29,6 +30,12 @@ export default function ReviewCards({ slug }) {
           <section key={b.slug} className={`${styles.branch} ${styles[b.slug] ?? ""}`}>
             <h2 className={styles.branchName}>{b.shortName}</h2>
             <p className={styles.address}>{b.address}</p>
+            {/* ดาว + จำนวนรีวิวปัจจุบันของสาขา (อัปเดตทุกคืนจาก Google Maps) */}
+            <p className={styles.rating}>
+              <span className={styles.ratingStars} aria-hidden="true">★★★★★</span>
+              <b>{reviewRating(b.slug)}</b>
+              <span className={styles.ratingCount}>{reviewCount(b.slug)} รีวิว</span>
+            </p>
 
             <div className={styles.option}>
               <a href={reviewUrl(b)} className={styles.primary} rel="noopener">
