@@ -2,7 +2,7 @@ import ReviewCards from "./ReviewCards";
 
 export const metadata = {
   title: "รีวิวร้านบน Google",
-  description: "รีวิวร้านหลอมทองพัทยา (เฮงศิริ) บน Google Maps เลือกสาขาพัทยาใต้หรือสาขาเนินพลับหวาน",
+  description: "รีวิวร้านเฮงศิริ หลอมทองพัทยา บน Google Maps เลือกสาขาที่ใช้บริการ",
   alternates: { canonical: "/reviews" },
 };
 

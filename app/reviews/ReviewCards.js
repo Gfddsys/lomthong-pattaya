@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { BRANCHES, mapsAppUrl, reviewUrl } from "@/data/branches";
-import { reviewCount, reviewRating } from "@/data/reviewStats";
+import { REVIEW_BRANCHES, mapsAppUrl, reviewUrl } from "@/data/branches";
+import { reviewRating } from "@/data/reviewStats";
 import styles from "./reviews.module.css";
 
-/* การ์ดรีวิวของแต่ละสาขา ใช้ทั้งหน้า /reviews (ทุกสาขา) และ /reviews/<slug> (สาขาเดียว)
+/* หน้ารีวิว: /reviews = เลือกสาขา (ปุ่มใหญ่) · /reviews/<slug> = การ์ดรีวิวของสาขาเดียว
    แต่ละสาขามี 2 ทาง:
    1. เขียนรีวิวเลย — เปิดหน้าให้ดาว/พิมพ์รีวิวตรง (ลิงก์เดียวกับ g.page/r/.../review ที่ GBP แจก)
       ถ้าเบราว์เซอร์ล็อกอิน Google อยู่ (Android ส่วนใหญ่) จะเข้าหน้าพิมพ์รีวิวทันที
@@ -12,71 +12,98 @@ import styles from "./reviews.module.css";
    ทุกปุ่มส่งลูกค้าไป Google โดยตรง ไม่มีการคัดกรองว่าพอใจหรือไม่
    (Google ห้าม "review gating" คือถามความพอใจก่อนแล้วส่งเฉพาะคนที่พอใจไปรีวิว) */
 export default function ReviewCards({ slug }) {
-  const branches = slug ? BRANCHES.filter((b) => b.slug === slug) : BRANCHES;
-  const others = slug ? BRANCHES.filter((b) => b.slug !== slug) : [];
+  const branch = slug ? REVIEW_BRANCHES.find((b) => b.slug === slug) : null;
+  const others = slug ? REVIEW_BRANCHES.filter((b) => b.slug !== slug) : [];
 
   return (
     <>
       <section className={styles.hero}>
-        <h1 className={styles.brand}>หลอมทองพัทยา</h1>
-        <p className={styles.tagline}>รับซื้อทอง · หลอมทอง พัทยา</p>
+        <h1 className={styles.brand}>เฮงศิริ</h1>
+        <p className={styles.tagline}>รับซื้อทอง · หลอมทอง · รับซื้อนาฬิกา พัทยา ชลบุรี</p>
         <p className={styles.thanks}>ขอบคุณที่ไว้วางใจเฮงศิริครับ 🙏</p>
         <div className={styles.stars} aria-hidden="true">★★★★★</div>
-        <p className={styles.ask}>ทุกรีวิวของคุณลูกค้ามีความหมายต่อพวกเรามากครับ ขอบคุณครับ 🙏</p>
+        <p className={styles.ask}>ขอบคุณที่ไว้วางใจเฮงศิริ ทุกรีวิวคือกำลังใจของเรา 🙏</p>
       </section>
 
-      <div className={branches.length > 1 ? styles.grid : styles.single}>
-        {branches.map((b) => (
-          <section key={b.slug} className={`${styles.branch} ${styles[b.slug] ?? ""}`}>
-            <h2 className={styles.branchName}>{b.shortName}</h2>
-            <p className={styles.address}>{b.address}</p>
-            {/* ดาว + จำนวนรีวิวปัจจุบันของสาขา (อัปเดตทุกคืนจาก Google Maps) */}
-            <p className={styles.rating}>
-              <span className={styles.ratingStars} aria-hidden="true">★★★★★</span>
-              <b>{reviewRating(b.slug)}</b>
-              <span className={styles.ratingCount}>{reviewCount(b.slug)} รีวิว</span>
-            </p>
-
-            <div className={styles.option}>
-              <a href={reviewUrl(b)} className={styles.primary} rel="noopener">
-                <GoogleIcon />
-                เขียนรีวิวเลย
-              </a>
-              <p className={styles.hint}>เปิดหน้าให้ดาวและพิมพ์รีวิวทันที</p>
-            </div>
-
-            <div className={styles.option}>
-              <p className={styles.optionLabel}>ถ้าระบบให้ล็อกอิน Gmail ใช้แอป Google Maps แทน</p>
-              <a href={mapsAppUrl(b)} className={styles.secondary} rel="noopener">
-                <MapsPin />
-                เปิดในแอป Google Maps
-              </a>
-              <ol className={styles.steps}>
-                <li>
-                  เลื่อนลง กดแท็บ <strong>รีวิว</strong>
-                </li>
-                <li>
-                  กด <strong>เขียนรีวิว</strong> แล้วให้ดาวได้เลย
-                </li>
-              </ol>
-            </div>
-          </section>
-        ))}
-      </div>
+      {/* /reviews = หน้าเลือกสาขา (ลิงก์ใน LINE / เพจ) · /reviews/<slug> = การ์ดรีวิวของสาขานั้น (QR บนเคาน์เตอร์) */}
+      {branch ? (
+        <div className={styles.single}>
+          {branch.upcoming ? <UpcomingCard b={branch} /> : <BranchCard b={branch} />}
+        </div>
+      ) : (
+        <nav className={styles.chooser} aria-label="เลือกสาขาที่จะรีวิว">
+          <p className={styles.chooserLabel}>เลือกสาขาที่ใช้บริการ</p>
+          {REVIEW_BRANCHES.map((b) => (
+            <Link key={b.slug} href={`/reviews/${b.slug}`} className={`${styles.choice} ${b.upcoming ? styles.choiceSoon : ""}`}>
+              <span>รีวิว{b.menuName}</span>
+              {b.upcoming ? <span className={styles.soonBadge}>เร็วๆ นี้</span> : <span aria-hidden="true">→</span>}
+            </Link>
+          ))}
+        </nav>
+      )}
 
       {others.length > 0 && (
         <p className={styles.switch}>
           ไม่ใช่สาขานี้?{" "}
-          {others.map((b) => (
-            <Link key={b.slug} href={`/reviews/${b.slug}`}>
-              รีวิว{b.shortName}
-            </Link>
+          {others.map((b, i) => (
+            <span key={b.slug}>
+              {i > 0 && " · "}
+              <Link href={`/reviews/${b.slug}`}>รีวิว{b.menuName}</Link>
+            </span>
           ))}
         </p>
       )}
 
       <p className={styles.en}>Thank you! Tap a button above to review us on Google.</p>
     </>
+  );
+}
+
+function BranchCard({ b }) {
+  return (
+    <section className={`${styles.branch} ${styles[b.slug] ?? ""}`}>
+      <h2 className={styles.branchName}>{b.shortName}</h2>
+      <p className={styles.address}>{b.address}</p>
+      {/* ดาวอย่างเดียว ไม่โชว์จำนวนรีวิว (ตามบรีฟ: จำนวนดูที่หน้าแรก) */}
+      <p className={styles.rating}>
+        <span className={styles.ratingStars} aria-hidden="true">★★★★★</span>
+        <b>{reviewRating(b.slug)}</b>
+      </p>
+
+      <div className={styles.option}>
+        <a href={reviewUrl(b)} className={styles.primary} rel="noopener">
+          <GoogleIcon />
+          เขียนรีวิวเลย
+        </a>
+      </div>
+
+      <div className={styles.option}>
+        <p className={styles.optionLabel}>ถ้าระบบให้ล็อกอิน Gmail ใช้แอป Google Maps แทน</p>
+        <a href={mapsAppUrl(b)} className={styles.secondary} rel="noopener">
+          <MapsPin />
+          เปิดในแอป Google Maps
+        </a>
+        <ol className={styles.steps}>
+          <li>
+            เลื่อนลง กดแท็บ <strong>รีวิว</strong>
+          </li>
+          <li>
+            กด <strong>เขียนรีวิว</strong> แล้วให้ดาวได้เลย
+          </li>
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+// สาขาที่ยังไม่มีหมุด Google Maps — เพิ่มปุ่มรีวิวเมื่อเปิดสาขาและได้หมุดแล้ว
+function UpcomingCard({ b }) {
+  return (
+    <section className={styles.branch}>
+      <h2 className={styles.branchName}>{b.shortName}</h2>
+      <p className={styles.soonText}>สาขานี้กำลังจะเปิดเร็วๆ นี้</p>
+      <p className={styles.hint}>ปุ่มรีวิวบน Google Maps จะมาเมื่อเปิดสาขา ขอบคุณที่รอครับ 🙏</p>
+    </section>
   );
 }
 

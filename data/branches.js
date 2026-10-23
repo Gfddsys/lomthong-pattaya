@@ -98,6 +98,22 @@ export function openingHoursSpec(b) {
   }));
 }
 
+// สาขาที่กำลังจะเปิด — ยังไม่อยู่ใน BRANCHES (ไม่โชว์หน้าสาขา แผนที่ หรือข้อมูลร้านให้ Google)
+// ใช้แค่เมนูรีวิว + หน้า /reviews/<slug> (ยังไม่มีหมุด Google Maps → ขึ้นว่ากำลังจะเปิด)
+// เปิดสาขาจริงแล้ว: ย้ายไปใส่ใน BRANCHES พร้อมที่อยู่ พิกัด placeId แล้วลบออกจากรายการนี้
+export const UPCOMING_BRANCHES = [
+  { slug: "mueang-mai-chonburi", shortName: "สาขาเมืองใหม่ ชลบุรี", city: "ชลบุรี" },
+];
+
+// ชื่อในเมนูรีวิว (เมนูบน) — ตามบรีฟ: ใส่ "พัทยา" หน้าเนินพลับหวาน ให้รู้ว่าอยู่พัทยา
+const MENU_NAME = { "noen-plap-wan": "สาขาพัทยาเนินพลับหวาน" };
+
+// ทุกสาขาที่มีหน้ารีวิว เรียงตามเมนู (สาขาที่ยังไม่เปิดมี upcoming: true)
+export const REVIEW_BRANCHES = [
+  ...BRANCHES.map((b) => ({ ...b, menuName: MENU_NAME[b.slug] ?? b.shortName })),
+  ...UPCOMING_BRANCHES.map((b) => ({ ...b, menuName: b.shortName, upcoming: true })),
+];
+
 // ลิงก์เปิดหน้าเขียนรีวิวของสาขาบน Google Maps
 export function reviewUrl(b) {
   return `https://search.google.com/local/writereview?placeid=${b.placeId}`;

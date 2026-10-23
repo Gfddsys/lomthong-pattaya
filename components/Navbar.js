@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CONTACT } from '@/data/contact';
+import { REVIEW_BRANCHES } from '@/data/branches';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,7 +28,12 @@ export default function Navbar() {
     { label: 'รู้จักเรา', href: '/#about' },
     { label: 'บริการ', href: '/#services' },
     { label: 'ผลงาน', href: '/#gallery' },
-    { label: 'รีวิว', href: '/reviews' },
+    {
+      label: 'รีวิว',
+      href: '/reviews',
+      // เอาเมาส์ชี้แล้วขึ้นรายชื่อสาขา 1 สาขา = 1 หน้า (มือถือ: แสดงเป็นรายการย่อยใต้ "รีวิว")
+      children: REVIEW_BRANCHES.map((b) => ({ label: `รีวิว${b.menuName}`, href: `/reviews/${b.slug}` })),
+    },
     { label: 'ราคาทอง', href: '/rakha-thong-wan-nee' },
     { label: 'บทความ', href: '/blog' },
     { label: 'ติดต่อเรา', href: '/#contact' },
@@ -55,15 +61,28 @@ export default function Navbar() {
         {/* Menu Links */}
         <ul className={`navbar-menu${menuOpen ? ' active' : ''}`} role="menubar">
           {menuLinks.map((link) => (
-            <li key={link.href} role="none">
+            <li key={link.href} role="none" className={link.children ? 'navbar-item-has-dropdown' : undefined}>
               <Link
                 href={link.href}
                 className="navbar-link"
                 role="menuitem"
+                aria-haspopup={link.children ? 'true' : undefined}
                 onClick={handleLinkClick}
               >
                 {link.label}
+                {link.children && <span className="navbar-caret" aria-hidden="true">▾</span>}
               </Link>
+              {link.children && (
+                <ul className="navbar-dropdown" role="menu" aria-label={link.label}>
+                  {link.children.map((c) => (
+                    <li key={c.href} role="none">
+                      <Link href={c.href} className="navbar-dropdown-link" role="menuitem" onClick={handleLinkClick}>
+                        {c.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>

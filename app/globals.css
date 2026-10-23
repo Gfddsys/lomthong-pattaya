@@ -3579,3 +3579,113 @@ a.contact-item--link:hover {
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(92, 0, 0, 0.1);
 }
+
+/* ---------- เมนูรีวิวแบบเลือกสาขา (components/Navbar.js) ---------- */
+.navbar-item-has-dropdown {
+  position: relative;
+}
+
+.navbar-caret {
+  margin-left: 4px;
+  font-size: 0.7em;
+  vertical-align: middle;
+}
+
+.navbar-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 20;
+  min-width: 250px;
+  margin-top: 14px;
+  padding: 8px;
+  list-style: none;
+  background: var(--gradient-gold);
+  border-radius: 14px;
+  box-shadow: 0 14px 34px rgba(92, 0, 0, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+/* สะพานโปร่งใสระหว่างเมนูกับกล่อง กันกล่องปิดตอนเลื่อนเมาส์ลงมา */
+.navbar-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.navbar-item-has-dropdown:hover .navbar-dropdown,
+.navbar-item-has-dropdown:focus-within .navbar-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.navbar-dropdown-link {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #3a2a00;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navbar-dropdown-link:hover,
+.navbar-dropdown-link:focus-visible {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-primary);
+}
+
+/* มือถือ/แท็บเล็ต (เมนูเต็มจอ): แสดงสาขาเป็นปุ่มทองเล็กใต้คำว่า "รีวิว" ไม่ต้องชี้เมาส์ */
+@media (max-width: 1180px) {
+  /* เมนูยาวขึ้น 3 บรรทัด → จอเตี้ยเลื่อนได้ ไม่ตัดหัว/ท้าย */
+  .navbar-menu {
+    overflow-y: auto;
+    justify-content: safe center;
+  }
+
+  .navbar-item-has-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .navbar-caret {
+    display: none;
+  }
+
+  .navbar-dropdown {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .navbar-dropdown::before {
+    display: none;
+  }
+
+  .navbar-dropdown-link {
+    padding: 6px 16px;
+    background: var(--gradient-gold);
+    border-radius: 999px;
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+}
