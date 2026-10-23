@@ -35,6 +35,8 @@ function branchFaq(b) {
       q: "ขายทองแล้วได้เงินสดเลยไหม",
       a: "ได้ จ่ายเงินสดทันทีหลังตกลงราคา หรือเลือกรับโอนเข้าบัญชีธนาคารได้ตามสะดวก",
     },
+    // คำถามเฉพาะสาขา (data/branches.js → faqExtra) เช่นสาขาชลบุรีที่คนค้นคนละชุดคำกับพัทยา
+    ...(b.faqExtra ?? []),
   ];
 }
 
@@ -129,7 +131,7 @@ export default async function BranchPage({ params }) {
       </nav>
 
       <header className="blog-article-header">
-        <h1>ร้านทอง {b.area} — รับซื้อทอง หลอมทอง</h1>
+        <h1>{b.h1 ?? `ร้านทอง ${b.area} — รับซื้อทอง หลอมทอง`}</h1>
         <div className="blog-article-meta">
           <span>📍 {b.shortName}</span>
           <span>⭐ Google รีวิว {reviewCount(b.slug)}</span>
@@ -173,6 +175,8 @@ export default async function BranchPage({ params }) {
           ทองคำแท่ง เครื่องประดับ และนาฬิกาแบรนด์เนม</strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
           ด้วยเครื่อง XRF ต่อหน้าคุณ ให้ราคาสูงตามสมาคมค้าทองคำ จ่ายเงินสดทันที
         </p>
+        {/* ย่อหน้าเฉพาะสาขา (data/branches.js → intro): จุดสังเกต การเดินทาง คนในพื้นที่ */}
+        {b.intro?.map((t) => <p key={t}>{t}</p>)}
 
         <h2>ข้อมูลติดต่อ {b.shortName}</h2>
         <ul>
