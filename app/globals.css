@@ -2402,7 +2402,9 @@ a.contact-item--link:hover {
 
 .blog-article-nav {
   display: flex;
-  gap: var(--space-md);
+  /* รายชื่อพื้นที่/สาขาอื่นยาวเกินจอมือถือ → ตัดขึ้นบรรทัดใหม่ (เดิมทำให้หน้าเลื่อนซ้ายขวาได้) */
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
   margin-bottom: var(--space-2xl);
   font-size: var(--font-size-sm);
 }
@@ -2755,6 +2757,14 @@ a.contact-item--link:hover {
 
   .blog-article-cta-actions {
     flex-direction: column;
+  }
+
+  /* ปุ่มข้อความยาว (เช่น "นำทางไปสาขาเนินพลับหวาน") ตัดบรรทัดได้ ไม่ล้นจอมือถือ */
+  .blog-article-cta-actions .btn {
+    white-space: normal;
+    max-width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   .blog-cta-actions {
@@ -3645,58 +3655,90 @@ a.contact-item--link:hover {
   color: var(--color-gold);
 }
 
-/* มือถือ/แท็บเล็ต (เมนูเต็มจอ): แสดงสาขาเป็นปุ่มทองเล็กใต้คำว่า "รีวิว" ไม่ต้องชี้เมาส์ */
+/* มือถือ/แท็บเล็ต (เมนูเต็มจอ): ซ่อนรายชื่อสาขาไว้ก่อน กดคำว่า "รีวิว" แล้วค่อยมีกล่องบับเบิลเด้งออกมา
+   (Navbar.js ใส่ class is-open ให้ li เมื่อกด) — ต้องเขียน selector :hover/:focus-within ซ้ำด้วย
+   เพราะกฎของคอมมีน้ำหนักมากกว่า ถ้าไม่ทับ กล่องจะโดนเลื่อนไปทางซ้าย (translate -50%) ตอนนิ้วแตะ */
 @media (max-width: 1180px) {
-  /* เมนูยาวขึ้น 3 บรรทัด → ระยะห่างแคบลงให้พอดีจอมือถือ ถ้าจอเตี้ยมากก็เลื่อนได้ ไม่ตัดหัว/ท้าย */
+  /* เมนูยาวขึ้นตอนกางรายชื่อสาขา → จอเตี้ยเลื่อนได้ ไม่ตัดหัว/ท้าย */
+  /* เรียงจากบนลงล่าง (ไม่จัดกลางจอ) — ตอนกางบับเบิล เมนูด้านบนจะไม่เด้งหนีนิ้ว */
   .navbar-menu {
     overflow-y: auto;
-    justify-content: safe center;
+    justify-content: flex-start;
     gap: var(--space-lg);
-    padding-block: var(--space-xl);
+    padding-block: var(--space-2xl) var(--space-xl);
   }
 
   .navbar-item-has-dropdown {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-lg);
   }
 
+  .navbar-item-has-dropdown.is-open > .navbar-link {
+    color: var(--color-gold);
+  }
 
-  .navbar-dropdown {
-    position: static;
-    display: flex;
+  .navbar-dropdown,
+  .navbar-item-has-dropdown:hover .navbar-dropdown,
+  .navbar-item-has-dropdown:focus-within .navbar-dropdown {
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: auto;
+    display: none;
     flex-direction: column;
-    gap: var(--space-lg);
+    align-items: center;
+    gap: 12px;
     min-width: 0;
-    margin: 0;
-    padding: 0;
-    background: none;
-    box-shadow: none;
+    margin: 12px 0 0;
+    padding: 14px 24px;
+    background: #fbf3dc;
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(160, 126, 46, 0.18);
     opacity: 1;
     visibility: visible;
     transform: none;
+    transition: none;
   }
 
+  .navbar-item-has-dropdown.is-open .navbar-dropdown {
+    display: flex;
+    animation: navBubbleIn 0.18s ease-out;
+  }
+
+  /* หางบับเบิลชี้ขึ้นไปที่คำว่า "รีวิว" */
   .navbar-dropdown::before {
-    display: none;
+    content: "";
+    top: -8px;
+    left: 50%;
+    right: auto;
+    width: 16px;
+    height: 16px;
+    background: #fbf3dc;
+    border-radius: 3px;
+    transform: translateX(-50%) rotate(45deg);
   }
 
-  /* ตัวหนังสือแบบเดียวกับเมนูอื่น ไม่มีกรอบ นำหน้าด้วย "-" (ตามบรีฟ) */
   .navbar-dropdown-link {
     padding: 0;
     background: none;
     border-radius: 0;
     color: var(--color-text-light);
     font-weight: 500;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     text-align: center;
+    white-space: nowrap;
   }
-
 
   .navbar-dropdown-link:hover,
   .navbar-dropdown-link:focus-visible {
     background: none;
     color: var(--color-gold);
   }
+}
+
+@keyframes navBubbleIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: none; }
 }

@@ -9,6 +9,8 @@ import { REVIEW_BRANCHES } from '@/data/branches';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // มือถือ: รายชื่อสาขาใต้ "รีวิว" ซ่อนไว้ กดแล้วค่อยกางเป็นบับเบิล
+  const [subOpen, setSubOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +23,18 @@ export default function Navbar() {
 
   const handleLinkClick = () => {
     setMenuOpen(false);
+    setSubOpen(false);
+  };
+
+  // เมนูที่มีรายการย่อย: บนมือถือ (เมนูเต็มจอ ≤1180px) กดแล้วกาง/หุบรายการย่อย ไม่เปลี่ยนหน้า
+  // บนคอมชี้เมาส์ก็เห็นรายการแล้ว กดคำว่า "รีวิว" = ไปหน้าเลือกสาขา /reviews
+  const handleParentClick = (e) => {
+    if (window.matchMedia('(max-width: 1180px)').matches) {
+      e.preventDefault();
+      setSubOpen((open) => !open);
+    } else {
+      handleLinkClick();
+    }
   };
 
   const menuLinks = [
@@ -61,13 +75,18 @@ export default function Navbar() {
         {/* Menu Links */}
         <ul className={`navbar-menu${menuOpen ? ' active' : ''}`} role="menubar">
           {menuLinks.map((link) => (
-            <li key={link.href} role="none" className={link.children ? 'navbar-item-has-dropdown' : undefined}>
+            <li
+              key={link.href}
+              role="none"
+              className={link.children ? `navbar-item-has-dropdown${subOpen ? ' is-open' : ''}` : undefined}
+            >
               <Link
                 href={link.href}
                 className="navbar-link"
                 role="menuitem"
                 aria-haspopup={link.children ? 'true' : undefined}
-                onClick={handleLinkClick}
+                aria-expanded={link.children ? subOpen : undefined}
+                onClick={link.children ? handleParentClick : handleLinkClick}
               >
                 {link.label}
               </Link>
@@ -115,7 +134,10 @@ export default function Navbar() {
         {/* Mobile Toggle */}
         <button
           className={`navbar-toggle${menuOpen ? ' active' : ''}`}
-          onClick={() => setMenuOpen((prev) => !prev)}
+          onClick={() => {
+            setMenuOpen((prev) => !prev);
+            setSubOpen(false);
+          }}
           aria-label={menuOpen ? 'ปิดเมนู' : 'เปิดเมนู'}
           aria-expanded={menuOpen}
           aria-controls="navbar-menu"
