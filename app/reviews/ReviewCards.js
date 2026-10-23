@@ -22,7 +22,6 @@ export default function ReviewCards({ slug }) {
         <p className={styles.tagline}>รับซื้อทอง · หลอมทอง · รับซื้อนาฬิกา พัทยา ชลบุรี</p>
         <p className={styles.thanks}>ขอบคุณที่ไว้วางใจเฮงศิริครับ 🙏</p>
         <div className={styles.stars} aria-hidden="true">★★★★★</div>
-        <p className={styles.ask}>ขอบคุณที่ไว้วางใจเฮงศิริ ทุกรีวิวคือกำลังใจของเรา 🙏</p>
       </section>
 
       {/* /reviews = หน้าเลือกสาขา (ลิงก์ใน LINE / เพจ) · /reviews/<slug> = การ์ดรีวิวของสาขานั้น (QR บนเคาน์เตอร์) */}
@@ -54,7 +53,6 @@ export default function ReviewCards({ slug }) {
         </p>
       )}
 
-      <p className={styles.en}>Thank you! Tap a button above to review us on Google.</p>
     </>
   );
 }

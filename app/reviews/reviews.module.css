@@ -85,11 +85,6 @@
   color: #e0a800;
 }
 
-.ask {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  color: var(--color-text-light);
-}
 
 /* ---------- การ์ดสาขา ---------- */
 .grid,
@@ -115,11 +110,12 @@
 /* โทนสีของการ์ดแต่ละสาขา — ต่างกันแค่ 1 โทนในชุดสีแดง-ทองของร้าน
    ให้ลูกค้าแยกออกทันทีว่ากำลังรีวิวสาขาไหน โดยปุ่มหลักสีทองยังเหมือนกันทุกการ์ด */
 .branch {
-  --accent: var(--color-primary); /* พัทยาใต้: แดงเลือดหมู */
-  --edge: var(--color-gold);
-  --tint: #fffdf7;
-  --tint-border: #efe3c4;
-  background: #ffffff;
+  /* ทุกสาขาใช้โทนทองเดียวกัน (ตามบรีฟ 23 ต.ค.: ใช้สีแบบเนินพลับหวานทุกการ์ด) */
+  --accent: #8a6508;
+  --edge: var(--color-gold-dark);
+  --tint: #faefd2;
+  --tint-border: #ead7a2;
+  background: #fdf7e6;
   border-radius: 20px;
   border-top: 4px solid var(--edge);
   padding: 20px 16px 16px;
@@ -131,15 +127,6 @@
   text-align: center;
   font-size: 1.35rem;
   color: var(--accent);
-}
-
-/* เนินพลับหวาน: โทนทองอ่อน — พื้นการ์ดออกทองกว่าการ์ดพัทยาใต้ (ขาว) เล็กน้อย ชื่อสาขาสีทองเข้ม */
-.noen-plap-wan {
-  --accent: #8a6508;
-  --edge: var(--color-gold-dark);
-  --tint: #faefd2;
-  --tint-border: #ead7a2;
-  background: #fdf7e6;
 }
 
 .address {
@@ -281,13 +268,6 @@
   font-weight: 600;
 }
 
-.en {
-  margin: 12px 0 0;
-  padding: 0 16px;
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
 
 .footer {
   padding: 16px;
