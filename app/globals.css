@@ -3585,11 +3585,6 @@ a.contact-item--link:hover {
   position: relative;
 }
 
-.navbar-caret {
-  margin-left: 4px;
-  font-size: 0.7em;
-  vertical-align: middle;
-}
 
 .navbar-dropdown {
   position: absolute;
@@ -3600,9 +3595,11 @@ a.contact-item--link:hover {
   margin-top: 14px;
   padding: 8px;
   list-style: none;
-  background: var(--gradient-gold);
+  /* กล่องขาวแบบแถบเมนู ตัวหนังสือเหมือนเมนูอื่น (ตามบรีฟ 24 ต.ค. — ไม่ใช้พื้นทอง) */
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #efe3c4;
   border-radius: 14px;
-  box-shadow: 0 14px 34px rgba(92, 0, 0, 0.22);
+  box-shadow: 0 14px 34px rgba(92, 0, 0, 0.12);
   opacity: 0;
   visibility: hidden;
   transform: translate(-50%, 6px);
@@ -3630,17 +3627,22 @@ a.contact-item--link:hover {
   display: block;
   padding: 10px 14px;
   border-radius: 10px;
-  color: #3a2a00;
-  font-weight: 600;
+  color: var(--color-text-light);
+  font-weight: 500;
   font-size: var(--font-size-sm);
+  letter-spacing: 0.5px;
   white-space: nowrap;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
+.navbar-dropdown-link::before {
+  content: "- ";
+}
+
 .navbar-dropdown-link:hover,
 .navbar-dropdown-link:focus-visible {
-  background: rgba(255, 255, 255, 0.55);
-  color: var(--color-primary);
+  background: #fbf3dc;
+  color: var(--color-gold);
 }
 
 /* มือถือ/แท็บเล็ต (เมนูเต็มจอ): แสดงสาขาเป็นปุ่มทองเล็กใต้คำว่า "รีวิว" ไม่ต้องชี้เมาส์ */
@@ -3660,9 +3662,6 @@ a.contact-item--link:hover {
     gap: var(--space-lg);
   }
 
-  .navbar-caret {
-    display: none;
-  }
 
   .navbar-dropdown {
     position: static;
@@ -3694,9 +3693,6 @@ a.contact-item--link:hover {
     text-align: center;
   }
 
-  .navbar-dropdown-link::before {
-    content: "- ";
-  }
 
   .navbar-dropdown-link:hover,
   .navbar-dropdown-link:focus-visible {

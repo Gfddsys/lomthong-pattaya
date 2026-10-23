@@ -70,7 +70,6 @@ export default function Navbar() {
                 onClick={handleLinkClick}
               >
                 {link.label}
-                {link.children && <span className="navbar-caret" aria-hidden="true">▾</span>}
               </Link>
               {link.children && (
                 <ul className="navbar-dropdown" role="menu" aria-label={link.label}>
