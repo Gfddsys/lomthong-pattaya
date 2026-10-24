@@ -65,8 +65,8 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="btn btn-line btn-lg hero-line-btn"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG จาก CDN แบบเดียวกับปุ่ม LINE ลอย */}
-              <img src="https://cdn.simpleicons.org/line/ffffff" alt="" width={24} height={24} />
+              {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG ไฟล์เดียวกับปุ่ม LINE ลอย */}
+              <img src="/images/icons/line.svg" alt="" width={24} height={24} />
               ประเมินราคา / สอบถาม
             </a>
             <a href="#contact" className="btn btn-primary btn-lg">

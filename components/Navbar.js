@@ -115,9 +115,9 @@ export default function Navbar() {
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn-icon line" aria-label="เพิ่มเพื่อน LINE">
             {/* ใช้โลโก้ LINE จริงจาก Simple Icons CDN (ไอคอนสำเร็จรูปที่ตรวจสอบแล้ว)
                 แทนการวาด SVG เอง เพื่อไม่ให้เพี้ยนแบบที่ผ่านมา */}
-            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG เล็ก (เก็บในเว็บเอง) next/image ไม่ช่วยอะไร */}
             <img
-              src="https://cdn.simpleicons.org/line/ffffff"
+              src="/images/icons/line.svg"
               alt="LINE"
               width={20}
               height={20}

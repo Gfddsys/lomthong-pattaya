@@ -10,7 +10,7 @@ import BranchRatings from './BranchRatings';
    ทำให้หน้าแรกหนักขึ้น ~37KB ใน HTML และอีกเท่าตัวในข้อมูลที่ React ส่งไปฝั่งเบราว์เซอร์ */
 const GoogleG = ({ size = 18 }) => (
   // eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG เล็ก next/image ไม่ช่วยอะไร
-  <img src="/images/google-g.svg" width={size} height={size} alt="" aria-hidden="true" style={{ display: 'block' }} />
+  <img src="/images/google-g.svg" width={size} height={size} alt="" aria-hidden="true" loading="lazy" style={{ display: 'block' }} />
 );
 
 const BRANCH_NAME = Object.fromEntries(BRANCHES.map((b) => [b.slug, b]));

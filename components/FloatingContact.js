@@ -27,9 +27,9 @@ export default function FloatingContact({ label = 'ประเมินรา�
       aria-label={ariaLabel}
       title={ariaLabel}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG เล็ก (เก็บในเว็บเอง) next/image ไม่ช่วยอะไร */}
       <img
-        src="https://cdn.simpleicons.org/line/ffffff"
+        src="/images/icons/line.svg"
         alt="LINE"
         width={24}
         height={24}

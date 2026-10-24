@@ -115,9 +115,9 @@ export default function Process() {
             rel="noopener noreferrer"
             className="process-cta-btn"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG 20px จาก CDN, next/image ไม่ช่วยอะไร */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG เล็ก (เก็บในเว็บเอง) next/image ไม่ช่วยอะไร */}
             <img
-              src="https://cdn.simpleicons.org/line/ffffff"
+              src="/images/icons/line.svg"
               alt="LINE"
               width={22}
               height={22}

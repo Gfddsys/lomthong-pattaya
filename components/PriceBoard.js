@@ -85,18 +85,20 @@ function Board({ kind, data, waiting }) {
 
   return (
     <figure className={`pb-board pb-board--${kind}`} style={{ aspectRatio: b.ratio }} aria-busy={waiting || undefined}>
-      {/* ภาพป้ายทองเป็นภาพใหญ่สุดบนจอแรก (LCP) → โหลดก่อนอย่างอื่น · ขนาดเล็กลงสำหรับจอมือถือ */}
+      {/* ภาพป้ายทองเป็นภาพใหญ่สุดบนจอแรก (LCP) → โหลดก่อนอย่างอื่น · ขนาดเล็กลงสำหรับจอมือถือ
+          มือถือป้ายกว้าง = จอ - ขอบซ้ายขวา 48px (จอ 412 → 364px ×1.75 = ใช้รูป 640) · ป้ายแท่งเงินอยู่ใต้จอแรก → lazy */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={b.src}
-        srcSet={`${b.src.replace('.webp', '-900.webp')} 900w, ${b.src} 1200w`}
-        sizes="(min-width: 820px) 520px, 100vw"
+        srcSet={`${b.src.replace('.webp', '-640.webp')} 640w, ${b.src.replace('.webp', '-900.webp')} 900w, ${b.src} 1200w`}
+        sizes="(min-width: 820px) 520px, calc(100vw - 48px)"
         width="1200"
         height="1118"
         alt={b.alt}
         className="pb-bg"
         draggable="false"
         fetchPriority={isGold ? 'high' : 'auto'}
+        loading={isGold ? 'eager' : 'lazy'}
         decoding="async"
       />
 
