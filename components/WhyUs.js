@@ -65,7 +65,7 @@ export default function WhyUs() {
   ];
 
   return (
-    <section className="section section-dark">
+    <section id="why-us" className="section section-dark">
       <div className="container">
         <header className="section-header animate-on-scroll">
           <span className="section-label">ทำไมต้องเลือกเรา</span>

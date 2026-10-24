@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Navbar logoSrc={logoSrc} />
-      <main>
+      <main className="home-main">
         <Hero />
         <About />
         <Services />
@@ -34,7 +34,7 @@ export default function Home() {
         <StoreLocation />
         <Process />
         <Gallery />
-        <section className="section">
+        <section id="home-videos" className="section">
           <div className="container">
             <VideoShorts page="home" title="คลิปจากหน้าร้าน" pageUrl="/" />
           </div>

@@ -2781,7 +2781,8 @@ a.contact-item--link:hover {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  will-change: opacity, transform;
+  /* ไม่ใส่ will-change: เดิมจองเลเยอร์กราฟิกค้างไว้ทุกจุด (หน้าแรก 52 จุด) ทำให้มือถือวาดจอแรกช้า
+     เบราว์เซอร์แยกเลเยอร์ให้เองตอนกำลังเคลื่อนไหวอยู่แล้ว ภาพเหมือนเดิม */
 }
 
 .animate-on-scroll.is-visible {
@@ -3741,4 +3742,40 @@ a.contact-item--link:hover {
 @keyframes navBubbleIn {
   from { opacity: 0; transform: translateY(-6px) scale(0.97); }
   to { opacity: 1; transform: none; }
+}
+
+/* ============================================
+   ความเร็วมือถือ: ส่วนที่อยู่ใต้จอแรก ยังไม่ต้องจัดวาง/วาดตอนเปิดหน้า
+   ============================================
+   วัด 24 ต.ค. 2026: หน้าแรกเบราว์เซอร์จัดวางทั้งหน้า (~1,700 กล่อง ข้อความไทยยาว) ก่อนวาดจอแรก
+   → มือถือรอ ~1 วิ กว่าจะเห็นอะไร · content-visibility: auto = ข้ามส่วนที่อยู่ไกลจากจอไว้ก่อน
+   จัดวางเองเมื่อเลื่อนเข้าใกล้ (ผู้ใช้ไม่เห็นความต่าง, Google/โปรแกรมอ่านหน้าจอยังอ่านเนื้อหาได้ครบ)
+   --cv-h = ความสูงเนื้อหาจริงที่วัดได้ (ไม่รวม padding) ใช้แทนชั่วคราวก่อนแสดง ให้แถบเลื่อนและเมนู "ผลงาน/ติดต่อเรา" เลื่อนไปตรงตำแหน่ง
+   (auto = แสดงครั้งแรกแล้วเบราว์เซอร์จำความสูงจริงไว้) */
+.home-main > section:not(:first-child),
+.footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--cv-h, 1200px);
+}
+/* ความสูงเนื้อหา (ไม่รวม padding ของส่วน) · มือถือ จอ 412px */
+#about { --cv-h: 928px; }
+#services { --cv-h: 4151px; }
+#why-us { --cv-h: 1415px; }
+#contact { --cv-h: 2848px; }
+#process { --cv-h: 1402px; }
+#gallery { --cv-h: 684px; }
+#home-videos { --cv-h: 862px; }
+#testimonials { --cv-h: 1118px; }
+.footer { --cv-h: 1724px; }
+/* คอม จอ 1280px */
+@media (min-width: 1024px) {
+  #about { --cv-h: 544px; }
+  #services { --cv-h: 1741px; }
+  #why-us { --cv-h: 906px; }
+  #contact { --cv-h: 1749px; }
+  #process { --cv-h: 673px; }
+  #gallery { --cv-h: 802px; }
+  #home-videos { --cv-h: 645px; }
+  #testimonials { --cv-h: 1038px; }
+  .footer { --cv-h: 621px; }
 }
