@@ -3744,6 +3744,13 @@ a.contact-item--link:hover {
   to { opacity: 1; transform: none; }
 }
 
+/* ความเร็วมือถือ: แอนิเมชันรอจนจอแรกแสดงเสร็จ (ดูคำอธิบายใน app/layout.js) */
+html[data-anim-wait] *,
+html[data-anim-wait] *::before,
+html[data-anim-wait] *::after {
+  animation-play-state: paused !important;
+}
+
 /* ============================================
    ความเร็วมือถือ: ส่วนที่อยู่ใต้จอแรก ยังไม่ต้องจัดวาง/วาดตอนเปิดหน้า
    ============================================

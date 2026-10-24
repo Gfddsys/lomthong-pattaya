@@ -6,6 +6,12 @@ import { BUSINESS_ID, branchSchema, organizationSchema } from "@/lib/schema";
 import { SITE_URL } from "@/data/site";
 import ScrollAnimation from "@/components/ScrollAnimation";
 
+/* แอนิเมชันทั้งเว็บ (ข้อความหัวเว็บเลื่อนขึ้น, ประกายทอง, จุดกะพริบ ฯลฯ) รอจนจอแรกแสดงเสร็จก่อนค่อยเล่น
+   วัด 24 ต.ค. 2026: ถ้ามีแอนิเมชันวิ่งอยู่ตอนวาดจอแรก งานกราฟิกของมือถือเพิ่มเกือบเท่าตัว → จอแรกขึ้นช้า
+   html[data-anim-wait] ส่งมากับ HTML (หยุดแอนิเมชันไว้ที่เฟรมแรก) → สคริปต์ท้ายหน้าเอาออกทันทีที่จอแรกขึ้น
+   หน้าตาเหมือนเดิม แค่เริ่มเล่นหลังจอแรกแสดง · ไม่มี JS = เล่นตามปกติ (noscript) · กันพลาด: ปล่อยเองใน 3 วิ */
+const START_ANIMATIONS = `(function(){var d=document.documentElement,done=false;function go(){if(done)return;done=true;d.removeAttribute('data-anim-wait')}var P=window.PerformanceObserver;if(P&&P.supportedEntryTypes&&P.supportedEntryTypes.indexOf('paint')>-1){new P(function(l){if(l.getEntriesByName('first-contentful-paint').length)go()}).observe({type:'paint',buffered:true})}else{requestAnimationFrame(function(){requestAnimationFrame(go)})}setTimeout(go,3000)})();`;
+
 // ฟอนต์ Prompt แบบ self-host (next/font) — ตัดการโหลดจาก Google Fonts ออก เร็วขึ้น ไม่มี layout shift
 const prompt = Prompt({
   subsets: ["thai", "latin"],
@@ -126,12 +132,17 @@ const schemaData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="th" className={prompt.variable}>
+    <html lang="th" className={prompt.variable} data-anim-wait="" suppressHydrationWarning>
       <head>
         {/* Schema Markup for Google */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: "<style>html[data-anim-wait] *,html[data-anim-wait] *::before,html[data-anim-wait] *::after{animation-play-state:running!important}</style>",
+          }}
         />
         {/* หมายเหตุ: ไม่ต้องใส่ <link rel="icon"> เองแล้ว เพราะ Next.js ดึง app/favicon.ico
             มาสร้าง tag นี้ให้อัตโนมัติอยู่แล้ว (ใส่ซ้ำจะได้ favicon tag ซ้ำ 2 อัน) */}
@@ -139,6 +150,7 @@ export default function RootLayout({ children }) {
       <body>
         <ScrollAnimation />
         {children}
+        <script dangerouslySetInnerHTML={{ __html: START_ANIMATIONS }} />
       </body>
     </html>
   );
