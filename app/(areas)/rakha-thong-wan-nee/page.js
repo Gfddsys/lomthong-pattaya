@@ -89,7 +89,7 @@ export default async function RakhaThongWanNee() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
       <nav className="blog-article-nav" aria-label="Breadcrumb">
-        <Link href="/">หน้าแรก</Link>
+        <Link href="/" prefetch={false}>หน้าแรก</Link>
         <span>/</span>
         <span>ราคาทองวันนี้</span>
       </nav>

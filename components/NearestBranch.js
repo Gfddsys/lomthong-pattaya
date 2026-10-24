@@ -114,7 +114,7 @@ export default function NearestBranch({ branches }) {
             <article key={b.slug} className={`near-card${isNearest ? ' is-nearest' : ''}`}>
               {isNearest && <span className="near-badge">ใกล้คุณที่สุด</span>}
               <h3>
-                <Link href={`/branch/${b.slug}`}>{b.shortName}</Link>
+                <Link href={`/branch/${b.slug}`} prefetch={false}>{b.shortName}</Link>
               </h3>
               <p className="near-status" data-open={st ? String(st.open) : undefined}>
                 {st ? st.text : b.hours}

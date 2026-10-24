@@ -64,7 +64,7 @@ export default async function WatchBrandPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
       <nav className="blog-article-nav" aria-label="Breadcrumb">
-        <Link href="/">หน้าแรก</Link>
+        <Link href="/" prefetch={false}>หน้าแรก</Link>
         <span>/</span>
         <Link href="/services/watch-buying">รับซื้อนาฬิกาแบรนด์เนม</Link>
         <span>/</span>

@@ -115,7 +115,7 @@ export default async function AutoArticlePage({ params }) {
       )}
 
       <nav className="blog-article-nav" aria-label="Breadcrumb">
-        <Link href="/">หน้าแรก</Link>
+        <Link href="/" prefetch={false}>หน้าแรก</Link>
         <span>/</span>
         <Link href="/blog">บทความ</Link>
         <span>/</span>

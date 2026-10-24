@@ -63,7 +63,7 @@ export default function RakhaThongYonLang() {
   return (
     <article className="blog-article">
       <nav className="blog-article-nav" aria-label="Breadcrumb">
-        <Link href="/">หน้าแรก</Link>
+        <Link href="/" prefetch={false}>หน้าแรก</Link>
         <span>/</span>
         <Link href="/rakha-thong-wan-nee">ราคาทองวันนี้</Link>
         <span>/</span>

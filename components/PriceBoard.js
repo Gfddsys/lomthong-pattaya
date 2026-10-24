@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { afterFirstPaint } from '@/lib/afterFirstPaint';
 
 /* ============================================
    กล่องราคาทอง/แท่งเงินแบบป้ายหน้าร้าน (ภาพแม่แบบจากเจ้าของร้าน + ตัวเลขจริงวางทับ)
@@ -157,6 +158,7 @@ export default function PriceBoard({ initialData = null }) {
 
   useEffect(() => {
     let alive = true;
+    let t = 0;
     const load = async () => {
       try {
         const res = await fetch('/api/gold-price', { cache: 'no-store' });
@@ -170,8 +172,12 @@ export default function PriceBoard({ initialData = null }) {
         if (alive) setError(true);
       }
     };
-    load();
-    const t = setInterval(load, REFRESH_MS);
+    // เริ่มดึงหลังจอแรกแสดงแล้ว (ปกติแสดงก่อนอยู่แล้ว = ดึงทันที) ไม่แย่งเน็ตกับภาพป้ายตอนเปิดหน้า
+    afterFirstPaint().then(() => {
+      if (!alive) return;
+      load();
+      t = setInterval(load, REFRESH_MS);
+    });
     return () => {
       alive = false;
       clearInterval(t);

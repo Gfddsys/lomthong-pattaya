@@ -156,7 +156,7 @@ export default async function ServicePage({ params }) {
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb" style={{ marginBottom: '2rem', fontSize: '0.9rem' }}>
           <ol style={{ listStyle: 'none', padding: 0, display: 'flex', gap: '0.5rem' }}>
-            <li><Link href="/" style={{ color: 'var(--color-primary)' }}>หน้าแรก</Link></li>
+            <li><Link href="/" prefetch={false} style={{ color: 'var(--color-primary)' }}>หน้าแรก</Link></li>
             <li><span style={{ color: '#ccc' }}>/</span></li>
             <li><Link href="/#services" style={{ color: 'var(--color-primary)' }}>บริการของเรา</Link></li>
             <li><span style={{ color: '#ccc' }}>/</span></li>

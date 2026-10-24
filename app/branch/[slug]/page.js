@@ -108,7 +108,7 @@ export default async function BranchPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <nav className="blog-article-nav" aria-label="Breadcrumb">
-        <Link href="/">หน้าแรก</Link>
+        <Link href="/" prefetch={false}>หน้าแรก</Link>
         <span>/</span>
         <span>{b.shortName}</span>
       </nav>

@@ -57,7 +57,8 @@ export default function Navbar() {
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`} role="navigation" aria-label="Main navigation">
       <div className="container">
         {/* Brand */}
-        <Link href="/" className="navbar-brand" aria-label="หลอมทองพัทยา - กลับหน้าแรก">
+        {/* prefetch={false}: ไม่ต้องโหลดหน้าแรก/หน้าอังกฤษล่วงหน้าทุกครั้งที่เปิดเว็บ (กดแล้วค่อยโหลด) — ลดของที่แย่งเน็ตตอนเปิดหน้า */}
+        <Link href="/" prefetch={false} className="navbar-brand" aria-label="หลอมทองพัทยา - กลับหน้าแรก">
           <Image
             src="/images/uploads/logo/logo-nav.png"
             alt="หลอมทองพัทยา"
@@ -106,7 +107,7 @@ export default function Navbar() {
         </ul>
 
         {/* สลับเป็นภาษาอังกฤษ — อยู่นอก navbar-cta เพราะกลุ่มนั้นถูกซ่อนบนมือถือ */}
-        <Link href="/en" hrefLang="en" className="navbar-lang" aria-label="English version">
+        <Link href="/en" prefetch={false} hrefLang="en" className="navbar-lang" aria-label="English version">
           EN
         </Link>
 
