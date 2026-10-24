@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { reviewCount } from "@/data/reviewStats";
-import { BRANCHES, getBranch, hoursShort, openingHoursSpec } from "@/data/branches";
+import { BRANCHES, getBranch, hoursShort } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
 import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
 import SocialLinks from "@/components/SocialLinks";
 import { getUploadedImages } from "@/lib/getImage";
+import { branchSchema } from "@/lib/schema";
 
 
 /* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
@@ -65,31 +66,12 @@ export default async function BranchPage({ params }) {
   // รูปจริงในร้าน วางที่ public/images/uploads/branch-<slug>/ (ไม่มีรูป = ไม่แสดงส่วนนี้)
   const photos = getUploadedImages(`branch-${b.slug}`).slice(0, 2);
 
+  // schema เดียวกับใน app/layout.js (@id เดียวกัน → Google รวมเป็น entity เดียว) + รูปจริงของสาขานี้
   const schema = {
     "@context": "https://schema.org",
-    "@type": "JewelryStore",
-    // @id เดียวกับใน app/layout.js → Google รวมเป็น entity เดียว ไม่ใช่ร้านซ้ำ 2 ร้าน
-    "@id": `${SITE_URL}/branch/${b.slug}#business`,
-    name: b.name,
-    alternateName: b.gbpName,
-    parentOrganization: { "@id": `${SITE_URL}/#business` },
-    image: photos.length ? photos.map((p) => `${SITE_URL}${p}`) : `${SITE_URL}/images/og-cover.jpg`,
-    url: `${SITE_URL}/branch/${b.slug}`,
-    telephone: CONTACT.phoneDisplay,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: b.streetAddress,
-      addressLocality: b.locality,
-      addressRegion: b.region,
-      postalCode: b.postalCode,
-      addressCountry: "TH",
-    },
-    geo: { "@type": "GeoCoordinates", latitude: b.lat, longitude: b.lng },
-    priceRange: "฿",
-    openingHoursSpecification: openingHoursSpec(b),
-    hasMap: b.mapUrl,
-    sameAs: [b.mapUrl, b.facebookUrl],
+    ...branchSchema(b, photos.length ? { image: photos.map((p) => `${SITE_URL}${p}`) } : {}),
   };
+
 
   const faq = branchFaq(b);
   const faqSchema = {

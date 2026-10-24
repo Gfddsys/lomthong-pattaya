@@ -59,26 +59,51 @@ function Flash({ value, className = '' }) {
   );
 }
 
-function Board({ kind, data }) {
+// ระหว่างรอราคา (หรือดึงไม่สำเร็จ) ใช้ค่าว่างนี้ → ภาพป้ายขึ้นทันที ตัวเลขเป็น "—"
+const WAITING = '—';
+const EMPTY = {
+  diff: '',
+  date: '',
+  time: WAITING,
+  gold_bar: { buy: WAITING, sell: WAITING },
+  gold_ornament: { buy: WAITING, sell: WAITING },
+  silver: { buy: WAITING, sell: WAITING, vat: WAITING, spot_diff: '' },
+};
+
+function Board({ kind, data, waiting }) {
   const b = BOARDS[kind];
   const isGold = kind === 'gold';
-  const diff = parseDiff(isGold ? data.diff : data.silver?.spot_diff);
+  const diff = waiting ? { dir: 'flat', text: WAITING } : parseDiff(isGold ? data.diff : data.silver?.spot_diff);
   const buy = isGold ? data.gold_bar.buy : data.silver.buy;
   // วันที่แบบสั้นให้พอดีแถบด้านบน เช่น "21 ต.ค. 2569"
-  const shortDate = data.updatedIso
-    ? new Date(data.updatedIso).toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok', day: 'numeric', month: 'short', year: 'numeric' })
-    : data.date;
+  const shortDate = waiting
+    ? 'กำลังดึงราคา'
+    : data.updatedIso
+      ? new Date(data.updatedIso).toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok', day: 'numeric', month: 'short', year: 'numeric' })
+      : data.date;
   const sell = isGold ? data.gold_bar.sell : data.silver.sell;
 
   return (
-    <figure className={`pb-board pb-board--${kind}`} style={{ aspectRatio: b.ratio }}>
+    <figure className={`pb-board pb-board--${kind}`} style={{ aspectRatio: b.ratio }} aria-busy={waiting || undefined}>
+      {/* ภาพป้ายทองเป็นภาพใหญ่สุดบนจอแรก (LCP) → โหลดก่อนอย่างอื่น · ขนาดเล็กลงสำหรับจอมือถือ */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={b.src} alt={b.alt} className="pb-bg" draggable="false" />
+      <img
+        src={b.src}
+        srcSet={`${b.src.replace('.webp', '-900.webp')} 900w, ${b.src} 1200w`}
+        sizes="(min-width: 820px) 520px, 100vw"
+        width="1200"
+        height="1118"
+        alt={b.alt}
+        className="pb-bg"
+        draggable="false"
+        fetchPriority={isGold ? 'high' : 'auto'}
+        decoding="async"
+      />
 
       <div className="pb-slot pb-pill" style={slotStyle(b.slots.pill)}>
         <span className="pb-live" aria-hidden="true" />
         <span>{shortDate}</span>
-        <span className="pb-pill-time">{data.time} น.</span>
+        {!waiting && <span className="pb-pill-time">{data.time} น.</span>}
       </div>
 
       <div className={`pb-slot pb-chg is-${diff.dir}`} style={slotStyle(b.slots.chg)}>
@@ -113,10 +138,12 @@ function Board({ kind, data }) {
         )}
       </div>
 
-      <figcaption className="sr-only">
-        {isGold ? 'ทองคำแท่ง 96.5%' : 'แท่งเงิน 99.99% 1 กิโลกรัม'} รับซื้อ {buy} บาท ขายออก {sell} บาท
-        ณ วันที่ {data.date} เวลา {data.time} น.
-      </figcaption>
+      {!waiting && (
+        <figcaption className="sr-only">
+          {isGold ? 'ทองคำแท่ง 96.5%' : 'แท่งเงิน 99.99% 1 กิโลกรัม'} รับซื้อ {buy} บาท ขายออก {sell} บาท
+          ณ วันที่ {data.date} เวลา {data.time} น.
+        </figcaption>
+      )}
     </figure>
   );
 }
@@ -149,26 +176,27 @@ export default function PriceBoard({ initialData = null }) {
     };
   }, []);
 
-  if (!data) {
-    return (
-      <div className="pb-wrap">
-        <div className="pb-state">{error ? 'ยังดึงราคาไม่ได้ ลองรีเฟรชอีกครั้ง หรือโทร 092-883-9799' : 'กำลังดึงราคาล่าสุด…'}</div>
-      </div>
-    );
-  }
+  // ยังไม่ได้ราคา → วาดป้ายเปล่าไว้ก่อน (ขนาดเท่าของจริง) แทนข้อความ "กำลังดึงราคา"
+  // เดิมป้ายโผล่ทีหลังตอนได้ราคา → เนื้อหาด้านล่างเด้งลง (CLS) และภาพป้ายเริ่มโหลดช้า (LCP)
+  const waiting = !data;
+  const shown = data ?? EMPTY;
 
   return (
     <div className="pb-wrap">
-      <Board kind="gold" data={data} />
-      {data.silver && <Board kind="silver" data={data} />}
+      <Board kind="gold" data={shown} waiting={waiting} />
+      {(waiting || data.silver) && <Board kind="silver" data={shown} waiting={waiting} />}
+      {waiting && error && (
+        <p className="pb-state">ยังดึงราคาไม่ได้ ลองรีเฟรชอีกครั้ง หรือโทร 092-883-9799</p>
+      )}
 
       <style>{`
         .pb-wrap { display: grid; grid-template-columns: 1fr; gap: 1.2rem; width: 100%; max-width: 1040px; margin: 0 auto; }
         @media (min-width: 820px) { .pb-wrap { grid-template-columns: 1fr 1fr; align-items: start; } }
-        .pb-state { padding: 2rem 1rem; text-align: center; color: #666; }
+        .pb-state { grid-column: 1 / -1; margin: 0; padding: 0.5rem 1rem; text-align: center; color: #666; }
 
         .pb-board { position: relative; margin: 0; width: 100%; container-type: inline-size; user-select: none; }
         .pb-bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+        .pb-board[aria-busy] .pb-price, .pb-board[aria-busy] .pb-strip b, .pb-board[aria-busy] .pb-chg-main { opacity: 0.45; }
         .pb-slot { position: absolute; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.1; font-family: var(--font-family, 'Prompt', sans-serif); }
 
         /* วันที่-เวลา ในแถบขาวด้านบน */

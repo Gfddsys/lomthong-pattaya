@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
 import { SITE_URL } from "@/data/site";
+import { BRANCHES } from "@/data/branches";
+import { BUSINESS_ID, branchId, serviceId } from "@/lib/schema";
 import ServiceIcon from "@/components/ServiceIcon";
 import VideoShorts from "@/components/VideoShorts";
 import { Section } from "@/components/ContentBlocks";
@@ -72,15 +74,19 @@ export default async function ServicePage({ params }) {
 
   const resolvedImage = getUploadedImage(SERVICE_IMAGE_SLOT[slug] || slug, service.image);
 
-  // Schema.org for LocalBusiness Service
+  // Service — @id เดียวกับรายการบริการ (hasOfferCatalog) ของทุกสาขาใน lib/schema.js
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": serviceId(service.slug),
     "name": service.title,
+    "url": `${SITE_URL}/services/${service.slug}`,
     "description": service.metaDescription,
-    "provider": {
-      "@id": `${SITE_URL}/#business`
-    }
+    "provider": { "@id": BUSINESS_ID },
+    "availableChannel": BRANCHES.map((b) => ({
+      "@type": "ServiceChannel",
+      "serviceLocation": { "@id": branchId(b) },
+    })),
   };
 
   // BreadcrumbList schema (matches the visual breadcrumb below)
@@ -141,7 +147,7 @@ export default async function ServicePage({ params }) {
           <div className="service-icon service-icon--header" aria-hidden="true">
             <ServiceIcon slug={service.slug} size={38} />
           </div>
-          <h1 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem', fontSize: '2.5rem' }}>{service.title}</h1>
+          <h1 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem', fontSize: '2.5rem' }}>{service.h1 ?? `${service.title} พัทยา`}</h1>
           <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>{service.excerpt}</p>
         </div>
       </div>
@@ -165,6 +171,9 @@ export default async function ServicePage({ params }) {
                 src={resolvedImage}
                 alt={service.title}
                 fill
+                // รูปใหญ่สุดบนจอแรกของหน้าบริการ (LCP) → โหลดทันที ไม่ lazy · กว้างสุด ~1170px ตามกรอบเนื้อหา
+                priority
+                sizes="(max-width: 1240px) 100vw, 1170px"
                 style={{ objectFit: 'cover' }}
              />
              <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.1)' }}></div>

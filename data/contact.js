@@ -10,6 +10,7 @@
 export const CONTACT = {
   phoneDisplay: "092-883-9799", // ← เบอร์จากรูปโปรของร้าน (แก้ได้ถ้าไม่ตรง)
   phoneHref: "tel:0928839799", // ← เบอร์โทรจริง (ไม่มีขีด)
+  phoneE164: "+66928839799", // รูปแบบสากล ใช้ใน schema (Google แนะนำให้มีรหัสประเทศ)
   lineId: "@hengsiri", // ยืนยันกับเจ้าของร้านแล้ว 19 ต.ค. 2026
   lineUrl: "https://line.me/ti/p/~@hengsiri", // LINE จริงของร้าน (ยืนยันแล้ว)
   facebookUrl: "https://www.facebook.com/hengsiripattaya", // เพจ Facebook จริงของร้าน
@@ -19,10 +20,8 @@ export const CONTACT = {
   instagramUrl: "https://www.instagram.com/hengsiri.official/",
   googleReviewUrl: "https://maps.app.goo.gl/HbUrUHzEVS9H6z4G7", // ลิงก์รีวิวจริงบน Google
   googleMapsUrl: "https://maps.app.goo.gl/U9Z2BXarqugMs9UL6", // ลิงก์หมุดร้านบน Google Maps (เปิด/นำทาง)
-  // ลิงก์ Google Maps แบบถาวร (CID) — ใช้ใน schema เท่านั้น
-  // ต่างจากลิงก์ maps.app.goo.gl ตรงที่ลิงก์นี้ "ไม่มีวันเปลี่ยน" และชี้ตรงไปที่ธุรกิจใน Google
-  // ทำให้ Google/AI เชื่อมได้ว่า "เว็บนี้ = ร้านนี้ในแผนที่" (สำคัญมากต่อการถูก AI แนะนำ)
-  googlePlaceUrl: "https://maps.google.com/?cid=7851014282260906235",
-  // แผนที่ฝัง (embed) ค้นด้วยชื่อร้านจริง เพื่อโชว์หมุด+ชื่อร้านชัดเจน — ไม่ต้องใช้ API key
-  mapEmbedUrl: "https://maps.google.com/maps?q=เฮงศิริรับซื้อทองและนาฬิกาพัทยา&z=17&hl=th&output=embed",
+  // ลิงก์ Google Maps แบบถาวร (CID) และแผนที่ฝัง ย้ายไปอยู่ที่แต่ละสาขาใน data/branches.js แล้ว (24 ต.ค. 2026)
+  // (เดิม googlePlaceUrl = CID ของสาขาพัทยาใต้ ใส่ไว้ที่ร้านแม่ → Google อาจผูกร้านแม่กับสาขาเดียว
+  //  ส่วน mapEmbedUrl เดิมค้นด้วยชื่อหมุดเก่า "เฮงศิริรับซื้อทองและนาฬิกาพัทยา" และไม่มีหน้าไหนใช้แล้ว
+  //  แผนที่ฝังทุกจุดใช้พิกัดของสาขาแทน → ไม่พังแม้ชื่อหมุดเปลี่ยน)
 };

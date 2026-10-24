@@ -1,8 +1,8 @@
 import "./globals.css";
 import { Prompt } from "next/font/google";
 import { getUploadedImage } from "@/lib/getImage";
-import { CONTACT } from "@/data/contact";
-import { BRANCHES, openingHoursSpec } from "@/data/branches";
+import { BRANCHES } from "@/data/branches";
+import { BUSINESS_ID, branchSchema, organizationSchema } from "@/lib/schema";
 import { SITE_URL } from "@/data/site";
 import ScrollAnimation from "@/components/ScrollAnimation";
 
@@ -23,8 +23,6 @@ const SITE_NAME = "หลอมทองพัทยา";
 const SITE_DESCRIPTION =
   "ร้านหลอมทองพัทยา (เฮงศิริ) 2 สาขา พัทยาใต้ · เนินพลับหวาน เปิดทุกวันถึง 20:00 น. รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองเค เครื่องเงิน นาฬิกาแบรนด์เนม ตรวจ XRF ฟรีต่อหน้า จ่ายเงินสดทันที";
 const HOME_TITLE = "ร้านหลอมทองพัทยา รับซื้อทอง ตรวจ XRF ฟรี จ่ายเงินสดทันที";
-const SITE_PHONE = CONTACT.phoneDisplay; // เบอร์จริงจาก data/contact.js
-const SITE_ADDRESS = "ถ.พัทยาใต้ ต.หนองปรือ อ.บางละมุง จ.ชลบุรี 20150";
 // วางรูปจริงไว้ที่ public/images/uploads/hero/ เพื่อแทนที่รูปตัวอย่าง (ไม่ต้องเปลี่ยนชื่อไฟล์)
 const HERO_IMAGE = getUploadedImage("hero", "/images/hero.png");
 // รูปตัวแทนเว็บสำหรับพรีวิวตอนแชร์ (Google / Facebook / LINE) — ขนาด 1200x630 ตามมาตรฐาน og:image
@@ -100,78 +98,16 @@ export const metadata = {
 const schemaData = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": `${SITE_URL}/#business`,
-      name: SITE_NAME,
-      description: SITE_DESCRIPTION,
-      url: SITE_URL,
-      telephone: SITE_PHONE,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "ถ.พัทยาใต้ ต.หนองปรือ",
-        addressLocality: "บางละมุง",
-        addressRegion: "ชลบุรี",
-        postalCode: "20150",
-        addressCountry: "TH",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 12.9187667, // พิกัดจริงของร้าน (Google Maps)
-        longitude: 100.8927284,
-      },
-      image: `${SITE_URL}${OG_IMAGE}`,
-      priceRange: "฿",
-      // ดึงจาก data/contact.js เพื่อให้ตรงกับ Navbar/Footer ทุกจุด (สำคัญต่อ Local SEO)
-      // googlePlaceUrl = ตัวเชื่อม "เว็บนี้ = ร้านนี้ใน Google Maps"
-      // ทำให้ Google/AI ดึงรีวิว ที่ตั้ง เวลาทำการ มารวมกับเว็บได้ → มีโอกาสถูกแนะนำใน AI Overview
-      // บัญชีทางการทั้งหมดของร้าน ให้ Google รวมเป็นธุรกิจเดียวกัน (Knowledge Panel แสดงไอคอนโซเชียล)
-      sameAs: [
-        CONTACT.googlePlaceUrl,
-        CONTACT.facebookUrl,
-        CONTACT.lineUrl,
-        CONTACT.tiktokUrl,
-        CONTACT.youtubeUrl,
-        CONTACT.instagramUrl,
-      ],
-      hasMap: CONTACT.googlePlaceUrl,
-      // ⚠️ ห้ามใส่ aggregateRating เทียม (rating/จำนวนรีวิวที่ไม่มีอยู่จริง) เด็ดขาด
-      // Google ถือเป็น "misleading structured data" และอาจโดน manual action ตัด rich result ทั้งเว็บ
-      // ให้ใส่กลับเมื่อมีรีวิวจริงบน Google Business Profile แล้วเท่านั้น (ผูกตัวเลขตามจริง)
-    },
-    /* ---------- สาขาทั้ง 2 แห่ง ----------
-       ประกาศแต่ละสาขาเป็น LocalBusiness ของตัวเอง แล้วผูกกลับไปที่ธุรกิจแม่ด้วย parentOrganization
-       ช่วยให้ Google/AI เข้าใจว่า "ร้านนี้มี 2 ที่ตั้งจริง" ไม่ใช่ที่เดียว
-       → มีโอกาสโผล่ในผลค้นหาแบบระบุพื้นที่ (เช่น "ร้านทอง เนินพลับหวาน") มากขึ้น */
-    ...BRANCHES.map((b) => ({
-      "@type": "LocalBusiness",
-      "@id": `${SITE_URL}/branch/${b.slug}#business`,
-      name: b.name,
-      alternateName: b.gbpName,
-      url: `${SITE_URL}/branch/${b.slug}`,
-      telephone: SITE_PHONE,
-      parentOrganization: { "@id": `${SITE_URL}/#business` },
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: b.streetAddress,
-        addressLocality: b.locality,
-        addressRegion: b.region,
-        postalCode: b.postalCode,
-        addressCountry: "TH",
-      },
-      geo: { "@type": "GeoCoordinates", latitude: b.lat, longitude: b.lng },
-      hasMap: b.mapUrl,
-      sameAs: [b.mapUrl, b.facebookUrl],
-      priceRange: "฿",
-      openingHoursSpecification: openingHoursSpec(b),
-    })),
+    // ร้านแม่ = แบรนด์ (Organization) · สาขา = JewelryStore แต่ละแห่ง — รายละเอียดใน lib/schema.js
+    organizationSchema(SITE_DESCRIPTION),
+    ...BRANCHES.map((b) => branchSchema(b)),
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: SITE_NAME,
       description: SITE_DESCRIPTION,
-      publisher: { "@id": `${SITE_URL}/#business` },
+      publisher: { "@id": BUSINESS_ID },
       inLanguage: "th",
     },
     {
@@ -180,7 +116,7 @@ const schemaData = {
       url: SITE_URL,
       name: HOME_TITLE,
       isPartOf: { "@id": `${SITE_URL}/#website` },
-      about: { "@id": `${SITE_URL}/#business` },
+      about: { "@id": BUSINESS_ID },
       description: SITE_DESCRIPTION,
       inLanguage: "th",
     },
