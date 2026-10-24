@@ -3750,6 +3750,18 @@ html[data-anim-wait] *::before,
 html[data-anim-wait] *::after {
   animation-play-state: paused !important;
 }
+/* ระหว่างรอจอแรก (มองไม่เห็นอะไรบนจออยู่แล้ว) ยังไม่ต้องจัดวางส่วนใต้จอแรก → รูปในส่วนนั้น (บรรยากาศร้าน 4 รูป)
+   เริ่มโหลดหลังจอแรกขึ้น ไม่แย่งเน็ตกับป้ายราคา · ป้ายแท่งเงินบนมือถืออยู่ใต้ป้ายทอง (นอกจอแรก) ก็เช่นกัน
+   ขนาดกล่องเท่าเดิม (ใช้ความสูงสำรองชุดเดียวกับ content-visibility ด้านล่าง) → ไม่มีอะไรขยับ */
+html[data-anim-wait] .home-main > section:not(:first-child),
+html[data-anim-wait] .footer {
+  content-visibility: hidden;
+}
+@media (max-width: 819px) {
+  html[data-anim-wait] .pb-board--silver {
+    content-visibility: hidden;
+  }
+}
 
 /* ============================================
    ความเร็วมือถือ: ส่วนที่อยู่ใต้จอแรก ยังไม่ต้องจัดวาง/วาดตอนเปิดหน้า
