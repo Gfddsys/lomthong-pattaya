@@ -8,6 +8,8 @@ import { useEffect, useRef } from 'react';
    - ใส่รายการซ้ำ 2 ชุด แล้วเลื่อน scrollLeft ทีละนิด พอถึงครึ่งหนึ่งกระโดดกลับ → วนไม่มีรอยต่อ
    - หยุดเมื่อชี้เมาส์/แตะ/ลาก แล้วเลื่อนต่อเองหลังปล่อย 3 วินาที
    - ไม่มีขอบจางสีขาวซ้าย-ขวา และไม่มีเงาการ์ด (ตามบรีฟ)
+   - เลื่อนเฉพาะตอนสไลด์อยู่บนจอ (IntersectionObserver) — เดิมวนทุกเฟรมตั้งแต่เปิดหน้า แม้อยู่ล่างสุด
+     ทำให้มือถือคำนวณหน้าเว็บตลอดเวลาตอนโหลด (PageSpeed: เวลาประมวลผลหน้าแรกสูง) · ความกว้างคำนวณใหม่เฉพาะตอนขนาดเปลี่ยน
 */
 
 const SPEED = 28; // พิกเซลต่อวินาที (คิดตามเวลาจริง ไม่ขึ้นกับจำนวนเฟรมของเครื่อง) ช้าพอให้อ่านทัน
@@ -24,18 +26,35 @@ export default function ReviewSlider({ children, label }) {
     let resumeTimer = 0;
     let pos = el.scrollLeft;
     let last = 0;
+    let visible = false;
+    let half = el.scrollWidth / 2;
 
     const tick = (now) => {
+      if (!visible) {
+        raf = 0; // ออกนอกจอ → หยุดวน จนกว่าจะกลับมาบนจอ
+        return;
+      }
       const dt = last ? Math.min(now - last, 100) : 0; // กันกระโดดไกลตอนสลับแท็บกลับมา
       last = now;
       if (!paused) {
-        const half = el.scrollWidth / 2;
         pos += (SPEED * dt) / 1000;
         if (pos >= half) pos -= half;
         el.scrollLeft = pos;
       }
       raf = requestAnimationFrame(tick);
     };
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !raf) {
+        last = 0;
+        raf = requestAnimationFrame(tick);
+      }
+    });
+    io.observe(el);
+    const ro = new ResizeObserver(() => {
+      half = el.scrollWidth / 2;
+    });
+    ro.observe(el);
     const pause = () => {
       paused = true;
       clearTimeout(resumeTimer);
@@ -44,7 +63,6 @@ export default function ReviewSlider({ children, label }) {
       clearTimeout(resumeTimer);
       resumeTimer = setTimeout(() => {
         // ถ้าลูกค้าเลื่อนเลยครึ่งไปแล้ว ดึงกลับมาในช่วงวนก่อนเลื่อนต่อ
-        const half = el.scrollWidth / 2;
         pos = el.scrollLeft % half;
         el.scrollLeft = pos;
         paused = false;
@@ -57,8 +75,9 @@ export default function ReviewSlider({ children, label }) {
     el.addEventListener('touchend', resumeLater, { passive: true });
     el.addEventListener('focusin', pause);
     el.addEventListener('focusout', resumeLater);
-    raf = requestAnimationFrame(tick);
     return () => {
+      io.disconnect();
+      ro.disconnect();
       cancelAnimationFrame(raf);
       clearTimeout(resumeTimer);
       el.removeEventListener('pointerenter', pause);

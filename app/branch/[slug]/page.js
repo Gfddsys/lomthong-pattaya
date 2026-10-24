@@ -8,6 +8,7 @@ import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
 import SocialLinks from "@/components/SocialLinks";
+import MapEmbed from "@/components/MapEmbed";
 import { getUploadedImages } from "@/lib/getImage";
 import { branchSchema } from "@/lib/schema";
 
@@ -139,16 +140,8 @@ export default async function BranchPage({ params }) {
       )}
 
       <div className="store-map" style={{ marginBottom: "var(--space-2xl)" }}>
-        <iframe
-          src={b.mapEmbedUrl}
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title={`แผนที่ ${b.name}`}
-        ></iframe>
+        {/* แผนที่แบบกดโหลด (เหมือนหน้าแรก) — Google Maps embed หนักมาก โหลดเฉพาะตอนลูกค้าแตะ */}
+        <MapEmbed src={b.mapEmbedUrl} title={`แผนที่ ${b.name}`} label={`ดูแผนที่${b.shortName}`} />
       </div>
 
       <div className="blog-article-content">
