@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Prompt } from "next/font/google";
+import localFont from "next/font/local";
 import { getUploadedImage } from "@/lib/getImage";
 import { BRANCHES } from "@/data/branches";
 import { BUSINESS_ID, branchSchema, organizationSchema } from "@/lib/schema";
@@ -12,10 +12,17 @@ import ScrollAnimation from "@/components/ScrollAnimation";
    หน้าตาเหมือนเดิม แค่เริ่มเล่นหลังจอแรกแสดง · ไม่มี JS = เล่นตามปกติ (noscript) · กันพลาด: ปล่อยเองใน 3 วิ */
 const START_ANIMATIONS = `(function(){var d=document.documentElement,done=false;function go(){if(done)return;done=true;d.removeAttribute('data-anim-wait')}var P=window.PerformanceObserver;if(P&&P.supportedEntryTypes&&P.supportedEntryTypes.indexOf('paint')>-1){new P(function(l){if(l.getEntriesByName('first-contentful-paint').length)go()}).observe({type:'paint',buffered:true})}else{requestAnimationFrame(function(){requestAnimationFrame(go)})}setTimeout(go,3000)})();`;
 
-// ฟอนต์ Prompt แบบ self-host (next/font) — ตัดการโหลดจาก Google Fonts ออก เร็วขึ้น ไม่มี layout shift
-const prompt = Prompt({
-  subsets: ["thai", "latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+// ฟอนต์ Prompt แบบ self-host — ตัดเหลือเฉพาะตัวอักษรที่เว็บใช้ (ไทย + อังกฤษ/ตัวเลข/เครื่องหมาย) 1 ไฟล์ต่อน้ำหนัก
+// เดิม next/font/google = 12 ไฟล์ 103 KB → 6 ไฟล์ 76 KB หน้าตาตัวอักษรเหมือนเดิมทุกตัว (วิธีสร้าง: scripts/subset-prompt-font.py)
+const prompt = localFont({
+  src: [
+    { path: "./fonts/prompt-300.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/prompt-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/prompt-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/prompt-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/prompt-700.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/prompt-800.woff2", weight: "800", style: "normal" },
+  ],
   display: "swap",
   variable: "--font-prompt",
 });
