@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 
 /* ============================================
    สไลด์รีวิวลูกค้า — เลื่อนเองต่อเนื่องแบบแถบผลงาน (Gallery) แต่ลูกค้าปัด/ลากดูเองได้
@@ -12,11 +12,17 @@ import { useEffect, useRef } from 'react';
      ทำให้มือถือคำนวณหน้าเว็บตลอดเวลาตอนโหลด (PageSpeed: เวลาประมวลผลหน้าแรกสูง) · ความกว้างคำนวณใหม่เฉพาะตอนขนาดเปลี่ยน
 */
 
+// true เฉพาะในเบราว์เซอร์หลัง hydrate (server/ตอน hydrate = false) — ใช้เพิ่มชุดรีวิวที่ 2 ทีหลัง
+const noopSubscribe = () => () => {};
+const useMounted = () => useSyncExternalStore(noopSubscribe, () => true, () => false);
+
 const SPEED = 28; // พิกเซลต่อวินาที (คิดตามเวลาจริง ไม่ขึ้นกับจำนวนเฟรมของเครื่อง) ช้าพอให้อ่านทัน
 const RESUME_MS = 3000;
 
 export default function ReviewSlider({ children, label }) {
   const ref = useRef(null);
+  // ชุดที่ 2 (สำหรับวนไม่มีรอยต่อ) ใส่เฉพาะฝั่งเบราว์เซอร์ → HTML ที่ส่งมาตอนแรกมีรีวิวชุดเดียว เบาลงครึ่งหนึ่ง
+  const mounted = useMounted();
 
   useEffect(() => {
     const el = ref.current;
@@ -54,7 +60,7 @@ export default function ReviewSlider({ children, label }) {
     const ro = new ResizeObserver(() => {
       half = el.scrollWidth / 2;
     });
-    ro.observe(el);
+    ro.observe(el.firstElementChild); // แถบรีวิว — กว้างขึ้นตอนเพิ่มชุดที่ 2 หลังโหลด
     const pause = () => {
       paused = true;
       clearTimeout(resumeTimer);
@@ -93,10 +99,12 @@ export default function ReviewSlider({ children, label }) {
     <div className="review-slider" ref={ref} role="region" aria-label={label} tabIndex={0}>
       <div className="review-track">
         {children}
-        {/* ชุดที่ 2 สำหรับวนต่อเนื่อง ซ่อนจากโปรแกรมอ่านหน้าจอ */}
-        <div className="review-track-dup" aria-hidden="true" inert>
-          {children}
-        </div>
+        {/* ชุดที่ 2 สำหรับวนต่อเนื่อง ซ่อนจากโปรแกรมอ่านหน้าจอ — ใส่หลังโหลดเท่านั้น */}
+        {mounted && (
+          <div className="review-track-dup" aria-hidden="true" inert>
+            {children}
+          </div>
+        )}
       </div>
     </div>
   );
