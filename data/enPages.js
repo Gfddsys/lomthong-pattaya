@@ -105,10 +105,10 @@ export const EN_PAGES = [
   {
     slug: "sell-luxury-watch",
     thPath: "/services/watch-buying",
-    title: "Sell Your Luxury Watch in Pattaya | Rolex, Omega, Cartier",
+    title: "Sell Your Luxury Watch in Pattaya | Rolex, Omega, Cartier, All Brands",
     description:
-      "Sell a pre-owned luxury watch in Pattaya: Rolex, Omega, Cartier, Patek Philippe, AP, Hublot, Tag Heuer. With or without box and papers. Free quote, cash paid.",
-    h1: "Sell Your Luxury Watch in Pattaya: Free Quote, Paid on the Spot",
+      "Sell a pre-owned watch of any brand in Pattaya: Rolex, Omega, Cartier, Patek Philippe, Tag Heuer, Seiko, G-Shock, Garmin. Old, not running or no box is fine. Free quote, cash paid.",
+    h1: "Sell Your Watch in Pattaya: Any Brand, Free Quote, Paid on the Spot",
     breadcrumb: "Sell a luxury watch",
     keywords: ["sell Rolex Pattaya", "sell watch Pattaya", "luxury watch buyer Pattaya", "sell Omega Pattaya", "sell watch Thailand cash"],
     blocks: [
@@ -116,10 +116,11 @@ export const EN_PAGES = [
         type: "summary",
         label: "In short",
         items: [
-          "We buy **pre-owned luxury watches** of many brands: Rolex, Omega, Cartier, Patek Philippe, Audemars Piguet, Hublot, Tag Heuer, Tudor, Longines.",
-          "**With or without box and papers.** A full set helps the price, but it is not required.",
+          "We buy **pre-owned watches of any brand**: luxury names such as Rolex, Omega, Cartier, Patek Philippe, Audemars Piguet, Hublot and Tag Heuer, and everyday watches such as Seiko, Citizen, Casio G-Shock and Garmin.",
+          "**Old, not running, or no box and papers?** We still buy. A full set helps the price, but it is not required.",
           "**Free quote** at the shop, or send photos on LINE first.",
           "**Gold-cased watches** can be valued as a watch or for their gold content, whichever pays more.",
+          "Not ready to sell? **Sale with right of redemption** (khai fak). Living elsewhere in Thailand? **Sell by post.**",
         ],
       },
       { type: "h2", text: "What affects the price of a pre-owned watch" },
@@ -163,13 +164,25 @@ export const EN_PAGES = [
         type: "p",
         text: "If the case or bracelet is gold, we can value it two ways: as a watch, by model and condition, or by the weight and purity of the gold. For models with little market demand or a broken movement, the gold value is often higher. We show you both and you choose. Selling gold jewelry at the same visit? See [selling gold in Pattaya](/en).",
       },
+      { type: "h2", text: "Not ready to sell? Sale with right of redemption" },
+      {
+        type: "p",
+        text: "Need cash but want the watch back later? We offer a sale with right of redemption (khai fak, often called pawning) for any brand. The amount depends on the model and condition and is lower than an outright sale. The amount, the redemption sum and the due date are all in a written contract you see before signing. The watch is kept in a safe and is not sold or used during the contract. If it is not redeemed by the due date, it becomes the shop's under the contract. Ask about the amount and terms on LINE.",
+      },
+      { type: "h2", text: "Living elsewhere in Thailand? Sell by post" },
+      {
+        type: "p",
+        text: "Agree the price on LINE first, then send the watch to our Pattaya shop with Thailand Post. There are two ways to be paid. With the deposit method, you send us a video of packing and posting plus the tracking number, we transfer 10% of the agreed price, and the other 90% once the watch arrives and is checked. With cash on delivery, you use Thailand Post's Wallet@Post app, linked to your Thai bank account, and we pay when we receive the parcel. Step by step guide in Thai: [ขายนาฬิกาทางไปรษณีย์](/khai-nalika-song-praisani).",
+      },
     ],
     faq: [
       { q: "Can I sell a watch without the box or papers?", a: "Yes. We buy watches with or without box and papers. A full set helps the price." },
-      { q: "Which brands do you buy?", a: "Many luxury brands, such as Rolex, Omega, Cartier, Patek Philippe, Audemars Piguet, Hublot, Tag Heuer, Tudor and Longines. Send photos on LINE to ask about others." },
+      { q: "Which brands do you buy?", a: "Any brand. Luxury watches such as Rolex, Omega, Cartier, Patek Philippe, Audemars Piguet, Hublot, Tag Heuer, Tudor and Longines, and everyday watches such as Seiko, Citizen, Casio G-Shock and Garmin. Send photos on LINE to ask." },
       { q: "Do you buy watches that are not running?", a: "Yes. The price reflects the model and real condition. If the case is gold, it can also be valued for its gold." },
       { q: "Can I get a quote on LINE?", a: "Yes. Send photos of the dial, case back, bracelet and any papers. We reply with a first estimate; the final price is confirmed in person." },
       { q: "How am I paid?", a: "In Thai baht, cash on the spot or a transfer to a Thai bank account. Bring your original passport." },
+      { q: "Can I pawn my watch instead of selling it?", a: "Yes, as a sale with right of redemption (khai fak) under a written contract. The amount is lower than an outright sale and depends on the model and condition. Ask on LINE for the amount and terms." },
+      { q: "I live outside Pattaya. Can I sell by post?", a: "Yes, from anywhere in Thailand. Agree the price on LINE, then post the watch with Thailand Post and choose a 10% deposit when you send it, or cash on delivery." },
     ],
   },
   {

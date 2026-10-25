@@ -19,12 +19,12 @@ export const revalidate = 300;
 const PAGE_PATH = "/rakha-thong-wan-nee";
 const TITLE = "ราคาทองวันนี้ พัทยา อัปเดตล่าสุด ทองคำแท่ง ทองรูปพรรณ";
 const DESCRIPTION =
-  "ราคาทองวันนี้ พัทยา อ้างอิงราคาประกาศสมาคมค้าทองคำ อัปเดตทุก 5 นาที ทั้งราคารับซื้อและขายออกทองคำแท่ง ทองรูปพรรณ พร้อมเครื่องคิดเลขประเมินราคาขายทองเก่า ทอง 18K 14K 9K";
+  "ราคาทองวันนี้ พัทยา อ้างอิงราคาประกาศสมาคมค้าทองคำ อัปเดตทุก 5 นาที ราคารับซื้อและขายออกทองคำแท่ง ทองรูปพรรณ ตารางขายทอง 1 สลึง 2 สลึง 1 บาท ได้เท่าไหร่ และเครื่องคิดเลขทอง 18K 14K 9K";
 
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["ราคาทองวันนี้", "ราคาทองวันนี้ พัทยา", "ราคาทองคำวันนี้", "ราคาทองรูปพรรณวันนี้", "ราคารับซื้อทองวันนี้", "คำนวณราคาขายทอง"],
+  keywords: ["ราคาทองวันนี้", "ราคาทองวันนี้ พัทยา", "ราคาทองคำวันนี้", "ราคาทองรูปพรรณวันนี้", "ราคารับซื้อทองวันนี้", "คำนวณราคาขายทอง", "ขายทอง 1 สลึง ได้เท่าไหร่", "ทอง 1 สลึง ราคาวันนี้"],
   alternates: {
     canonical: PAGE_PATH,
     languages: { th: PAGE_PATH, en: "/en/gold-price-today", "x-default": PAGE_PATH },
@@ -53,6 +53,20 @@ const FAQ = [
     a: "ร้านคิดราคาจากน้ำหนักและเปอร์เซ็นต์ทองที่ตรวจด้วยเครื่อง XRF ต่อหน้าคุณ อ้างอิงราคาสมาคมฯ ล่าสุด ณ เวลาที่ตกลงซื้อขาย ตัวเลขในหน้านี้จึงใช้เป็นราคาในใจก่อนไปร้าน",
   },
 ];
+
+/* ขายทองรูปพรรณตามน้ำหนักที่คนถามบ่อย (1 บาท = 4 สลึง = 15.16 กรัม) — คิดจากราคารับซื้อทองรูปพรรณ (ประมาณ) */
+const ORNAMENT_GRAMS_PER_BAHT = 15.16;
+const SELL_WEIGHTS = [
+  { label: "1 กรัม", baht: 1 / ORNAMENT_GRAMS_PER_BAHT },
+  { label: "ครึ่งสลึง", baht: 1 / 8 },
+  { label: "1 สลึง", baht: 1 / 4 },
+  { label: "2 สลึง (ครึ่งบาท)", baht: 1 / 2 },
+  { label: "3 สลึง", baht: 3 / 4 },
+  { label: "1 บาท", baht: 1 },
+  { label: "2 บาท", baht: 2 },
+];
+const fmtBaht = (n) => Math.round(n).toLocaleString("th-TH");
+const fmtGram = (n) => n.toLocaleString("th-TH", { maximumFractionDigits: 2 });
 
 function fmtDiff(diff) {
   const d = String(diff ?? "").trim();
@@ -154,6 +168,42 @@ export default async function RakhaThongWanNee() {
             </>
           )}
         </p>
+
+        {p && (
+          <>
+            <h2>ขายทอง 1 สลึง 2 สลึง 1 บาท วันนี้ได้เท่าไหร่</h2>
+            <p>
+              ตัวเลขด้านล่างคิดจากราคารับซื้อทองรูปพรรณ 96.5% (ประมาณ) ของวันนี้ บาทละ {p.gold_ornament.buy} บาท
+              ตามน้ำหนักที่คนถามบ่อย ใช้เป็นราคาในใจก่อนไปร้าน
+            </p>
+            <div className="blog-table-wrap">
+              <table className="blog-table gp-table">
+                <caption>ขายทองรูปพรรณ 96.5% ได้ประมาณเท่าไหร่ ตามราคาวันนี้ (หน่วย: บาท)</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">น้ำหนัก</th>
+                    <th scope="col">กรัม</th>
+                    <th scope="col">ได้ประมาณ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {SELL_WEIGHTS.map((w) => (
+                    <tr key={w.label}>
+                      <td>{w.label}</td>
+                      <td>{fmtGram(w.baht * ORNAMENT_GRAMS_PER_BAHT)}</td>
+                      <td>{fmtBaht(w.baht * p.raw.ornamentBuy)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="gp-source">
+              ราคาที่ได้จริงคิดจากน้ำหนักที่ชั่งจริงและเปอร์เซ็นต์ทองที่ตรวจด้วยเครื่อง XRF ต่อหน้าคุณ ณ เวลาที่ตกลงซื้อขาย
+              ทองหัก ทองชำรุด หรือไม่มีใบเสร็จก็คิดตามเนื้อทองเหมือนกัน · แปลงน้ำหนักอื่นดูที่{" "}
+              <Link href="/blog/gold-salung-gram-converter-pattaya">ทอง 1 สลึง กี่กรัม</Link>
+            </p>
+          </>
+        )}
 
         <h2>ราคาทองวันนี้ ขายทองเก่าได้เท่าไร</h2>
         <p>

@@ -24,7 +24,8 @@ export default function sitemap() {
     const path = `/services/${service.slug}`;
     return {
       url: `${baseUrl}${path}`,
-      lastModified: LASTMOD,
+      // บริการที่แก้เนื้อหาทีหลังมีวันที่ของตัวเอง (updated ใน data/services.js)
+      lastModified: service.updated ? new Date(service.updated) : LASTMOD,
       changeFrequency: "monthly",
       priority: 0.8,
       ...(EN_FOR_TH[path] && { alternates: { languages: pairLangs(path) } }),
@@ -104,10 +105,17 @@ export default function sitemap() {
     // หน้ารับซื้อนาฬิการายแบรนด์ (data/watchBrands.js)
     ...WATCH_BRANDS.map((b) => ({
       url: `${baseUrl}/rap-sue-nalika/${b.slug}`,
-      lastModified: new Date("2026-10-20"),
+      lastModified: new Date(b.updated ?? "2026-10-20"),
       changeFrequency: "monthly",
       priority: 0.7,
     })),
+    {
+      // ขายนาฬิกาทางไปรษณีย์ สำหรับลูกค้าต่างจังหวัด (เพิ่ม 25 ต.ค. 2569)
+      url: `${baseUrl}/khai-nalika-song-praisani`,
+      lastModified: new Date("2026-10-25"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     // ราคาทองย้อนหลัง: ใส่ sitemap เมื่อข้อมูลครบ HISTORY_MIN_DAYS วัน (data/goldHistory.js)
     ...(HISTORY_READY
       ? [{ url: `${baseUrl}/rakha-thong-yon-lang`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 }]

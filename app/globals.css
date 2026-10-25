@@ -2968,6 +2968,17 @@ a.contact-item--link:hover {
   color: var(--color-white);
 }
 
+/* มือถือ: ตารางราคาทองต้องเห็นครบทุกช่องโดยไม่เลื่อนข้าง
+   (.blog-table td กว้างขั้นต่ำ 120px → ช่องราคาด้านขวาโดนตัดบนจอ 360-412px) */
+@media (max-width: 600px) {
+  .gp-table th,
+  .gp-table td {
+    min-width: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
 .gp-source {
   font-size: var(--font-size-sm) !important;
   color: var(--color-text-muted);

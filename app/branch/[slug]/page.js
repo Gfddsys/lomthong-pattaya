@@ -37,6 +37,10 @@ function branchFaq(b) {
       q: "ขายทองแล้วได้เงินสดเลยไหม",
       a: "ได้ จ่ายเงินสดทันทีหลังตกลงราคา หรือเลือกรับโอนเข้าบัญชีธนาคารได้ตามสะดวก",
     },
+    {
+      q: `${b.shortName} รับซื้อนาฬิกาไหม`,
+      a: `รับ นาฬิกาทุกยี่ห้อ ทั้งแบรนด์หรูอย่าง Rolex, Omega, Cartier และนาฬิกาทั่วไปอย่าง Seiko, Casio, G-Shock มือสอง เก่า เสีย หรือไม่มีกล่องก็รับ ส่งรูปให้ประเมินก่อนทาง LINE ${CONTACT.lineId} ได้`,
+    },
     // คำถามเฉพาะสาขา (data/branches.js → faqExtra) เช่นสาขาชลบุรีที่คนค้นคนละชุดคำกับพัทยา
     ...(b.faqExtra ?? []),
   ];
@@ -51,7 +55,7 @@ export async function generateMetadata({ params }) {
   const b = getBranch(slug);
   if (!b) return {};
   const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
-  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาแบรนด์เนม ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,
     description,
@@ -147,7 +151,7 @@ export default async function BranchPage({ params }) {
       <div className="blog-article-content">
         <p>
           <strong>{b.name}</strong> ให้บริการ<strong>รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองชำรุด
-          ทองคำแท่ง เครื่องประดับ และนาฬิกาแบรนด์เนม</strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
+          ทองคำแท่ง เครื่องประดับ และ<Link href="/services/watch-buying">นาฬิกาทุกยี่ห้อ</Link></strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
           ด้วยเครื่อง XRF ต่อหน้าคุณ ให้ราคาสูงตามสมาคมค้าทองคำ จ่ายเงินสดทันที
         </p>
         {/* ย่อหน้าเฉพาะสาขา (data/branches.js → intro): จุดสังเกต การเดินทาง คนในพื้นที่ */}
