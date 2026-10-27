@@ -664,6 +664,8 @@ button {
   margin-bottom: var(--space-3xl);
   font-weight: 300;
   line-height: 1.8;
+  /* แต่ละวลีห้ามตัดกลาง (ใน Hero.js) + เฉลี่ยความยาวบรรทัด → ไม่มีคำค้างบรรทัดสุดท้ายคำเดียว */
+  text-wrap: balance;
   animation: fadeInUp 0.8s ease 0.4s both;
 }
 
@@ -2137,9 +2139,18 @@ a.contact-item--link:hover {
     align-items: stretch;
   }
 
+  /* จอแคบ 360-375px: ปุ่มใหญ่ห้ามตัดบรรทัด + ขอบในกว้าง (กว้าง 350px) ดันส่วนหัวทั้งก้อนให้กว้างเกินจอ
+     → ข้อความและปุ่มโดนตัดขอบขวา · ล็อกความกว้างส่วนหัวไว้เท่าจอ แล้วให้ปุ่มบีบตามจอได้ */
+  .hero > .container {
+    width: 100%;
+    min-width: 0;
+  }
+
   .hero-actions .btn {
     text-align: center;
     justify-content: center;
+    padding-inline: var(--space-lg);
+    white-space: normal;
   }
 
   .services-grid {
@@ -2950,6 +2961,13 @@ a.contact-item--link:hover {
 
   .navbar-brand-name {
     white-space: nowrap;
+  }
+}
+
+/* จอแคบ 360-375px (Android ทั่วไป, iPhone SE/mini): ชื่อร้านห้ามตัดบรรทัด เลยล้นไปทับปุ่ม EN → ลดขนาดลงหน่อย */
+@media (max-width: 380px) {
+  .navbar-brand-name {
+    font-size: var(--font-size-xl);
   }
 }
 

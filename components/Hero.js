@@ -1,8 +1,19 @@
+import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
 import PriceBoard from './PriceBoard';
 import { getUploadedImage } from '@/lib/getImage';
+
+const HERO_POINTS = [
+  'รับหลอมทองต่อหน้าคุณ',
+  'ชั่งก่อน-หลังหลอม',
+  'ตรวจเปอร์เซ็นต์ทองด้วย XRF ฟรี',
+  'ขายรับเงินสดทันที',
+  'หรือรับก้อนทองกลับ ·',
+  'รับซื้อทองเก่า ทองหัก',
+  'ไม่มีใบเสร็จก็ขายได้',
+];
 
 export default function Hero() {
   const heroSrc = getUploadedImage('hero', '/images/hero.png');
@@ -37,10 +48,10 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="container">
         <div className="hero-content">
-          {/* Badge */}
+          {/* Badge: ชื่อร้านจริง "เฮงศิริ" — คนค้น "หลอมทอง พัทยา" เจอหลายร้านที่ชื่อคล้ายกัน ให้แยกออกว่าเป็นร้านเรา */}
           <div className="hero-badge animate-on-scroll">
             <span className="hero-badge-dot"></span>
-            บริการครบวงจร | พัทยาและพื้นที่ใกล้เคียง
+            เฮงศิริ · 2 สาขาในพัทยา เปิดทุกวัน
           </div>
 
           {/* Heading */}
@@ -48,12 +59,15 @@ export default function Hero() {
             ร้าน<span className="gold-text">หลอมทอง</span>พัทยา
           </h1>
 
-          {/* Description */}
+          {/* Description: บอกสิ่งที่ลูกค้าได้จริงตอนมาหลอมทอง (ข้อมูลเดียวกับหน้า /services/gold-melting)
+              แต่ละวลีห้ามตัดกลาง (เช่น "ตรวจ / XRF") → ขึ้นบรรทัดใหม่ได้เฉพาะระหว่างวลี */}
           <p className="hero-description animate-on-scroll animate-delay-200">
-            บริการรับหลอมทอง รับซื้อทองเก่า ทองหัก ทองคำแท่ง
-            ทุกประเภท ด้วยเครื่องมือทันสมัย{" "}
-            <span style={{ whiteSpace: 'nowrap' }}>ตรวจสอบ</span>ความบริสุทธิ์
-            พร้อมให้ราคาสูงสุด โปร่งใส ยุติธรรม
+            {HERO_POINTS.map((phrase, i) => (
+              <Fragment key={phrase}>
+                {i > 0 && ' '}
+                <span style={{ whiteSpace: 'nowrap' }}>{phrase}</span>
+              </Fragment>
+            ))}
           </p>
 
           {/* CTA Buttons */}
