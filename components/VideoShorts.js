@@ -1,10 +1,11 @@
 import { videosFor } from '@/data/videos';
 import { CONTACT } from '@/data/contact';
 import { SITE_URL } from '@/data/site';
-import ShortCard from './ShortCard';
+import ShortsGrid from './ShortsGrid';
 
 /* กล่องคลิปสั้น YouTube ของร้าน + ข้อมูล VideoObject ให้ Google
-   แต่ละคลิปโชว์แค่รูปปก กดแล้วค่อยโหลดตัวเล่น (หน้าเว็บไม่ช้าลง)
+   แต่ละคลิปโชว์รูปปก เลื่อนมาถึงแล้วเล่นเองทีละคลิป (components/ShortsGrid.js)
+   ตัวเล่นโหลดตอนเลื่อนมาถึงเท่านั้น (หน้าเว็บไม่ช้าลง)
    page: "home" หรือ slug หน้าบริการ ตามที่ระบุใน data/videos.js */
 export default function VideoShorts({ page, title = 'คลิปจากหน้าร้าน', pageUrl, limit = 4 }) {
   const videos = videosFor(page).slice(0, limit);
@@ -35,11 +36,7 @@ export default function VideoShorts({ page, title = 'คลิปจากหน
           ดูคลิปทั้งหมดบน YouTube →
         </a>
       </div>
-      <div className="video-shorts-grid">
-        {videos.map((v) => (
-          <ShortCard key={v.id} id={v.id} title={v.title} />
-        ))}
-      </div>
+      <ShortsGrid videos={videos.map(({ id, title, seconds }) => ({ id, title, seconds }))} />
     </section>
   );
 }
