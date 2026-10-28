@@ -15,7 +15,7 @@ export default function MeltPromo({ className = '', href = '/services/gold-melti
         ))}
       </strong>
       <span className="melt-promo-sub">
-        <span>จากราคารับซื้อทองรูปพรรณ</span> · <span>ทองทุกเปอร์เซ็นต์บวกตามเนื้อทอง ›</span>
+        <span>จากราคารับซื้อทองรูปพรรณ</span> · <span>ทองทุกเปอร์เซ็นต์บวกตามเนื้อทอง →</span>
       </span>
     </Link>
   );
