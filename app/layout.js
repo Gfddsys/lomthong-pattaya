@@ -4,6 +4,7 @@ import { getUploadedImage } from "@/lib/getImage";
 import { BRANCHES } from "@/data/branches";
 import { BUSINESS_ID, branchSchema, organizationSchema } from "@/lib/schema";
 import { SITE_URL } from "@/data/site";
+import { MELT_BONUS_HOOK, MELT_BONUS_LINE } from "@/data/meltBonus";
 import ScrollAnimation from "@/components/ScrollAnimation";
 
 /* แอนิเมชันทั้งเว็บ (ข้อความหัวเว็บเลื่อนขึ้น, ประกายทอง, จุดกะพริบ ฯลฯ) รอจนจอแรกแสดงเสร็จก่อนค่อยเล่น
@@ -35,9 +36,13 @@ const SITE_NAME = "หลอมทองพัทยา";
 // → บอกข้อมูลที่คนอยากรู้ก่อนกด (2 สาขา เปิดทุกวัน ตรวจฟรี เงินสด) ไว้ในคำอธิบายที่โชว์บนหน้าผลค้นหา
 const SITE_DESCRIPTION =
   "ร้านหลอมทองพัทยา (เฮงศิริ) 2 สาขา พัทยาใต้ · เนินพลับหวาน เปิดทุกวันถึง 20:00 น. รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองเค เครื่องเงิน นาฬิกาแบรนด์เนม ตรวจ XRF ฟรีต่อหน้า จ่ายเงินสดทันที";
-// ปรับ 27 ต.ค. 2026: คำค้น "หลอมทอง พัทยา" มีร้านอื่นชื่อ "ร้านหลอมทองพัทยา" ขึ้นด้วย
-// → ใส่ชื่อร้านจริง (เฮงศิริ) ให้คนแยกออก + "รับหลอมทอง" เป็นคำบริการชัด ๆ (ยังขึ้นต้นด้วยคำเดิมและมี "รับซื้อทอง")
-const HOME_TITLE = "ร้านหลอมทองพัทยา (เฮงศิริ) รับหลอมทอง รับซื้อทอง ตรวจ XRF ฟรี";
+// 29 ต.ค. 2026 พี่สั่ง: คนเจอเว็บบน Google ต้องเห็นโปร "หลอมทองบวกเพิ่มบาทละ 1,000" ทุกครั้ง
+// → โปรอยู่ต้นชื่อหน้าและต้นคำอธิบาย (Google ตัดท้ายเมื่อยาวเกิน ส่วนต้นจะโชว์เสมอ)
+// ข้อมูลร้าน (Organization / WebSite ใน schema) ยังใช้ SITE_DESCRIPTION ที่ไม่มีโปร
+const HOME_DESCRIPTION = `${MELT_BONUS_LINE} · ${SITE_DESCRIPTION}`;
+// ปรับ 27 ต.ค. 2026: คำค้น "หลอมทอง พัทยา" มีร้านอื่นชื่อ "ร้านหลอมทองพัทยา" ขึ้นด้วย → ใส่ชื่อร้านจริง (เฮงศิริ) ให้คนแยกออก
+// 29 ต.ค. 2026: ใส่โปรต่อจากชื่อร้าน (ยาว ~590px ส่วนโปรอยู่ใน 510px แรก ไม่โดนตัด) ยังขึ้นต้นคำเดิมและมี "รับซื้อทอง"
+const HOME_TITLE = `ร้านหลอมทองพัทยา (เฮงศิริ) ${MELT_BONUS_HOOK} รับซื้อทอง`;
 // วางรูปจริงไว้ที่ public/images/uploads/hero/ เพื่อแทนที่รูปตัวอย่าง (ไม่ต้องเปลี่ยนชื่อไฟล์)
 const HERO_IMAGE = getUploadedImage("hero", "/images/hero.png");
 // รูปตัวแทนเว็บสำหรับพรีวิวตอนแชร์ (Google / Facebook / LINE) — ขนาด 1200x630 ตามมาตรฐาน og:image
@@ -49,7 +54,7 @@ export const metadata = {
     default: HOME_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
-  description: SITE_DESCRIPTION,
+  description: HOME_DESCRIPTION,
   keywords: [
     "หลอมทองพัทยา",
     "หลอมทอง",
@@ -73,7 +78,7 @@ export const metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
     title: HOME_TITLE,
-    description: SITE_DESCRIPTION,
+    description: HOME_DESCRIPTION,
     images: [
       {
         url: OG_IMAGE,
@@ -86,7 +91,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: HOME_TITLE,
-    description: SITE_DESCRIPTION,
+    description: HOME_DESCRIPTION,
     images: [OG_IMAGE],
   },
   robots: {
@@ -132,7 +137,7 @@ const schemaData = {
       name: HOME_TITLE,
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": BUSINESS_ID },
-      description: SITE_DESCRIPTION,
+      description: HOME_DESCRIPTION,
       inLanguage: "th",
     },
   ],

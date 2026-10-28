@@ -3,7 +3,9 @@ import NearestBranch from "@/components/NearestBranch";
 import { BRANCHES } from "@/data/branches";
 import { AREAS } from "@/data/areas";
 import { CONTACT } from "@/data/contact";
+import { MELT_BONUS_HOOK } from "@/data/meltBonus";
 import { SITE_URL } from "@/data/site";
+import MeltPromo from "@/components/MeltPromo";
 
 /* ============================================
    ร้านหลอมทอง / รับซื้อทอง ใกล้ฉัน — หน้ารวม 2 สาขา สำหรับคำค้น "…ใกล้ฉัน"
@@ -17,8 +19,8 @@ import { SITE_URL } from "@/data/site";
 
 const PATH = "/ran-lomthong-klai-chan";
 const TITLE = "หลอมทอง ขายทอง ใกล้ฉัน พัทยา · ร้านรับซื้อทอง 2 สาขา เปิดทุกวัน";
-const DESCRIPTION =
-  "หลอมทอง ขายทอง ใกล้ฉันในพัทยา ร้านรับซื้อทอง เงินแท้ นาฬิกา 2 สาขา พัทยาใต้ · เนินพลับหวาน กดดูสาขาที่ใกล้คุณและเปิดอยู่ตอนนี้ ตรวจ XRF ฟรี";
+// โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบาย ให้เห็นบน Google ทุกครั้ง
+const DESCRIPTION = `${MELT_BONUS_HOOK} · หลอมทอง ขายทอง ใกล้ฉันในพัทยา ร้านรับซื้อทอง เงินแท้ นาฬิกา 2 สาขา พัทยาใต้ · เนินพลับหวาน กดดูสาขาที่ใกล้คุณและเปิดอยู่ตอนนี้ ตรวจ XRF ฟรี`;
 
 export const metadata = {
   title: TITLE,
@@ -154,6 +156,8 @@ export default function RanLomthongKlaiChan() {
           <span>🔬 ตรวจ XRF ฟรี</span>
         </div>
       </header>
+
+      <MeltPromo />
 
       <div className="blog-article-content">
         <p>

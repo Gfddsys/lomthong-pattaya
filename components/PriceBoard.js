@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { afterFirstPaint } from '@/lib/afterFirstPaint';
+import { MELT_BONUS } from '@/data/meltBonus';
 
 /* ============================================
    กล่องราคาทอง/แท่งเงินแบบป้ายหน้าร้าน (ภาพแม่แบบจากเจ้าของร้าน + ตัวเลขจริงวางทับ)
@@ -68,6 +70,7 @@ const EMPTY = {
   time: WAITING,
   gold_bar: { buy: WAITING, sell: WAITING },
   gold_ornament: { buy: WAITING, sell: WAITING },
+  gold_melt: { buy: WAITING },
   silver: { buy: WAITING, sell: WAITING, vat: WAITING, spot_diff: '' },
 };
 
@@ -192,6 +195,15 @@ export default function PriceBoard({ initialData = null }) {
   return (
     <div className="pb-wrap">
       <Board kind="gold" data={shown} waiting={waiting} />
+      {/* ราคาหลอมขายที่ร้าน = รับซื้อทองรูปพรรณ + โปรบาทละ 1,000 (data/meltBonus.js)
+          แสดงกรอบไว้ตั้งแต่ยังไม่ได้ราคา (ตัวเลข "—") และแยก 3 บรรทัดเสมอ → ได้ราคาแล้วความสูงไม่เปลี่ยน หน้าไม่เด้ง */}
+      <Link href="/services/gold-melting" className="pb-melt">
+        <span className="pb-melt-label">หลอมทองขายที่ร้านวันนี้ ทอง 96.5% (ประมาณ)</span>
+        <span className="pb-melt-val">
+          บาทละ <b><Flash value={shown.gold_melt?.buy ?? WAITING} /></b> บาท
+        </span>
+        <span className="pb-melt-note">= รับซื้อทองรูปพรรณ {shown.gold_ornament.buy} + {MELT_BONUS}</span>
+      </Link>
       {(waiting || data.silver) && <Board kind="silver" data={shown} waiting={waiting} />}
       {waiting && error && (
         <p className="pb-state">ยังดึงราคาไม่ได้ ลองรีเฟรชอีกครั้ง หรือโทร 092-883-9799</p>
@@ -201,6 +213,14 @@ export default function PriceBoard({ initialData = null }) {
         .pb-wrap { display: grid; grid-template-columns: 1fr; gap: 1.2rem; width: 100%; max-width: 1040px; margin: 0 auto; }
         @media (min-width: 820px) { .pb-wrap { grid-template-columns: 1fr 1fr; align-items: start; } }
         .pb-state { grid-column: 1 / -1; margin: 0; padding: 0.5rem 1rem; text-align: center; color: #666; }
+
+        /* กรอบราคาหลอมขาย: มือถืออยู่ใต้ป้ายทอง (ก่อนป้ายเงิน) · จอกว้างอยู่ใต้ป้ายทั้งสองเต็มแถว */
+        .pb-melt { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; padding: 0.65rem 1rem; border-radius: 14px; background: linear-gradient(135deg, #fff6dc, #fbe7b0); border: 1px solid rgba(212, 168, 67, 0.6); color: #3a1d14; text-decoration: none; text-align: center; line-height: 1.35; font-family: var(--font-family, 'Prompt', sans-serif); }
+        .pb-melt-label { font-weight: 700; font-size: 0.95rem; }
+        .pb-melt-val { font-size: 1.3rem; font-weight: 800; color: #b0121b; }
+        .pb-melt-note { font-size: 0.82rem; color: #6b4a2a; }
+        .pb-melt:hover .pb-melt-val { text-decoration: underline; }
+        @media (min-width: 820px) { .pb-melt { grid-column: 1 / -1; order: 3; } }
 
         .pb-board { position: relative; margin: 0; width: 100%; container-type: inline-size; user-select: none; }
         .pb-bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }

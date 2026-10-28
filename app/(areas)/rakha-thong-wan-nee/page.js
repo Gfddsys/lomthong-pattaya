@@ -7,6 +7,7 @@ import EmbedCode from "@/components/EmbedCode";
 import AutoRefresh from "@/components/AutoRefresh";
 import PriceBoard from "@/components/PriceBoard";
 import { HISTORY_READY } from "@/data/goldHistory";
+import { MELT_BONUS, MELT_BONUS_HALF, MELT_BONUS_LINE } from "@/data/meltBonus";
 
 /* ============================================
    ราคาทองวันนี้ พัทยา — หน้าราคาทอง + เครื่องคิดเลข + โค้ดกล่องราคาให้เว็บอื่นติด
@@ -18,8 +19,8 @@ export const revalidate = 300;
 
 const PAGE_PATH = "/rakha-thong-wan-nee";
 const TITLE = "ราคาทองวันนี้ พัทยา อัปเดตล่าสุด ทองคำแท่ง ทองรูปพรรณ";
-const DESCRIPTION =
-  "ราคาทองวันนี้ พัทยา อ้างอิงราคาประกาศสมาคมค้าทองคำ อัปเดตทุก 5 นาที ราคารับซื้อและขายออกทองคำแท่ง ทองรูปพรรณ ตารางขายทอง 1 สลึง 2 สลึง 1 บาท ได้เท่าไหร่ และเครื่องคิดเลขทอง 18K 14K 9K";
+// โปรหลอมทอง (data/meltBonus.js) อยู่ต่อจากคำค้นหลักของหน้า "ราคาทองวันนี้ พัทยา"
+const DESCRIPTION = `ราคาทองวันนี้ พัทยา อ้างอิงสมาคมค้าทองคำ อัปเดตทุก 5 นาที · ${MELT_BONUS_LINE} · ตารางขายทอง 1 สลึง 2 สลึง 1 บาท ได้เท่าไหร่ และเครื่องคิดเลขทอง 18K 14K 9K`;
 
 export const metadata = {
   title: TITLE,
@@ -50,7 +51,7 @@ const FAQ = [
   },
   {
     q: "ขายทองวันนี้ที่ร้าน ได้ราคาตามหน้านี้เลยไหม",
-    a: "ร้านคิดราคาจากน้ำหนักและเปอร์เซ็นต์ทองที่ตรวจด้วยเครื่อง XRF ต่อหน้าคุณ อ้างอิงราคาสมาคมฯ ล่าสุด ณ เวลาที่ตกลงซื้อขาย ตัวเลขในหน้านี้จึงใช้เป็นราคาในใจก่อนไปร้าน",
+    a: `หลอมแล้วขายให้ร้าน ได้ราคารับซื้อทองรูปพรรณบวกเพิ่มบาทละ ${MELT_BONUS} (ทอง 96.5%) ทองเปอร์เซ็นต์ต่ำกว่าบวกตามสัดส่วนเนื้อทอง ไม่ถึง 1 บาทก็คิดตามสัดส่วน ร้านคิดจากน้ำหนักและเปอร์เซ็นต์ทองที่ตรวจด้วยเครื่อง XRF ต่อหน้าคุณ อ้างอิงราคาสมาคมฯ ล่าสุด ณ เวลาที่ตกลงซื้อขาย ตัวเลขในหน้านี้เป็นราคาประมาณ ใช้เป็นราคาในใจก่อนไปร้าน`,
   },
 ];
 
@@ -153,6 +154,16 @@ export default async function RakhaThongWanNee() {
                   <td>{p.gold_ornament.buy}</td>
                   <td>{p.gold_ornament.sell}</td>
                 </tr>
+                <tr>
+                  <td>
+                    <strong>หลอมขายที่ร้านเรา</strong>{" "}
+                    <span style={{ whiteSpace: "nowrap" }}>(รูปพรรณ</span> + {MELT_BONUS})
+                  </td>
+                  <td>
+                    <strong>{p.gold_melt.buy}</strong>
+                  </td>
+                  <td>–</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -174,24 +185,37 @@ export default async function RakhaThongWanNee() {
             <h2>ขายทอง 1 สลึง 2 สลึง 1 บาท วันนี้ได้เท่าไหร่</h2>
             <p>
               ตัวเลขด้านล่างคิดจากราคารับซื้อทองรูปพรรณ 96.5% (ประมาณ) ของวันนี้ บาทละ {p.gold_ornament.buy} บาท
+              ถ้าหลอมขายที่ร้านเรา บวกเพิ่มบาทละ {MELT_BONUS} ทองไม่ถึง 1 บาทก็บวกตามสัดส่วน (เช่น 2 สลึง บวก {MELT_BONUS_HALF})
               ตามน้ำหนักที่คนถามบ่อย ใช้เป็นราคาในใจก่อนไปร้าน
             </p>
             <div className="blog-table-wrap">
               <table className="blog-table gp-table">
                 <caption>ขายทองรูปพรรณ 96.5% ได้ประมาณเท่าไหร่ ตามราคาวันนี้ (หน่วย: บาท)</caption>
+                {/* 3 ช่องพอดีจอมือถือ 360px (กรัมอยู่ใต้น้ำหนัก) — ช่องหลอมขายที่ร้านเราต้องเห็นโดยไม่ต้องเลื่อนข้าง */}
                 <thead>
                   <tr>
                     <th scope="col">น้ำหนัก</th>
-                    <th scope="col">กรัม</th>
-                    <th scope="col">ได้ประมาณ</th>
+                    <th scope="col">
+                      ราคารับซื้อ<span style={{ whiteSpace: "nowrap" }}>รูปพรรณ</span>
+                    </th>
+                    <th scope="col">
+                      หลอมขาย<span style={{ whiteSpace: "nowrap" }}>ที่ร้านเรา</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {SELL_WEIGHTS.map((w) => (
                     <tr key={w.label}>
-                      <td>{w.label}</td>
-                      <td>{fmtGram(w.baht * ORNAMENT_GRAMS_PER_BAHT)}</td>
+                      <td>
+                        {w.label}
+                        {!w.label.endsWith("กรัม") && (
+                          <span className="gp-gram">{fmtGram(w.baht * ORNAMENT_GRAMS_PER_BAHT)} กรัม</span>
+                        )}
+                      </td>
                       <td>{fmtBaht(w.baht * p.raw.ornamentBuy)}</td>
+                      <td>
+                        <strong>{fmtBaht(w.baht * p.raw.meltBuy)}</strong>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -207,10 +231,10 @@ export default async function RakhaThongWanNee() {
 
         <h2>ราคาทองวันนี้ ขายทองเก่าได้เท่าไร</h2>
         <p>
-          กรอกน้ำหนักและชนิดทองของคุณ เพื่อดูมูลค่าเนื้อทองโดยประมาณจากราคาวันนี้ ใช้ได้ทั้งทองไทย 96.5%
-          และทองเค 18K 14K 9K
+          กรอกน้ำหนักและชนิดทองของคุณ เพื่อดูว่าหลอมขายที่ร้านได้ประมาณเท่าไหร่จากราคาวันนี้
+          (ราคารับซื้อทองรูปพรรณ บวกเพิ่มบาทละ {MELT_BONUS} ตามสัดส่วนเนื้อทอง) ใช้ได้ทั้งทองไทย 96.5% และทองเค 18K 14K 9K
         </p>
-        {p ? <GoldCalculator barBuy={p.raw.barBuy} /> : <p>เครื่องคิดเลขใช้ได้เมื่อดึงราคาทองสำเร็จ</p>}
+        {p ? <GoldCalculator ornamentBuy={p.raw.ornamentBuy} /> : <p>เครื่องคิดเลขใช้ได้เมื่อดึงราคาทองสำเร็จ</p>}
         <p>
           อยากเข้าใจวิธีคิดแบบละเอียด อ่านต่อที่ <Link href="/blog/wi-thi-kamnuan-rakha-khai-thong-kao">วิธีคำนวณราคาขายทองเก่า</Link>{" "}
           ถ้าเป็นทองเคจากต่างประเทศ ดู <Link href="/blog/ran-rub-sue-thong-k-pattaya-18k-14k-9k">รับซื้อทองเค 18K 14K 9K</Link>

@@ -4,8 +4,8 @@
     "time": "22:27",
     "barBuy": 65400,
     "barSell": 65600,
-    "ornamentBuy": 64410,
-    "ornamentSell": 66100,
+    "ornamentBuy": 64092,
+    "ornamentSell": 66400,
     "silverBuyKg": 59990,
     "silverSellKg": 62170
   },
@@ -14,8 +14,8 @@
     "time": "22:24",
     "barBuy": 65150,
     "barSell": 65350,
-    "ornamentBuy": 64170,
-    "ornamentSell": 65850,
+    "ornamentBuy": 63847,
+    "ornamentSell": 66150,
     "silverBuyKg": 57780,
     "silverSellKg": 59880
   },
@@ -24,8 +24,8 @@
     "time": "22:18",
     "barBuy": 64150,
     "barSell": 64350,
-    "ornamentBuy": 63180,
-    "ornamentSell": 64850,
+    "ornamentBuy": 62867,
+    "ornamentSell": 65150,
     "silverBuyKg": 56610,
     "silverSellKg": 58670
   },
@@ -34,8 +34,8 @@
     "time": "21:03",
     "barBuy": 63900,
     "barSell": 64100,
-    "ornamentBuy": 62940,
-    "ornamentSell": 64600,
+    "ornamentBuy": 62622,
+    "ornamentSell": 64900,
     "silverBuyKg": 56450,
     "silverSellKg": 58500
   },
@@ -44,8 +44,8 @@
     "time": "21:27",
     "barBuy": 63900,
     "barSell": 64100,
-    "ornamentBuy": 62940,
-    "ornamentSell": 64600,
+    "ornamentBuy": 62622,
+    "ornamentSell": 64900,
     "silverBuyKg": 56050,
     "silverSellKg": 58080
   },
@@ -54,8 +54,8 @@
     "time": "23:51",
     "barBuy": 64150,
     "barSell": 64350,
-    "ornamentBuy": 63180,
-    "ornamentSell": 64850,
+    "ornamentBuy": 62867,
+    "ornamentSell": 65150,
     "silverBuyKg": 56160,
     "silverSellKg": 58200
   },
@@ -64,8 +64,8 @@
     "time": "22:54",
     "barBuy": 63800,
     "barSell": 64000,
-    "ornamentBuy": 62840,
-    "ornamentSell": 64500,
+    "ornamentBuy": 62524,
+    "ornamentSell": 64800,
     "silverBuyKg": 57080,
     "silverSellKg": 59150
   },
@@ -74,8 +74,8 @@
     "time": "23:42",
     "barBuy": 64600,
     "barSell": 64800,
-    "ornamentBuy": 63630,
-    "ornamentSell": 65300,
+    "ornamentBuy": 63308,
+    "ornamentSell": 65600,
     "silverBuyKg": 56210,
     "silverSellKg": 58250
   }

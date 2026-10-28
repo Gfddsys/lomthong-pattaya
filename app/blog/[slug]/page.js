@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getUploadedImage } from "@/lib/getImage";
 import { getAutoArticles, getAutoArticle } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
+import { MELT_BONUS_HOOK } from "@/data/meltBonus";
 
 /* ============================================================
    หน้าบทความอัตโนมัติ
@@ -177,6 +178,12 @@ export default async function AutoArticlePage({ params }) {
         <h3>{article.ctaTitle}</h3>
         <p>
           <RichText>{article.ctaText}</RichText>
+        </p>
+        {/* โปรหลอมทอง (data/meltBonus.js) ท้ายทุกบทความ — พี่สั่ง 29 ต.ค. 2026 ให้คนเห็นทุกครั้ง */}
+        <p className="blog-article-cta-promo">
+          <Link href="/services/gold-melting">
+            <strong>{MELT_BONUS_HOOK}</strong> จากราคารับซื้อทองรูปพรรณ ›
+          </Link>
         </p>
         <div className="blog-article-cta-actions">
           <Link href={article.ctaLink} className="btn btn-primary">

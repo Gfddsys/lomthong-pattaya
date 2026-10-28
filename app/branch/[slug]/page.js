@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import { reviewCount } from "@/data/reviewStats";
 import { BRANCHES, getBranch, hoursShort } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
+import { MELT_BONUS_HOOK } from "@/data/meltBonus";
 import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
 import SocialLinks from "@/components/SocialLinks";
+import MeltPromo from "@/components/MeltPromo";
 import MapEmbed from "@/components/MapEmbed";
 import { getUploadedImages } from "@/lib/getImage";
 import { branchSchema } from "@/lib/schema";
@@ -55,7 +57,8 @@ export async function generateMetadata({ params }) {
   const b = getBranch(slug);
   if (!b) return {};
   const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
-  const description = `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบาย ให้เห็นบน Google ทุกครั้ง
+  const description = `${MELT_BONUS_HOOK} · ${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,
     description,
@@ -125,6 +128,8 @@ export default async function BranchPage({ params }) {
           <span>🕐 {hoursShort(b)}</span>
         </div>
       </header>
+
+      <MeltPromo />
 
       {photos.length > 0 && (
         <div className="branch-photos">

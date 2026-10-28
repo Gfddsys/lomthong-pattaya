@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CONTACT } from '@/data/contact';
+import MeltPromo from './MeltPromo';
 import PriceBoard from './PriceBoard';
 import { getUploadedImage } from '@/lib/getImage';
 
@@ -58,6 +59,9 @@ export default function Hero() {
           <h1 className="animate-on-scroll animate-delay-100">
             ร้าน<span className="gold-text">หลอมทอง</span>พัทยา
           </h1>
+
+          {/* โปรหลอมทอง — พี่สั่ง 29 ต.ค. 2026 ให้คนเห็นทุกครั้ง · กดดูเงื่อนไขที่หน้าหลอมทอง */}
+          <MeltPromo className="hero-promo animate-on-scroll animate-delay-100" />
 
           {/* Description: บอกสิ่งที่ลูกค้าได้จริงตอนมาหลอมทอง (ข้อมูลเดียวกับหน้า /services/gold-melting)
               แต่ละวลีห้ามตัดกลาง (เช่น "ตรวจ / XRF") → ขึ้นบรรทัดใหม่ได้เฉพาะระหว่างวลี */}

@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { AREAS, getArea } from "@/data/areas";
 import { BRANCHES, hoursShort } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
+import { MELT_BONUS_HOOK } from "@/data/meltBonus";
 import { SITE_URL } from "@/data/site";
+import MeltPromo from "@/components/MeltPromo";
 
 export const dynamicParams = false;
 
@@ -39,7 +41,8 @@ export async function generateMetadata({ params }) {
   const [nearest] = branchesByDistance(area);
   // พื้นที่ที่เน้นคำค้นอื่น (เช่น "หลอมทอง ชลบุรี") ตั้ง title/description/h1/label เองใน data/areas.js
   const title = area.title ?? `รับซื้อทอง ${area.name} · ขายทอง หลอมทอง ใกล้${area.name}`;
-  const description = area.description ?? `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${hoursShort(nearest).replace("ทุกวัน ", "")} น. โทร ${CONTACT.phoneDisplay}`;
+  // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบายทุกย่าน รวมย่านที่ตั้งคำอธิบายเองใน data/areas.js
+  const description = `${MELT_BONUS_HOOK} · ${area.description ?? `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${hoursShort(nearest).replace("ทุกวัน ", "")} น. โทร ${CONTACT.phoneDisplay}`}`;
   return {
     title,
     description,
@@ -119,6 +122,8 @@ export default async function AreaPage({ params }) {
           <span>🕐 {hoursShort(nearest)}</span>
         </div>
       </header>
+
+      <MeltPromo />
 
       <div className="blog-article-content">
         <p>{area.intro}</p>

@@ -8,6 +8,7 @@ import { SITE_URL } from "@/data/site";
 import { BRANCHES } from "@/data/branches";
 import { BUSINESS_ID, branchId, serviceId } from "@/lib/schema";
 import ServiceIcon from "@/components/ServiceIcon";
+import MeltPromo from "@/components/MeltPromo";
 import VideoShorts from "@/components/VideoShorts";
 import { Section } from "@/components/ContentBlocks";
 
@@ -149,6 +150,14 @@ export default async function ServicePage({ params }) {
           </div>
           <h1 style={{ color: 'var(--color-primary-dark)', marginBottom: '1rem', fontSize: '2.5rem' }}>{service.h1 ?? `${service.title} พัทยา`}</h1>
           <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>{service.excerpt}</p>
+          {/* บริการทองที่คำอธิบายบน Google มีโปรหลอมทอง (meltPromo ใน data/services.js) → โชว์ป้ายโปรบนหน้าด้วย
+              หน้าหลอมทองเอง: ป้ายพาไปดูตัวเลขของวันนี้ที่หน้าราคาทอง (ไม่ลิงก์กลับหน้าตัวเอง) */}
+          {service.meltPromo && (
+            <MeltPromo
+              className="melt-promo--service"
+              href={service.slug === 'gold-melting' ? '/rakha-thong-wan-nee' : undefined}
+            />
+          )}
         </div>
       </div>
 

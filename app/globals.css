@@ -669,6 +669,61 @@ button {
   animation: fadeInUp 0.8s ease 0.4s both;
 }
 
+/* ป้ายโปรหลอมทอง (components/MeltPromo.js) — ตัวเลขโปรสีแดงบนพื้นทองอ่อน กดไปหน้าหลอมทอง */
+.melt-promo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  margin: 0 0 var(--space-xl);
+  padding: var(--space-sm) var(--space-xl);
+  border: 1px solid rgba(212, 168, 67, 0.55);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(240, 210, 124, 0.35), rgba(212, 168, 67, 0.12));
+  text-align: center;
+  text-decoration: none;
+}
+
+.melt-promo strong {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--color-primary);
+}
+
+.melt-promo-sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.melt-promo strong > span,
+.melt-promo-sub > span {
+  white-space: nowrap;
+}
+
+.melt-promo:hover strong {
+  color: var(--color-primary-light);
+}
+
+/* บนหัวหน้าแรก: ชิดชื่อร้านด้านบน + เลื่อนขึ้นพร้อมข้อความหัวเว็บ */
+.hero-promo {
+  margin-top: calc(var(--space-md) * -1);
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+/* หัวหน้าบริการ: ใต้คำอธิบายสั้น */
+.melt-promo--service {
+  margin: var(--space-lg) 0 0;
+}
+
+/* มือถือ: ขอบในแคบลง ให้วลีที่ห้ามตัดกลางพอดีกล่องถึงจอ 320px */
+@media (max-width: 480px) {
+  .melt-promo {
+    padding: var(--space-sm) var(--space-md);
+  }
+}
+
 .hero-actions {
   display: flex;
   gap: var(--space-lg);
@@ -2732,6 +2787,21 @@ a.contact-item--link:hover {
   margin-bottom: var(--space-xl);
 }
 
+/* โปรหลอมทองในกล่องท้ายบทความ (ตัวเลขโปรสีแดงเหมือนบนหัวหน้าแรก) */
+.blog-article-cta .blog-article-cta-promo {
+  margin: calc(var(--space-md) * -1) 0 var(--space-xl);
+}
+
+.blog-article-cta-promo a {
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+.blog-article-cta-promo strong {
+  color: var(--color-primary);
+  font-size: var(--font-size-lg);
+}
+
 .blog-article-cta-actions {
   display: flex;
   gap: var(--space-md);
@@ -2986,6 +3056,13 @@ a.contact-item--link:hover {
   color: var(--color-white);
 }
 
+/* น้ำหนักเป็นกรัม บรรทัดเล็กใต้ชื่อน้ำหนัก (แทนช่องกรัมแยก → ตารางเหลือ 3 ช่อง พอดีจอมือถือ) */
+.gp-gram {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
 /* มือถือ: ตารางราคาทองต้องเห็นครบทุกช่องโดยไม่เลื่อนข้าง
    (.blog-table td กว้างขั้นต่ำ 120px → ช่องราคาด้านขวาโดนตัดบนจอ 360-412px) */
 @media (max-width: 600px) {
@@ -2994,6 +3071,11 @@ a.contact-item--link:hover {
     min-width: 0;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+
+  /* หัวช่องยาว ("ราคารับซื้อรูปพรรณ" / "หลอมขายที่ร้านเรา") ตัดบรรทัดได้ ไม่ดันตารางเกินจอ */
+  .gp-table th {
+    white-space: normal;
   }
 }
 
@@ -3053,6 +3135,14 @@ a.contact-item--link:hover {
   font-size: var(--font-size-2xl);
   color: var(--color-gold-dark);
   font-variant-numeric: tabular-nums;
+}
+
+/* ยอดโปรหลอมทองที่รวมอยู่ในราคา (บรรทัดใต้ตัวเลข ชิดขวา) */
+.gold-calc-bonus {
+  flex-basis: 100%;
+  text-align: right;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
 }
 
 .gold-calc-note {
