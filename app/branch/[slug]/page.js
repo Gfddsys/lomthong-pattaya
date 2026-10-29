@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { reviewCount } from "@/data/reviewStats";
 import { BRANCHES, getBranch, hoursShort } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
-import { MELT_BONUS_HOOK } from "@/data/meltBonus";
+import { MELT_BONUS_HOOK, MELT_BONUS_LINE, MELT_BONUS_TERMS } from "@/data/meltBonus";
 import { servicesData } from "@/data/services";
 import { getAutoArticles } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
@@ -15,6 +15,9 @@ import { getUploadedImages } from "@/lib/getImage";
 import { branchSchema } from "@/lib/schema";
 
 
+// รับหลอมทองได้ทั้ง 2 สาขาในพัทยา (data/areas.js) · สาขาเมืองอื่นเปิดใหม่ยังไม่ยืนยันเรื่องหลอม → ไม่ขึ้นส่วนนี้
+const meltsHere = (b) => b.city === "พัทยา";
+
 /* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
    ใส่ชื่อพื้นที่ของสาขาในคำถาม เพื่อให้ตรงกับคำค้นแบบ "ร้านทอง <พื้นที่>" */
 function branchFaq(b) {
@@ -23,6 +26,13 @@ function branchFaq(b) {
       q: `ร้านรับซื้อทอง${b.area} อยู่ตรงไหน`,
       a: `${b.name} ตั้งอยู่ที่ ${b.address} กดปุ่ม "นำทางมาสาขานี้" เพื่อเปิด Google Maps ได้ทันที หรือโทร ${CONTACT.phoneDisplay} สอบถามเส้นทาง`,
     },
+    // หมุดเนินพลับหวานแทบไม่ติดคำ "หลอมทอง" (วัด 29 ต.ค. 2026) → หน้าที่หมุดลิงก์มาต้องบอกชัดว่าสาขานี้รับหลอม
+    ...(meltsHere(b)
+      ? [{
+          q: `${b.shortName} รับหลอมทองไหม`,
+          a: `รับ หลอมต่อหน้าคุณที่${b.shortName} ชั่งก่อนหลอม หลอม เทแม่พิมพ์ ชั่งหลังหลอม แล้วตรวจเปอร์เซ็นต์ด้วยเครื่อง XRF ไม่ต้องจองคิว หลอมแล้วเลือกได้ว่าจะขายรับเงินสดทันที (${MELT_BONUS_LINE}) หรือรับก้อนทองกลับ`,
+        }]
+      : []),
     {
       q: `${b.shortName} เปิดกี่โมง เปิดวันอาทิตย์ไหม`,
       a: `${b.hours} รวมวันเสาร์ อาทิตย์ วันหยุดนักขัตฤกษ์โทรถามก่อนได้ที่ ${CONTACT.phoneDisplay}`,
@@ -161,6 +171,20 @@ export default async function BranchPage({ params }) {
         </p>
         {/* ย่อหน้าเฉพาะสาขา (data/branches.js → intro): จุดสังเกต การเดินทาง คนในพื้นที่ */}
         {b.intro?.map((t) => <p key={t}>{t}</p>)}
+
+        {meltsHere(b) && (
+          <>
+            <h2>หลอมทองที่{b.shortName}</h2>
+            <p>
+              หลอมต่อหน้าคุณ ยืนดูได้ทุกขั้นตอน: ชั่งก่อนหลอม → หลอม → เทแม่พิมพ์ → ชั่งหลังหลอม → ตรวจเปอร์เซ็นต์ทองด้วยเครื่อง XRF
+              เห็นทุกตัวเลขที่ใช้คิดราคา แล้วเลือกได้ว่าจะขายรับเงินสดทันที หรือรับก้อนทองกลับ ไม่ต้องจองคิว
+            </p>
+            <p>
+              <strong>{MELT_BONUS_LINE}</strong> {MELT_BONUS_TERMS} ·{" "}
+              <Link href="/services/gold-melting">ดูขั้นตอนและเงื่อนไขหลอมทอง</Link>
+            </p>
+          </>
+        )}
 
         <h2>ข้อมูลติดต่อ {b.shortName}</h2>
         <ul>
