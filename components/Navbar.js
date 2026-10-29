@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { CONTACT } from '@/data/contact';
 import { REVIEW_BRANCHES } from '@/data/branches';
 
@@ -59,17 +58,9 @@ export default function Navbar() {
         {/* Brand */}
         {/* prefetch={false}: ไม่ต้องโหลดหน้าแรก/หน้าอังกฤษล่วงหน้าทุกครั้งที่เปิดเว็บ (กดแล้วค่อยโหลด) — ลดของที่แย่งเน็ตตอนเปิดหน้า */}
         <Link href="/" prefetch={false} className="navbar-brand" aria-label="หลอมทองพัทยา - กลับหน้าแรก">
-          <Image
-            src="/images/uploads/logo/logo-nav.png"
-            alt="หลอมทองพัทยา"
-            width={48}
-            height={48}
-            priority
-            className="navbar-brand-logo"
-            style={{ height: '48px', width: '48px', borderRadius: '10px', display: 'block', objectFit: 'cover' }}
-          />
           <div className="navbar-brand-text">
-            <span className="navbar-brand-name">หลอมทองพัทยา</span>
+            {/* พี่สั่ง 29 ต.ค. 2026: เอาโลโก้ออก ใช้ชื่อ "เฮงศิริ" แทน */}
+            <span className="navbar-brand-name">เฮงศิริ</span>
           </div>
         </Link>
 

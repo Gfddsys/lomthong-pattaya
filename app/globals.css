@@ -686,19 +686,14 @@ button {
 }
 
 .melt-promo strong {
-  font-size: var(--font-size-2xl);
+  /* ตัวใหญ่เต็มกล่อง: จอแคบย่อตามความกว้าง แต่ไม่เล็กกว่าเดิม */
+  font-size: clamp(var(--font-size-2xl), 7.5vw, var(--font-size-4xl));
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.25;
   color: var(--color-primary);
 }
 
-.melt-promo-sub {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-}
-
-.melt-promo strong > span,
-.melt-promo-sub > span {
+.melt-promo strong > span {
   white-space: nowrap;
 }
 

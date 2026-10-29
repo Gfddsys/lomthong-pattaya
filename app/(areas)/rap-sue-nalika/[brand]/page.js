@@ -99,7 +99,7 @@ export default async function WatchBrandPage({ params }) {
         <p>ทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวันถึง 20:00 น.</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            💬 ประเมินราคา / สอบถาม
+            💬 ประเมินราคา - สอบถาม
           </a>
           <a href={CONTACT.phoneHref} className="btn btn-outline">
             📞 โทร {CONTACT.phoneDisplay}

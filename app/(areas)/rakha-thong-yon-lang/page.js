@@ -152,7 +152,7 @@ export default function RakhaThongYonLang() {
         <p>ส่งรูปและน้ำหนักทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · 2 สาขาในพัทยา เปิดทุกวัน</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            💬 ประเมินราคา / สอบถาม
+            💬 ประเมินราคา - สอบถาม
           </a>
           <Link href="/services/gold-buying" className="btn btn-outline">
             รับซื้อทองเก่า พัทยา

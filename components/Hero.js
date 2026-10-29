@@ -85,7 +85,7 @@ export default function Hero() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG ไฟล์เดียวกับปุ่ม LINE ลอย */}
               <img src="/images/icons/line.svg" alt="" width={24} height={24} />
-              ประเมินราคา / สอบถาม
+              ประเมินราคา - สอบถาม
             </a>
             <a href="#contact" className="btn btn-primary btn-lg">
               รับซื้อทองเก่าให้ราคาสูงพิเศษ
