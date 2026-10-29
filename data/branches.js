@@ -44,6 +44,20 @@ export const BRANCHES = [
     placeId: "ChIJ686UVEaVAjER-wCurORn9Gw",
     // เพจ Facebook ที่ดูแลสาขานี้ (พัทยาใต้ใช้เพจหลักของร้าน)
     facebookUrl: "https://www.facebook.com/hengsiripattaya",
+    // สถานที่ที่คนในพื้นที่รู้จัก รอบสาขา (ชื่อตามหมุด Google Maps · ระยะเส้นตรงจากพิกัดหมุด วัด 29 ต.ค. 2026)
+    // ช่วยให้ Google ผูกสาขากับย่าน และลูกค้าใช้เป็นจุดสังเกตตอนมาร้าน
+    nearby: [
+      { name: "บิ๊กซี เพลส พัทยาใต้", km: 0.4 },
+      { name: "วัดธรรมสามัคคี", km: 0.8 },
+      { name: "โรงพยาบาลจอมเทียน", km: 0.8 },
+      { name: "ตลาดเทพประสิทธิ์", km: 1.1 },
+      { name: "เอาท์เล็ทมอลล์ พัทยา", km: 1.2 },
+      { name: "โรงพยาบาลเมืองพัทยา", km: 1.4 },
+      { name: "โลตัส พัทยาใต้", km: 1.5 },
+      { name: "วัดชัยมงคล พระอารามหลวง", km: 1.9 },
+      { name: "เซ็นทรัล พัทยา", km: 2.0 },
+      { name: "วัดพระใหญ่ เขาพระตำหนัก", km: 2.7 },
+    ],
   },
   {
     slug: "noen-plap-wan",
@@ -53,8 +67,8 @@ export const BRANCHES = [
     name: "หลอมทองพัทยา สาขาเนินพลับหวาน",
     gbpName: "เฮงศิริรับซื้อทองและนาฬิกา สาขา2 ซอยเนินพลับหวาน",
     cid: "18375488596678420709", // ID หมุด 0xff02d9856b4228e5
-    address: "13/228 ซอยเนินพลับหวาน เมืองพัทยา อ.บางละมุง จ.ชลบุรี 20150",
-    streetAddress: "13/228 ซอยเนินพลับหวาน",
+    address: "13/228 ม.5 ซอยเนินพลับหวาน เมืองพัทยา อ.บางละมุง จ.ชลบุรี 20150",
+    streetAddress: "13/228 ม.5 ซอยเนินพลับหวาน",
     locality: "บางละมุง",
     region: "ชลบุรี",
     postalCode: "20150",
@@ -64,13 +78,25 @@ export const BRANCHES = [
     schedule: [{ days: [0, 1, 2, 3, 4, 5, 6], opens: "10:00", closes: "20:00" }],
     nameEn: "Noen Plap Wan Branch",
     seoTitle: "ร้านทองเนินพลับหวาน · ห้างทอง รับซื้อทอง หลอมทอง ซอยเนินพลับหวาน",
-    addressEn: "13/228 Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
+    addressEn: "13/228 Moo 5, Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
     reviews: 53, // ค่าเริ่มต้น 21 ต.ค. 2026 · ตัวเลขที่โชว์บนเว็บมาจาก data/reviewStats.js (อัปเดตทุกวัน)
     mapEmbedUrl:
       "https://maps.google.com/maps?q=12.9317188,100.906533&z=17&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
     placeId: "ChIJEeEaq92VAjER5ShCa4XZAv8",
     facebookUrl: "https://www.facebook.com/hengsirinernplubwan/",
+    nearby: [
+      { name: "ตลาดสดเจ้าสัว", km: 0.1 },
+      { name: "เนินพลับหวานพลาซ่า", km: 0.1 },
+      { name: "ตลาดนำชัยแฟร์", km: 0.3 },
+      { name: "โรงเรียนบ้านเนินพลับหวาน", km: 0.7 },
+      { name: "วัดเซนต์นิโคลัส พัทยา", km: 0.7 },
+      { name: "เดอะชิลล์ (ท็อปส์ เดอะชิลล์)", km: 1.1 },
+      { name: "บิ๊กซี เพลส พัทยากลาง", km: 1.4 },
+      { name: "โรงพยาบาลมิตรไมตรี", km: 1.6 },
+      { name: "วัดหนองอ้อ", km: 1.7 },
+      { name: "โรงพยาบาลกรุงเทพพัทยา", km: 2.5 },
+    ],
   },
 ];
 

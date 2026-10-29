@@ -172,6 +172,21 @@ export default async function BranchPage({ params }) {
         </ul>
         <SocialLinks facebookUrl={b.facebookUrl} className="social-links--branch" />
 
+        {b.nearby?.length > 0 && (
+          <>
+            <h2>สถานที่ใกล้{b.shortName}</h2>
+            <p>
+              รอบ{b.shortName}มีสถานที่ที่คนพัทยารู้จัก ใช้เป็นจุดสังเกตตอนมาร้านได้
+              (ระยะเส้นตรงโดยประมาณ ขับรถจริงอาจไกลกว่านี้)
+            </p>
+            <ul>
+              {b.nearby.map((n) => (
+                <li key={n.name}>{n.name} · ราว {n.km < 1 ? `${Math.round(n.km * 1000 / 50) * 50} เมตร` : `${n.km.toFixed(1)} กม.`}</li>
+              ))}
+            </ul>
+          </>
+        )}
+
         <h2>บริการที่ {b.shortName}</h2>
         <ul>
           {servicesData.map((s) => (
