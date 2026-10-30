@@ -117,7 +117,7 @@ export default function SellGoldPattayaEn() {
         <h1>Sell Gold in Pattaya: Free XRF Test, Cash Paid on the Spot</h1>
         <div className="blog-article-meta">
           <span>📍 2 shops in Pattaya</span>
-          <span>🕐 Open daily until 20:00</span>
+          <span>🕐 Open daily</span>
           <span>🛂 Bring your passport</span>
         </div>
       </header>
@@ -304,7 +304,7 @@ export default function SellGoldPattayaEn() {
 
       <div className="blog-article-cta">
         <h3>Find out what your gold is worth</h3>
-        <p>Free XRF test in front of you · Cash in Thai baht on the spot · Open daily until 20:00</p>
+        <p>Free XRF test in front of you · Cash in Thai baht on the spot · Open daily</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.phoneHref} className="btn btn-primary">
             📞 Call {CONTACT.phoneDisplay}

@@ -3509,21 +3509,27 @@ a.contact-item--link:hover {
 a.short-card-frame {
   display: block;
 }
-/* หน้าดูคลิป (/khlip/<slug>): คลิปแนวตั้งอยู่ใต้หัวข้อทันที และไม่สูงเกินจอ (39vh × 16/9 ≈ 70% ของความสูงจอ) */
+/* หน้าดูคลิป (/khlip/<slug>): คลิปแนวตั้งอยู่ใต้หัวข้อทันที และอยู่ในจอแรกทั้งคลิป (33vh × 16/9 ≈ 59% ของความสูงจอ)
+   Google จัดทำดัชนีวิดีโอเมื่อคลิปเป็นเนื้อหาหลักที่เห็นได้ทันที */
 .watch-page .blog-article-header {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+.watch-page .blog-article-header h1 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: 0;
 }
 .watch-page .blog-article-meta {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.25rem var(--space-lg);
   padding-bottom: 0;
+  margin-bottom: var(--space-md);
   border-bottom: 0;
 }
 .watch-frame {
   position: relative;
   aspect-ratio: 9 / 16;
-  width: min(100%, 340px, 39vh);
+  width: min(100%, 340px, 33vh);
   margin: 0 auto 1.5rem;
   border-radius: 16px;
   overflow: hidden;

@@ -205,7 +205,7 @@ export default async function GoldPriceTodayEn() {
 
       <div className="blog-article-cta">
         <h3>Want a price for your gold?</h3>
-        <p>Send photos and the weight on LINE for a free estimate · Open daily until 20:00</p>
+        <p>Send photos and the weight on LINE for a free estimate · Open daily</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             💬 Send photos on LINE

@@ -84,7 +84,7 @@ export default async function EnGuidePage({ params }) {
         <h1>{page.h1}</h1>
         <div className="blog-article-meta">
           <span>📍 2 shops in Pattaya</span>
-          <span>🕐 Open daily until 20:00</span>
+          <span>🕐 Open daily</span>
           <span>🛂 Bring your passport</span>
         </div>
       </header>

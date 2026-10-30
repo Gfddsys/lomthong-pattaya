@@ -210,7 +210,7 @@ export default function KhaiNalikaSongPraisani() {
 
       <div className="blog-article-cta">
         <h3>ส่งรูปนาฬิกาให้ประเมินก่อนส่ง ฟรี</h3>
-        <p>ทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวันถึง 20:00 น.</p>
+        <p>ทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวัน</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             💬 ประเมินราคา - สอบถาม

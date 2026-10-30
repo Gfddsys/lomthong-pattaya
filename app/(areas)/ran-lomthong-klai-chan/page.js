@@ -152,7 +152,7 @@ export default function RanLomthongKlaiChan() {
         <h1>หลอมทอง ขายทอง ใกล้ฉัน — หาร้านรับซื้อทองที่ใกล้คุณที่สุดในพัทยา</h1>
         <div className="blog-article-meta">
           <span>📍 2 สาขาในพัทยา</span>
-          <span>🕐 เปิดทุกวันถึง 20:00</span>
+          <span>🕐 เปิดทุกวัน</span>
           <span>🔬 ตรวจ XRF ฟรี</span>
         </div>
       </header>
@@ -236,7 +236,7 @@ export default function RanLomthongKlaiChan() {
 
       <div className="blog-article-cta">
         <h3>ถามราคาก่อนเดินทางได้ทุกวัน</h3>
-        <p>ส่งรูปทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวันถึง 20:00 น.</p>
+        <p>ส่งรูปทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวัน</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             💬 ประเมินราคา - สอบถาม

@@ -96,7 +96,7 @@ export default async function WatchBrandPage({ params }) {
 
       <div className="blog-article-cta">
         <h3>ส่งรูป {b.name} ให้ประเมินราคาฟรี</h3>
-        <p>ทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวันถึง 20:00 น.</p>
+        <p>ทาง LINE {CONTACT.lineId} หรือโทร {CONTACT.phoneDisplay} · เปิดทุกวัน</p>
         <div className="blog-article-cta-actions">
           <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             💬 ประเมินราคา - สอบถาม

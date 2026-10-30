@@ -80,10 +80,6 @@ export default async function WatchPage({ params }) {
 
       <header className="blog-article-header">
         <h1>{heading}</h1>
-        <div className="blog-article-meta">
-          <span>🎬 ความยาว {formatLength(v.seconds)} นาที</span>
-          <span>📅 ลงคลิป {formatDate(v.uploadDate)}</span>
-        </div>
       </header>
 
       <div className="watch-frame">
@@ -97,6 +93,10 @@ export default async function WatchPage({ params }) {
       </div>
 
       <div className="blog-article-content watch-text">
+        <div className="blog-article-meta">
+          <span>🎬 ความยาว {formatLength(v.seconds)} นาที</span>
+          <span>📅 ลงคลิป {formatDate(v.uploadDate)}</span>
+        </div>
         <p>{v.description}</p>
         <p>
           ตัวเลขในคลิปเป็นของลูกค้ารายนั้น ราคาจริงขึ้นกับน้ำหนัก เปอร์เซ็นต์ที่ตรวจได้ และราคาวันที่มาขาย

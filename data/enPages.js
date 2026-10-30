@@ -26,7 +26,7 @@ export const EN_PAGES = [
           "We **melt gold of any kind** at both Pattaya shops: old jewelry, broken pieces, 9K-18K, Italian gold, scrap and gold dust.",
           "Every step happens **in front of you**: weigh, melt, pour, weigh again, **XRF test**.",
           "After melting you choose: **sell to us for cash** in Thai baht, or **take the gold bar home**.",
-          "Open daily until 20:00, no appointment needed. Bring your **original passport**.",
+          "Open daily, no appointment needed. Bring your **original passport**.",
         ],
       },
       {
@@ -562,7 +562,7 @@ export const EN_PAGES = [
       },
       {
         "q": "Is there a gold buyer near Walking Street?",
-        "a": "Our South Pattaya shop is about 2.4 km from Walking Street in a straight line, open daily until 20:00."
+        "a": "Our South Pattaya shop is about 2.4 km from Walking Street in a straight line, open daily (Mon-Fri until 20:00, Sat-Sun until 18:00)."
       },
       {
         "q": "Which shop is closer to Terminal 21 and Naklua?",
