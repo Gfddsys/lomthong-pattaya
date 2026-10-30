@@ -20,12 +20,12 @@ export const revalidate = 300;
 const PAGE_PATH = "/rakha-thong-wan-nee";
 const TITLE = "ราคาทองวันนี้ พัทยา อัปเดตล่าสุด ทองคำแท่ง ทองรูปพรรณ";
 // โปรหลอมทอง (data/meltBonus.js) อยู่ต่อจากคำค้นหลักของหน้า "ราคาทองวันนี้ พัทยา"
-const DESCRIPTION = `ราคาทองวันนี้ พัทยา อ้างอิงสมาคมค้าทองคำ อัปเดตทุก 5 นาที · ${MELT_BONUS_LINE} · ตารางขายทอง 1 สลึง 2 สลึง 1 บาท ได้เท่าไหร่ และเครื่องคิดเลขทอง 18K 14K 9K`;
+const DESCRIPTION = `ราคาทองวันนี้ พัทยา อ้างอิงสมาคมค้าทองคำ อัปเดตทุก 5 นาที · ${MELT_BONUS_LINE} · ตารางขายทอง 1 สลึง 2 สลึง 1 บาท ได้เท่าไหร่ และราคาทอง 18K 14K 9K กรัมละเท่าไหร่`;
 
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["ราคาทองวันนี้", "ราคาทองวันนี้ พัทยา", "ราคาทองคำวันนี้", "ราคาทองรูปพรรณวันนี้", "ราคารับซื้อทองวันนี้", "คำนวณราคาขายทอง", "ขายทอง 1 สลึง ได้เท่าไหร่", "ทอง 1 สลึง ราคาวันนี้"],
+  keywords: ["ราคาทองวันนี้", "ราคาทองวันนี้ พัทยา", "ราคาทองคำวันนี้", "ราคาทองรูปพรรณวันนี้", "ราคารับซื้อทองวันนี้", "คำนวณราคาขายทอง", "ขายทอง 1 สลึง ได้เท่าไหร่", "ทอง 1 สลึง ราคาวันนี้", "ราคาทอง 75% กรัมละเท่าไหร่", "ราคาทอง 18K วันนี้", "ทองเค กรัมละเท่าไหร่"],
   alternates: {
     canonical: PAGE_PATH,
     languages: { th: PAGE_PATH, en: "/en/gold-price-today", "x-default": PAGE_PATH },
@@ -66,6 +66,16 @@ const SELL_WEIGHTS = [
   { label: "1 บาท", baht: 1 },
   { label: "2 บาท", baht: 2 },
 ];
+/* ทองเคต่อ 1 กรัม — สูตรเดียวกับเครื่องคิดเลข (components/GoldCalculator.js)
+   ต่อกรัม = ราคารับซื้อทองรูปพรรณ ÷ 15.16 × (เปอร์เซ็นต์ทอง ÷ 96.5%) · หลอมขายที่ร้าน = ใช้ราคารูปพรรณ + บาทละ 1,000 แทน */
+const KARATS = [
+  { id: "965", label: "ทองไทย 96.5%", note: "ทองรูปพรรณ", purity: 0.965 },
+  { id: "22k", label: "ทอง 22K", note: "เนื้อทอง 91.6%", purity: 0.916 },
+  { id: "18k", label: "ทอง 18K", note: "ทอง 75% · ตรา 750", purity: 0.75 },
+  { id: "14k", label: "ทอง 14K", note: "ทอง 58.5% · ตรา 585", purity: 0.585 },
+  { id: "9k", label: "ทอง 9K", note: "ทอง 37.5% · ตรา 375", purity: 0.375 },
+];
+const perGram = (bahtPrice, purity) => (bahtPrice / ORNAMENT_GRAMS_PER_BAHT) * (purity / 0.965);
 const fmtBaht = (n) => Math.round(n).toLocaleString("th-TH");
 const fmtGram = (n) => n.toLocaleString("th-TH", { maximumFractionDigits: 2 });
 
@@ -226,6 +236,49 @@ export default async function RakhaThongWanNee() {
               ทองหัก ทองชำรุด หรือไม่มีใบเสร็จก็คิดตามเนื้อทองเหมือนกัน · แปลงน้ำหนักอื่นดูที่{" "}
               <Link href="/blog/gold-salung-gram-converter-pattaya">ทอง 1 สลึง กี่กรัม</Link>
             </p>
+
+            <h2 id="rakha-thong-k">ราคาทองเค 18K 14K 9K กรัมละเท่าไหร่ วันนี้</h2>
+            <p>
+              วันนี้<strong>ทอง 18K (ทอง 75%) กรัมละประมาณ {fmtBaht(perGram(p.raw.ornamentBuy, 0.75))} บาท</strong>{" "}
+              ตามราคารับซื้อทองรูปพรรณ ถ้าหลอมขายที่ร้านเรา ได้กรัมละประมาณ{" "}
+              <strong>{fmtBaht(perGram(p.raw.meltBuy, 0.75))} บาท</strong> เพราะบวกเพิ่มบาทละ {MELT_BONUS} ตามสัดส่วนเนื้อทอง
+              ทอง 14K และ 9K มีเนื้อทองน้อยกว่า ราคาต่อกรัมจึงต่ำลงตามเปอร์เซ็นต์ ดูครบทุกชนิดในตาราง
+            </p>
+            <div className="blog-table-wrap">
+              <table className="blog-table gp-table">
+                <caption>ราคาทองต่อ 1 กรัม ตามราคาวันนี้ (ประมาณ หน่วย: บาท)</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">ชนิดทอง</th>
+                    <th scope="col">
+                      ราคารับซื้อ<span style={{ whiteSpace: "nowrap" }}>รูปพรรณ</span>
+                    </th>
+                    <th scope="col">
+                      หลอมขาย<span style={{ whiteSpace: "nowrap" }}>ที่ร้านเรา</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {KARATS.map((k) => (
+                    <tr key={k.id}>
+                      <td>
+                        {k.label}
+                        <span className="gp-gram">{k.note}</span>
+                      </td>
+                      <td>{fmtBaht(perGram(p.raw.ornamentBuy, k.purity))}</td>
+                      <td>
+                        <strong>{fmtBaht(perGram(p.raw.meltBuy, k.purity))}</strong>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="gp-source">
+              คิดจากราคารับซื้อทองรูปพรรณบาทละ {p.gold_ornament.buy} บาท ÷ 15.16 กรัม × สัดส่วนเนื้อทองเทียบทอง 96.5%
+              (เช่น 18K = 75 ÷ 96.5) ทองเคจริงแต่ละชิ้นเปอร์เซ็นต์อาจไม่ตรงตราปั๊ม ร้านตรวจด้วยเครื่อง XRF ต่อหน้าคุณก่อนแจ้งราคา
+              · อ่านเพิ่ม <Link href="/blog/ran-rub-sue-thong-k-pattaya-18k-14k-9k">ทองเคขายได้ไหม คิดราคายังไง</Link>
+            </p>
           </>
         )}
 
@@ -264,6 +317,10 @@ export default async function RakhaThongWanNee() {
           ตกลงราคาแล้ว <Link href="/blog/pattaya-gold-shop-payment-cash-vs-transfer">รับเงินสดทันทีหรือโอนเข้าบัญชี</Link>ได้
           ร้านเปิดทุกวันถึง 20:00 น. ที่ <Link href="/branch/pattaya-tai">สาขาพัทยาใต้</Link> และ{" "}
           <Link href="/branch/noen-plap-wan">สาขาเนินพลับหวาน</Link>
+        </p>
+        <p>
+          ต้องการเงินก้อนแต่ยังไม่อยากขายทองขาด <Link href="/services/khai-fak-thong">ขายฝากทอง</Link>แล้วไถ่คืนตามสัญญาได้
+          ถ้าทองติดอยู่ที่โรงรับจำนำ ร้านช่วยไถ่ถอนตั๋วจำนำให้ด้วย
         </p>
 
         <h2>คำถามเกี่ยวกับราคาทองวันนี้</h2>

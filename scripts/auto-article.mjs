@@ -179,7 +179,8 @@ export function validate(a, existing) {
   const validPaths = new Set(["/", ...CTA_LINKS, ...existing.map((e) => `/blog/${e.slug}`)]);
   const links = [...collectAllText(a).matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)];
   for (const [, , href] of links) {
-    if (!validPaths.has(href)) problems.push(`ลิงก์ "${href}" ไม่มีอยู่ในเว็บ — ใช้ได้เฉพาะ path จากรายการลิงก์ภายในที่ให้ไว้`);
+    // ลิงก์ไปหัวข้อในหน้า (เช่น /rakha-thong-wan-nee#rakha-thong-k) เช็กเฉพาะ path หน้าก่อน #
+    if (!validPaths.has(href.split("#")[0])) problems.push(`ลิงก์ "${href}" ไม่มีอยู่ในเว็บ — ใช้ได้เฉพาะ path จากรายการลิงก์ภายในที่ให้ไว้`);
   }
   if (links.length < 3) problems.push(`มีลิงก์ภายใน ${links.length} ลิงก์ (ต้องอย่างน้อย 3 ลิงก์ ไปบทความ/บริการ/สาขาที่เกี่ยวข้อง แทรกในเนื้อหาอย่างเป็นธรรมชาติ)`);
 

@@ -81,6 +81,7 @@ export default async function AutoArticlePage({ params }) {
     if (b.type === "h2") headingIds.set(i, `h-${headingIds.size + 1}`);
   });
   const toc = [...headingIds].map(([i, id]) => ({ id, text: article.sections[i].text.replace(/\*\*/g, "") }));
+  const lead = article.sections[0]?.type === "summary" ? 1 : 0; // จำนวนบล็อกที่แสดงก่อนสารบัญ
 
   // บทความที่เกี่ยวข้อง: หมวดรูปเดียวกันก่อน แล้วเติมด้วยบทความล่าสุด
   const others = getAutoArticles().filter((a) => a.slug !== article.slug);
@@ -144,6 +145,11 @@ export default async function AutoArticlePage({ params }) {
       </div>
 
       <div className="blog-article-content">
+        {/* สรุปสั้นๆ (บล็อกแรก) ขึ้นก่อนสารบัญ — คำตอบอยู่ใต้รูปปกเลย บนมือถือไม่ต้องเลื่อนผ่านสารบัญยาวๆ */}
+        {article.sections.slice(0, lead).map((block, i) => (
+          <Section key={i} block={block} />
+        ))}
+
         {toc.length >= 3 && (
           <nav className="blog-toc" aria-label="สารบัญ">
             <p className="blog-toc-title">สารบัญ</p>
@@ -157,8 +163,8 @@ export default async function AutoArticlePage({ params }) {
           </nav>
         )}
 
-        {article.sections.map((block, i) => (
-          <Section key={i} block={block} id={headingIds.get(i)} />
+        {article.sections.slice(lead).map((block, i) => (
+          <Section key={i + lead} block={block} id={headingIds.get(i + lead)} />
         ))}
 
         {article.faq.length > 0 && (
