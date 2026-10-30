@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 /* คลิปสั้นแนวตั้งของร้าน (YouTube Shorts) — เล่นเองทีละคลิป
    - เลื่อนมาถึงแล้วเล่นเอง (ปิดเสียง เบราว์เซอร์ยอมให้เล่นเองเฉพาะแบบไม่มีเสียง) จบแล้วไปคลิปถัดไป วนกลับคลิปแรก
@@ -241,7 +242,9 @@ export default function ShortsGrid({ videos }) {
               />
             )}
           </div>
-          <figcaption>{v.title}</figcaption>
+          <figcaption>
+            <Link href={`/khlip/${v.slug}`} prefetch={false}>{v.title}</Link>
+          </figcaption>
         </figure>
       ))}
     </div>

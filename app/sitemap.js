@@ -5,6 +5,7 @@ import { getAutoArticles } from "../lib/articles";
 import { SITE_URL } from "@/data/site";
 import { EN_PAGES, EN_FOR_TH } from "@/data/enPages";
 import { WATCH_BRANDS } from "@/data/watchBrands";
+import { VIDEOS } from "@/data/videos";
 import { HISTORY_READY } from "@/data/goldHistory";
 
 export default function sitemap() {
@@ -117,6 +118,14 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    // หน้าดูคลิป หน้าละ 1 คลิป (data/videos.js)
+    { url: `${baseUrl}/khlip`, lastModified: new Date("2026-10-31"), changeFrequency: "monthly", priority: 0.6 },
+    ...VIDEOS.map((v) => ({
+      url: `${baseUrl}/khlip/${v.slug}`,
+      lastModified: new Date("2026-10-31"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    })),
     // ราคาทองย้อนหลัง: ใส่ sitemap เมื่อข้อมูลครบ HISTORY_MIN_DAYS วัน (data/goldHistory.js)
     ...(HISTORY_READY
       ? [{ url: `${baseUrl}/rakha-thong-yon-lang`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 }]

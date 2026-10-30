@@ -21,7 +21,7 @@ export default function VideoShorts({ page, title = 'คลิปจากหน
       uploadDate: v.uploadDate,
       duration: `PT${v.seconds}S`,
       embedUrl: `https://www.youtube.com/embed/${v.id}`,
-      url: `https://www.youtube.com/shorts/${v.id}`,
+      url: `${SITE_URL}/khlip/${v.slug}`,
       publisher: { '@id': `${SITE_URL}/#business` },
       ...(pageUrl ? { isPartOf: { '@type': 'WebPage', '@id': `${SITE_URL}${pageUrl}` } } : {}),
     })),
@@ -36,7 +36,7 @@ export default function VideoShorts({ page, title = 'คลิปจากหน
           ดูคลิปทั้งหมดบน YouTube →
         </a>
       </div>
-      <ShortsGrid videos={videos.map(({ id, title, seconds }) => ({ id, title, seconds }))} />
+      <ShortsGrid videos={videos.map(({ id, slug, title, seconds }) => ({ id, slug, title, seconds }))} />
     </section>
   );
 }
