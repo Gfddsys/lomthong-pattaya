@@ -13,7 +13,7 @@
 /* ส่วนท้ายที่ทุกแบรนด์ใช้ร่วมกัน — สาขา + ส่งไปรษณีย์ (+ ขายฝาก เฉพาะแบรนด์หรู) */
 function tail(name, { khaiFak = false } = {}) {
   return [
-    { type: "h2", text: `มาขาย ${name} ที่สาขาไหนดี` },
+    { type: "h2", text: `ร้านรับซื้อ ${name} ใกล้ฉัน มาขายที่สาขาไหนดี` },
     {
       type: "ul",
       items: [
@@ -27,7 +27,7 @@ function tail(name, { khaiFak = false } = {}) {
       type: "p",
       text:
         (khaiFak ? `ยังไม่อยากขายขาด ขายฝาก ${name} ได้ สอบถามวงเงินทาง LINE · ` : "") +
-        "นาฬิกายี่ห้ออื่นดูที่ [รับซื้อนาฬิกาทุกยี่ห้อ](/services/watch-buying) · ยังเลือกช่องทางขายไม่ได้ อ่าน [ขายนาฬิกาที่ไหนดี](/blog/sell-brand-name-watch-pattaya-cash) · For English: [sell your watch in Pattaya](/en/sell-luxury-watch)",
+        "นาฬิกายี่ห้ออื่นดูที่ [ร้านรับซื้อนาฬิกา พัทยา ทุกยี่ห้อ](/services/watch-buying) · ยังเลือกช่องทางขายไม่ได้ อ่าน [ขายนาฬิกาที่ไหนดี](/blog/sell-brand-name-watch-pattaya-cash) · For English: [sell your watch in Pattaya](/en/sell-luxury-watch)",
     },
   ];
 }

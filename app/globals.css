@@ -3058,18 +3058,21 @@ a.contact-item--link:hover {
   color: var(--color-text-muted);
 }
 
-/* มือถือ: ตารางราคาทองต้องเห็นครบทุกช่องโดยไม่เลื่อนข้าง
-   (.blog-table td กว้างขั้นต่ำ 120px → ช่องราคาด้านขวาโดนตัดบนจอ 360-412px) */
+/* มือถือ: ตารางราคาทอง และตารางบทความ/บริการที่มีไม่เกิน 3 ช่อง ต้องเห็นครบทุกช่องโดยไม่เลื่อนข้าง
+   (.blog-table td กว้างขั้นต่ำ 120px → 3 ช่องกว้างเกินจอ 360-412px ช่องขวาสุดโดนตัด) */
 @media (max-width: 600px) {
   .gp-table th,
-  .gp-table td {
+  .gp-table td,
+  .blog-table-fit th,
+  .blog-table-fit td {
     min-width: 0;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
 
   /* หัวช่องยาว ("ราคารับซื้อรูปพรรณ" / "หลอมขายที่ร้านเรา") ตัดบรรทัดได้ ไม่ดันตารางเกินจอ */
-  .gp-table th {
+  .gp-table th,
+  .blog-table-fit th {
     white-space: normal;
   }
 }

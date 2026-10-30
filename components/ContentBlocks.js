@@ -91,9 +91,10 @@ export function Section({ block, id }) {
       );
     case "table":
       // ตารางเปรียบเทียบ — Google มักดึงไปแสดงเป็น featured snippet
+      // ไม่เกิน 3 ช่อง: บนมือถือบีบให้เห็นครบทุกช่องโดยไม่ต้องเลื่อนข้าง (.blog-table-fit ใน globals.css)
       return (
         <div className="blog-table-wrap">
-          <table className="blog-table">
+          <table className={block.head.length <= 3 ? "blog-table blog-table-fit" : "blog-table"}>
             {block.caption && <caption>{block.caption}</caption>}
             <thead>
               <tr>
