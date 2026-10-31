@@ -25,11 +25,11 @@ export const BRANCHES = [
     lat: 12.9187667,
     lng: 100.8927284,
     // ที่อยู่ยืนยันกับเจ้าของร้าน 12 ต.ค. 2026 · เวลาเปิดแก้ตามหมุด Google 22 ต.ค. 2026 (NAP ต้องตรงกันทุกที่)
-    hours: "เปิดทุกวัน จ.-ศ. 10:30-20:00 น. · ส.-อา. 10:00-18:00 น.",
+    hours: "เปิดทุกวัน จ.-ศ. 10:00-20:00 น. · ส.-อา. 10:00-19:00 น.",
     // days: 0 = อาทิตย์ ... 6 = เสาร์ (ตรงกับ Date.getDay)
     schedule: [
-      { days: [1, 2, 3, 4, 5], opens: "10:30", closes: "20:00" },
-      { days: [0, 6], opens: "10:00", closes: "18:00" },
+      { days: [1, 2, 3, 4, 5], opens: "10:00", closes: "20:00" },
+      { days: [0, 6], opens: "10:00", closes: "19:00" },
     ],
     // สำหรับหน้าภาษาอังกฤษ /en
     nameEn: "South Pattaya Branch",
@@ -105,7 +105,7 @@ export const BRANCHES = [
 ];
 
 // สรุปเวลาเปิดทั้ง 2 สาขา สำหรับ Footer / หน้าติดต่อ / คำอธิบายเว็บ
-export const HOURS_SUMMARY = "เปิดทุกวัน · เนินพลับหวาน 10:00-20:00 น. · พัทยาใต้ จ.-ศ. 10:30-20:00 น. ส.-อา. 10:00-18:00 น.";
+export const HOURS_SUMMARY = "เปิดทุกวัน · เนินพลับหวาน 10:00-20:00 น. · พัทยาใต้ จ.-ศ. 10:00-20:00 น. ส.-อา. 10:00-19:00 น.";
 
 const DAY_SHORT = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
 const DAY_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -115,7 +115,7 @@ export function hoursOn(b, day) {
   return b.schedule.find((s) => s.days.includes(day));
 }
 
-// แบบสั้นสำหรับป้าย/คำอธิบาย เช่น "ทุกวัน 10:00-20:00" หรือ "จ.-ศ. 10:30-20:00 · ส.-อา. 10:00-18:00"
+// แบบสั้นสำหรับป้าย/คำอธิบาย เช่น "ทุกวัน 10:00-20:00" หรือ "จ.-ศ. 10:00-20:00 · ส.-อา. 10:00-19:00"
 export function hoursShort(b) {
   if (b.schedule.length === 1) return `ทุกวัน ${b.schedule[0].opens}-${b.schedule[0].closes}`;
   const label = (days) => (days.length === 2 && days.includes(0) && days.includes(6) ? "ส.-อา." : `${DAY_SHORT[days[0]]}-${DAY_SHORT[days.at(-1)]}`);
