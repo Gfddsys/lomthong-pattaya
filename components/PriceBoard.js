@@ -195,14 +195,14 @@ export default function PriceBoard({ initialData = null }) {
   return (
     <div className="pb-wrap">
       <Board kind="gold" data={shown} waiting={waiting} />
-      {/* ราคาหลอมขายที่ร้าน = รับซื้อทองรูปพรรณ + โปรบาทละ 1,000 (data/meltBonus.js)
+      {/* ราคาหลอมขายที่ร้าน = รับซื้อทองคำแท่ง + โปรบาทละ 1,000 (data/meltBonus.js)
           แสดงกรอบไว้ตั้งแต่ยังไม่ได้ราคา (ตัวเลข "—") และแยก 3 บรรทัดเสมอ → ได้ราคาแล้วความสูงไม่เปลี่ยน หน้าไม่เด้ง */}
       <Link href="/services/gold-melting" className="pb-melt">
         <span className="pb-melt-label">หลอมทองขายที่ร้านวันนี้ ทอง 96.5% (ประมาณ)</span>
         <span className="pb-melt-val">
           บาทละ <b><Flash value={shown.gold_melt?.buy ?? WAITING} /></b> บาท
         </span>
-        <span className="pb-melt-note">= รับซื้อทองรูปพรรณ {shown.gold_ornament.buy} + {MELT_BONUS}</span>
+        <span className="pb-melt-note">= รับซื้อทองคำแท่ง {shown.gold_bar.buy} + {MELT_BONUS}</span>
       </Link>
       {(waiting || data.silver) && <Board kind="silver" data={shown} waiting={waiting} />}
       {waiting && error && (
