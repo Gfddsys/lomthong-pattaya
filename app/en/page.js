@@ -5,6 +5,7 @@ import { CONTACT } from "@/data/contact";
 import { BRANCHES } from "@/data/branches";
 import { SITE_URL } from "@/data/site";
 import { EN_PAGES } from "@/data/enPages";
+import ArticleLineBox from "@/components/ArticleLineBox";
 
 /* ============================================
    Sell Gold in Pattaya — หน้าภาษาอังกฤษสำหรับชาวต่างชาติ
@@ -15,9 +16,12 @@ import { EN_PAGES } from "@/data/enPages";
 
 const PAGE_URL = `${SITE_URL}/en`;
 const COVER_IMAGE = getUploadedImage("hero", "/images/hero.png");
-const TITLE = "Sell Gold in Pattaya | Gold Buyer, Free XRF Test, Cash Paid";
+// คำที่คนค้น (Search Console 28 วันถึง 4 พ.ย. 2569 + คำที่ Google แนะนำ): "where to sell gold in pattaya",
+// "where to sell gold jewelry / bracelet / earring", "sell gold for cash near me" → ชื่อหน้าและ h1 ขึ้นต้นด้วย Where to sell (7 พ.ย. 2569)
+// นาฬิกาไม่อยู่ในคำอธิบายแล้ว (6 พ.ย. 2569 เว็บนาฬิกาของร้านเป็นหลักเรื่องนาฬิกา) แต่หน้านาฬิกาภาษาอังกฤษยังลิงก์จากรายการด้านล่าง
+const TITLE = "Where to Sell Gold in Pattaya | Gold Buyer, Cash on the Spot";
 const DESCRIPTION =
-  "Gold buyer in Pattaya with 2 shops. Sell 9K-22K, Italian and broken gold or luxury watches with your passport. Free XRF test, cash in Thai baht. Open daily.";
+  "2 gold buyer shops in Pattaya, open daily. Sell gold chains, bracelets, rings and earrings of any karat with your passport. Free XRF test, cash in Thai baht.";
 
 export const metadata = {
   title: { absolute: TITLE },
@@ -114,7 +118,7 @@ export default function SellGoldPattayaEn() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <header className="blog-article-header">
-        <h1>Sell Gold in Pattaya: Free XRF Test, Cash Paid on the Spot</h1>
+        <h1>Where to Sell Gold in Pattaya: Free XRF Test, Cash on the Spot</h1>
         <div className="blog-article-meta">
           <span>📍 2 shops in Pattaya</span>
           <span>🕐 Open daily</span>
@@ -144,6 +148,8 @@ export default function SellGoldPattayaEn() {
           </ul>
         </div>
 
+        <ArticleLineBox kind="en" />
+
         <p>
           Many people who live in or visit Pattaya bring gold from home: a chain bought in Italy, a ring from
           the UK, a bracelet from Dubai. When the day comes to turn it into baht, the small gold shop down the
@@ -162,7 +168,7 @@ export default function SellGoldPattayaEn() {
 
         <h2>What we buy</h2>
         <ul>
-          <li>Gold jewelry from any country: 9K, 14K, 18K, 22K, Thai 96.5% and 24K</li>
+          <li>Gold jewelry of any kind and from any country: chains, bracelets, bangles, rings, earrings and pendants in 9K, 14K, 18K, 22K, Thai 96.5% and 24K</li>
           <li>Italian, European and Middle Eastern gold chains and bracelets</li>
           <li>Broken, bent or single-earring pieces, scrap gold and gold dust</li>
           <li>Gold bars</li>

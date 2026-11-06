@@ -110,6 +110,12 @@ export const HOURS_SUMMARY = "เปิดทุกวัน · เนินพ�
 const DAY_SHORT = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
 const DAY_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+// ลิงก์นำทางใน Google Maps ไปที่หมุดของสาขา (กดแล้วเปิดเส้นทางทันที)
+// ใช้ placeId เพื่อให้ปลายทางเป็นหมุดร้านจริง ไม่ใช่แค่พิกัด · ระบบนับคลิกนับเป็น "ขอเส้นทาง"
+export function directionsUrl(b) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&destination_place_id=${b.placeId}`;
+}
+
 // เวลาเปิด-ปิดของวันนั้น (day: 0 = อาทิตย์)
 export function hoursOn(b, day) {
   return b.schedule.find((s) => s.days.includes(day));

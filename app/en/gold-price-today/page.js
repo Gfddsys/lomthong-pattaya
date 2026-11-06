@@ -3,6 +3,7 @@ import { getGoldPrice } from "@/lib/goldPrice";
 import { CONTACT } from "@/data/contact";
 import { SITE_URL } from "@/data/site";
 import AutoRefresh from "@/components/AutoRefresh";
+import ArticleLineBox from "@/components/ArticleLineBox";
 
 /* ============================================
    Gold price today in Pattaya — หน้าราคาทองภาษาอังกฤษ (คู่กับ /rakha-thong-wan-nee)
@@ -15,15 +16,17 @@ import AutoRefresh from "@/components/AutoRefresh";
 export const revalidate = 300;
 
 const PATH = "/en/gold-price-today";
-const TITLE = "Gold Price Today in Pattaya, Thailand | Per Gram & Per Baht";
+// คำที่คนค้นจริง (Search Console 28 วันถึง 4 พ.ย. 2569): "96.5 gold price in thailand today" คนเห็นมากสุด (อันดับ 10)
+// ตามด้วย "gold rate today pattaya", "gold price today pattaya" → ชื่อหน้า/หัวข้อใส่ 96.5% และคำว่า gold rate (7 พ.ย. 2569)
+const TITLE = "96.5% Gold Price Today in Thailand | Pattaya Gold Rate per Baht";
 const DESCRIPTION =
-  "Today's gold price in Pattaya from the Thai Gold Traders Association, updated every 5 minutes. Per baht weight and per gram for 24K, 22K, 18K, 14K and 9K gold.";
+  "Today's 96.5% Thai gold price from the Gold Traders Association, updated every 5 minutes. Gold rate per baht and per gram for 24K, 22K, 18K, 14K and 9K.";
 const BAR_GRAMS_PER_BAHT = 15.244;
 
 export const metadata = {
   title: { absolute: TITLE },
   description: DESCRIPTION,
-  keywords: ["gold price Pattaya", "gold price today Thailand", "gold price per gram Thailand", "18K gold price Thailand", "Thai gold price baht"],
+  keywords: ["96.5 gold price in Thailand today", "gold rate today Pattaya", "gold price Pattaya", "gold price per gram Thailand", "Thai gold price per baht"],
   alternates: {
     canonical: PATH,
     languages: { th: "/rakha-thong-wan-nee", en: PATH, "x-default": "/rakha-thong-wan-nee" },
@@ -47,7 +50,7 @@ const FAQ = [
   },
   {
     q: "What is a baht of gold?",
-    a: "Thailand weighs gold in baht. One baht of gold bar is 15.244 grams of 96.5% gold. Prices on Thai gold shop boards are per baht weight.",
+    a: "Thailand weighs gold in baht. One baht of gold bar is 15.244 grams of 96.5% gold, and one baht of gold jewelry is 15.16 grams. Prices on Thai gold shop boards are per baht weight.",
   },
   {
     q: "Is the per-gram value what I will get for my jewelry?",
@@ -108,7 +111,7 @@ export default async function GoldPriceTodayEn() {
       </nav>
 
       <header className="blog-article-header">
-        <h1>Gold Price Today in Pattaya, Thailand</h1>
+        <h1>Gold Price Today in Pattaya: 96.5% Thai Gold Rate</h1>
         <div className="blog-article-meta">
           {updated ? <span>🕐 Updated {updated} (Bangkok time)</span> : <span>Thai Gold Traders Association price</span>}
         </div>
@@ -117,9 +120,28 @@ export default async function GoldPriceTodayEn() {
       <div className="blog-article-content">
         {p ? (
           <>
+            {/* คำตอบในประโยคเดียว (ตัวเลขจริงของรอบนี้) ให้ Google ดึงไปตอบคำค้น "96.5 gold price in thailand today" */}
+            <div className="en-summary">
+              <p><strong>96.5% gold price in Thailand today</strong></p>
+              <ul>
+                <li>
+                  Gold bar: shops buy at <strong>{fmt(p.raw.barBuy)} THB</strong> and sell at{" "}
+                  <strong>{fmt(p.raw.barSell)} THB</strong> per baht (15.244 g).
+                </li>
+                <li>
+                  Gold jewelry: shops buy at about <strong>{fmt(p.raw.ornamentBuy)} THB</strong> per baht (15.16 g).
+                </li>
+                <li>
+                  That is about <strong>{fmt(perGram965)} THB per gram</strong> of 96.5% gold, based on the gold bar buy price.
+                </li>
+              </ul>
+            </div>
+
+            <ArticleLineBox kind="en" />
+
             <div className="blog-table-wrap">
               <table className="blog-table gp-table">
-                <caption>96.5% gold per 1 baht weight (15.244 g), in Thai baht</caption>
+                <caption>96.5% gold per 1 baht weight (gold bar 15.244 g, jewelry 15.16 g), in Thai baht</caption>
                 <thead>
                   <tr>
                     <th scope="col">Type</th>

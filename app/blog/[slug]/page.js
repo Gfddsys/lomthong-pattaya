@@ -1,11 +1,15 @@
 import { EN_FOR_TH } from "@/data/enPages";
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RichText, Section } from "@/components/ContentBlocks";
+import ArticleLineBox, { lineBoxKind } from "@/components/ArticleLineBox";
 import { notFound } from "next/navigation";
 import { getUploadedImage } from "@/lib/getImage";
 import { getAutoArticles, getAutoArticle } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
+import { CONTACT } from "@/data/contact";
+import { BRANCHES, directionsUrl } from "@/data/branches";
 import { MELT_BONUS_HOOK } from "@/data/meltBonus";
 
 /* ============================================================
@@ -150,6 +154,9 @@ export default async function AutoArticlePage({ params }) {
           <Section key={i} block={block} />
         ))}
 
+        {/* ปุ่ม LINE ใต้คำตอบแรก (ข้อ 69 · 7 พ.ย. 2569) คนอ่านคำตอบแล้วอยากรู้ราคาของตัวเอง กดเปิด LINE ได้ทันที */}
+        <ArticleLineBox kind={lineBoxKind(article)} />
+
         {toc.length >= 3 && (
           <nav className="blog-toc" aria-label="สารบัญ">
             <p className="blog-toc-title">สารบัญ</p>
@@ -180,7 +187,9 @@ export default async function AutoArticlePage({ params }) {
         )}
       </div>
 
-      <div className="blog-article-cta">
+      {/* กล่องท้ายบทความ: ปุ่มหลักเปิด LINE ทันที (เดิมพาไปหน้าแรกก่อน ลูกค้าต้องกดอีกทอด) + นำทางไปสาขาได้ในคลิกเดียว
+          นับยอดที่ /admin/clicks ช่อง "บทความ: กล่องท้ายบทความ" */}
+      <div className="blog-article-cta" data-track="บทความ: กล่องท้ายบทความ">
         <h3>{article.ctaTitle}</h3>
         <p>
           <RichText>{article.ctaText}</RichText>
@@ -192,13 +201,26 @@ export default async function AutoArticlePage({ params }) {
           </Link>
         </p>
         <div className="blog-article-cta-actions">
-          <Link href={article.ctaLink} className="btn btn-primary">
+          <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-line">
+            {/* eslint-disable-next-line @next/next/no-img-element -- ไอคอน SVG ไฟล์เดียวกับปุ่ม LINE ลอย */}
+            <img src="/images/icons/line.svg" alt="" width={22} height={22} />
+            ส่งรูปประเมินทาง LINE
+          </a>
+          <Link href={article.ctaLink} className="btn btn-outline">
             {article.ctaLinkText}
           </Link>
-          <Link href="/#contact" className="btn btn-outline">
-            ติดต่อประเมินราคาฟรี
-          </Link>
         </div>
+        <p className="blog-article-cta-visit">
+          มาที่ร้านได้เลย เปิดทุกวัน:{" "}
+          {BRANCHES.map((b, i) => (
+            <Fragment key={b.slug}>
+              {i > 0 && " · "}
+              <a href={directionsUrl(b)} target="_blank" rel="noopener noreferrer">
+                🧭 นำทางไป{b.shortName}
+              </a>
+            </Fragment>
+          ))}
+        </p>
       </div>
 
       {related.length > 0 && (
