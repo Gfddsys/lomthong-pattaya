@@ -111,13 +111,6 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.7,
     })),
-    {
-      // ขายนาฬิกาทางไปรษณีย์ สำหรับลูกค้าต่างจังหวัด (เพิ่ม 25 ต.ค. 2569)
-      url: `${baseUrl}/khai-nalika-song-praisani`,
-      lastModified: new Date("2026-10-25"),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
     // หน้าดูคลิป หน้าละ 1 คลิป (data/videos.js)
     { url: `${baseUrl}/khlip`, lastModified: new Date("2026-10-31"), changeFrequency: "monthly", priority: 0.6 },
     ...VIDEOS.map((v) => ({

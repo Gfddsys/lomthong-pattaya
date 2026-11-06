@@ -172,7 +172,7 @@ export const EN_PAGES = [
       { type: "h2", text: "Living elsewhere in Thailand? Sell by post" },
       {
         type: "p",
-        text: "Agree the price on LINE first, then send the watch to our Pattaya shop with Thailand Post. There are two ways to be paid. With the deposit method, you send us a video of packing and posting plus the tracking number, we transfer 10% of the agreed price, and the other 90% once the watch arrives and is checked. With cash on delivery, you use Thailand Post's Wallet@Post app, linked to your Thai bank account, and we pay when we receive the parcel. Step by step guide in Thai: [ขายนาฬิกาทางไปรษณีย์](/khai-nalika-song-praisani).",
+        text: "Send photos on LINE first and agree the price, then post the watch to our Pattaya shop with Thailand Post. Before you send anything, we tell you on LINE how to post it and how you will be paid.",
       },
     ],
     faq: [
