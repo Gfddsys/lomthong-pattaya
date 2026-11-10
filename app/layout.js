@@ -7,6 +7,7 @@ import { SITE_URL } from "@/data/site";
 import { MELT_BONUS_HOOK, MELT_BONUS_LINE } from "@/data/meltBonus";
 import ScrollAnimation from "@/components/ScrollAnimation";
 import ClickTracker from "@/components/ClickTracker";
+import EntryPopup from "@/components/EntryPopup";
 
 /* แอนิเมชันทั้งเว็บ (ข้อความหัวเว็บเลื่อนขึ้น, ประกายทอง, จุดกะพริบ ฯลฯ) รอจนจอแรกแสดงเสร็จก่อนค่อยเล่น
    วัด 24 ต.ค. 2026: ถ้ามีแอนิเมชันวิ่งอยู่ตอนวาดจอแรก งานกราฟิกของมือถือเพิ่มเกือบเท่าตัว → จอแรกขึ้นช้า
@@ -167,6 +168,8 @@ export default function RootLayout({ children }) {
         {/* นับคลิกปุ่มโทร / LINE / ขอเส้นทาง → หลังบ้าน /admin/clicks */}
         <ClickTracker />
         {children}
+        {/* ป๊อปอัปรูปตอนเข้าเว็บ (เปิด/ปิด และเปลี่ยนรูปที่ data/popup.js) */}
+        <EntryPopup />
         <script dangerouslySetInnerHTML={{ __html: START_ANIMATIONS }} />
       </body>
     </html>

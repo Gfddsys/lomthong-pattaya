@@ -2023,12 +2023,14 @@ a.contact-item--link:hover {
   z-index: 999;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.6rem;
   background: linear-gradient(135deg, #06C755 0%, #05a648 100%);
   color: #fff;
   font-weight: 800;
-  font-size: 1rem;
-  padding: 0.85rem 1.4rem;
+  /* ใหญ่ขึ้น เด่นขึ้น (พี่สั่ง 10 พ.ย. 2569) เดิม 1rem / 0.85rem 1.4rem */
+  font-size: 1.2rem;
+  padding: 1.05rem 1.75rem;
+  border: 3px solid #fff;
   border-radius: 999px;
   text-decoration: none;
   box-shadow: 0 10px 26px rgba(6,199,85,0.45);
@@ -2047,9 +2049,9 @@ a.contact-item--link:hover {
 @media (max-width: 480px) {
   .floating-cta {
     bottom: var(--space-lg);
-    right: var(--space-lg);
-    font-size: 0.9rem;
-    padding: 0.75rem 1.15rem;
+    right: var(--space-md);
+    font-size: 1.08rem;
+    padding: 0.95rem 1.4rem;
   }
 }
 
@@ -4051,4 +4053,68 @@ html[data-anim-wait] .footer {
   #home-videos { --cv-h: 645px; }
   #testimonials { --cv-h: 1038px; }
   .footer { --cv-h: 621px; }
+}
+
+/* ============================================
+   ป๊อปอัปรูปตอนเข้าเว็บ (components/EntryPopup.js)
+   ============================================ */
+.entry-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: rgba(0, 0, 0, 0.72);
+  cursor: pointer;
+  animation: entryPopupIn 0.2s ease-out;
+}
+@keyframes entryPopupIn { from { opacity: 0; } to { opacity: 1; } }
+.entry-popup-box {
+  position: relative;
+  max-width: min(480px, 100%);
+  cursor: default;
+}
+.entry-popup-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 120px);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+/* กากบาทใหญ่ 48px มุมขวาบนของรูป พื้นขาวขอบดำ เห็นชัดบนรูปทุกสี */
+.entry-popup-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid #1a1a1a;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+.entry-popup-close span { margin-top: -3px; }
+@media (max-width: 520px) {
+  .entry-popup-close { top: -10px; right: -6px; }
+}
+.entry-popup-hint {
+  margin: 0;
+  color: #fff;
+  font-size: 0.9rem;
+  opacity: 0.85;
 }

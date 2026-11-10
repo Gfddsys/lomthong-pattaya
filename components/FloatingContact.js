@@ -31,9 +31,9 @@ export default function FloatingContact({ label = 'ประเมินรา�
       <img
         src="/images/icons/line.svg"
         alt="LINE"
-        width={24}
-        height={24}
-        style={{ width: '24px', height: '24px', display: 'block' }}
+        width={30}
+        height={30}
+        style={{ width: '30px', height: '30px', display: 'block' }}
       />
       <span>{label}</span>
     </a>
