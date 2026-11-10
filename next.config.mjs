@@ -61,6 +61,8 @@ const REVIEW_LINKS = {
   "/review": "/reviews",
   "/review/pattaya-tai": "/reviews/pattaya-tai",
   "/review/noen-plap-wan": "/reviews/noen-plap-wan",
+  // 10 พ.ย. 2569 ไม่มีหน้าร้านที่ชลบุรี หน้ารีวิว "กำลังจะเปิด" ถูกเอาออก
+  "/reviews/mueang-mai-chonburi": "/reviews",
 };
 
 /** @type {import('next').NextConfig} */
