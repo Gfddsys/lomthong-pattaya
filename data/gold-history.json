@@ -198,5 +198,15 @@
     "ornamentSell": 65350,
     "silverBuyKg": 54070,
     "silverSellKg": 56030
+  },
+  {
+    "date": "2026-11-13",
+    "time": "01:27",
+    "barBuy": 63000,
+    "barSell": 63200,
+    "ornamentBuy": 61740,
+    "ornamentSell": 64000,
+    "silverBuyKg": 52760,
+    "silverSellKg": 54670
   }
 ]
