@@ -178,5 +178,20 @@
         "rating": 5
       }
     }
+  },
+  {
+    "date": "2026-11-15",
+    "time": "01:07",
+    "source": "manual",
+    "branches": {
+      "pattaya-tai": {
+        "count": 55,
+        "rating": 5
+      },
+      "noen-plap-wan": {
+        "count": 87,
+        "rating": 5
+      }
+    }
   }
 ]
