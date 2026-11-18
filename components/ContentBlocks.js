@@ -1,6 +1,8 @@
 import Link from "next/link";
+import KGoldToday from "@/components/KGoldToday";
 
 /* บล็อกเนื้อหาแบบเดียวกับบทความ (summary/h2/h3/p/ul/ol/quote/table) ใช้ร่วมกันระหว่างบทความและหน้าบริการ
+   + liveGoldK = กล่องราคาทองเคต่อกรัมของวันนี้ (ใส่เองในบทความ ไม่เปิดให้ระบบบทความอัตโนมัติใช้)
    ข้อความรองรับ **ตัวหนา** และ [ลิงก์](/หน้าในเว็บ) */
 /* ---------- แปลง **ตัวหนา** และ [ลิงก์](/หน้าในเว็บ) ในข้อความ ----------
    ลิงก์รับเฉพาะ path ภายในเว็บ (ขึ้นต้นด้วย /) — ลิงก์ภายในช่วยส่งน้ำหนัก SEO ระหว่างหน้า
@@ -117,6 +119,8 @@ export function Section({ block, id }) {
           </table>
         </div>
       );
+    case "liveGoldK":
+      return <KGoldToday />;
     default:
       return null;
   }

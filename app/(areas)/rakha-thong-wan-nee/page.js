@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getGoldPrice } from "@/lib/goldPrice";
+import { KARATS, ORNAMENT_GRAMS_PER_BAHT, perGram } from "@/lib/goldKarats";
 import { SITE_URL } from "@/data/site";
 import { CONTACT } from "@/data/contact";
 import GoldCalculator from "@/components/GoldCalculator";
@@ -56,7 +57,6 @@ const FAQ = [
 ];
 
 /* ขายทองรูปพรรณตามน้ำหนักที่คนถามบ่อย (1 บาท = 4 สลึง = 15.16 กรัม) — คิดจากราคารับซื้อทองรูปพรรณ (ประมาณ) */
-const ORNAMENT_GRAMS_PER_BAHT = 15.16;
 const SELL_WEIGHTS = [
   { label: "1 กรัม", baht: 1 / ORNAMENT_GRAMS_PER_BAHT },
   { label: "ครึ่งสลึง", baht: 1 / 8 },
@@ -66,16 +66,7 @@ const SELL_WEIGHTS = [
   { label: "1 บาท", baht: 1 },
   { label: "2 บาท", baht: 2 },
 ];
-/* ทองเคต่อ 1 กรัม — สูตรเดียวกับเครื่องคิดเลข (components/GoldCalculator.js)
-   ต่อกรัม = ราคารับซื้อทองรูปพรรณ ÷ 15.16 × (เปอร์เซ็นต์ทอง ÷ 96.5%) · หลอมขายที่ร้าน = ใช้ราคาทองคำแท่ง + บาทละ 1,000 แทน */
-const KARATS = [
-  { id: "965", label: "ทองไทย 96.5%", note: "ทองรูปพรรณ", purity: 0.965 },
-  { id: "22k", label: "ทอง 22K", note: "เนื้อทอง 91.6%", purity: 0.916 },
-  { id: "18k", label: "ทอง 18K", note: "ทอง 75% · ตรา 750", purity: 0.75 },
-  { id: "14k", label: "ทอง 14K", note: "ทอง 58.5% · ตรา 585", purity: 0.585 },
-  { id: "9k", label: "ทอง 9K", note: "ทอง 37.5% · ตรา 375", purity: 0.375 },
-];
-const perGram = (bahtPrice, purity) => (bahtPrice / ORNAMENT_GRAMS_PER_BAHT) * (purity / 0.965);
+/* ทองเคต่อ 1 กรัม: KARATS + perGram อยู่ที่ lib/goldKarats.js (ใช้ร่วมกับกล่องราคาสดในบทความ ตัวเลขจะตรงกันทุกหน้า) */
 const fmtBaht = (n) => Math.round(n).toLocaleString("th-TH");
 const fmtGram = (n) => n.toLocaleString("th-TH", { maximumFractionDigits: 2 });
 
