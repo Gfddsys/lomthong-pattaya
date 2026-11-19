@@ -6,7 +6,7 @@ import { BRANCHES, getBranch, hoursShort } from "@/data/branches";
 import { CONTACT } from "@/data/contact";
 import { MELT_BONUS_HOOK, MELT_BONUS_LINE, MELT_BONUS_TERMS } from "@/data/meltBonus";
 import { servicesData } from "@/data/services";
-import { getAutoArticles } from "@/lib/articles";
+import { getAutoArticles, toThaiDate } from "@/lib/articles";
 import { SITE_URL } from "@/data/site";
 import SocialLinks from "@/components/SocialLinks";
 import MeltPromo from "@/components/MeltPromo";
@@ -96,6 +96,17 @@ export default async function BranchPage({ params }) {
   };
 
 
+  // หน้าเว็บของสาขา: วันที่อัปเดตตรงกับที่โชว์บนหน้า (geo audit 19 พ.ย. 2569: G-DATES)
+  const pageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/branch/${b.slug}#webpage`,
+    url: `${SITE_URL}/branch/${b.slug}`,
+    about: { "@id": `${SITE_URL}/branch/${b.slug}#business` },
+    inLanguage: "th",
+    ...(b.updated ? { dateModified: b.updated } : {}),
+  };
+
   const faq = branchFaq(b);
   const faqSchema = {
     "@context": "https://schema.org",
@@ -128,6 +139,7 @@ export default async function BranchPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
 
       <nav className="blog-article-nav" aria-label="Breadcrumb">
         <Link href="/" prefetch={false}>หน้าแรก</Link>
@@ -152,7 +164,7 @@ export default async function BranchPage({ params }) {
             <div key={src} className="branch-photo">
               <Image
                 src={src}
-                alt={i === 0 ? `ร้านเฮงศิริ หลอมทองพัทยา พร้อมให้บริการรับซื้อทอง ${b.area}` : `เคาน์เตอร์ตรวจทองต่อหน้าลูกค้า ร้านเฮงศิริ หลอมทองพัทยา`}
+                alt={i === 0 ? `หน้าร้านเฮงศิริ หลอมทองพัทยา ${b.shortName} รับหลอมทอง รับซื้อทอง` : `เคาน์เตอร์ตรวจทองต่อหน้าลูกค้า ร้านเฮงศิริ ${b.shortName}`}
                 fill
                 sizes="(max-width: 768px) 50vw, 400px"
                 style={{ objectFit: "cover" }}
@@ -206,6 +218,11 @@ export default async function BranchPage({ params }) {
           <li><strong>LINE:</strong> <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer">{CONTACT.lineId}</a></li>
           <li><strong>Facebook:</strong> <a href={b.facebookUrl} target="_blank" rel="noopener noreferrer">เพจ{b.slug === 'noen-plap-wan' ? 'สาขาเนินพลับหวาน' : 'หลักของร้าน'}</a></li>
         </ul>
+        {b.updated && (
+          <p className="note">
+            ข้อมูลสาขาอัปเดตล่าสุด <time dateTime={b.updated}>{toThaiDate(b.updated)}</time>
+          </p>
+        )}
         <SocialLinks facebookUrl={b.facebookUrl} className="social-links--branch" />
 
         {b.nearby?.length > 0 && (
