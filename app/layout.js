@@ -141,6 +141,8 @@ const schemaData = {
       about: { "@id": BUSINESS_ID },
       description: HOME_DESCRIPTION,
       inLanguage: "th",
+      // หน้าแรกเปลี่ยนตามป้ายราคาและรีวิวทุกครั้งที่ deploy (ทุกวัน) · geo audit 19 พ.ย. 2569: ไม่มีสัญญาณวันที่อัปเดต
+      dateModified: new Date().toISOString(),
     },
   ],
 };
@@ -160,6 +162,8 @@ export default function RootLayout({ children }) {
             __html: "<style>html[data-anim-wait] *,html[data-anim-wait] *::before,html[data-anim-wait] *::after{animation-play-state:running!important}</style>",
           }}
         />
+        {/* ฟีดบทความ (app/blog/feed.xml) — ใส่ที่ layout เพราะ alternates ใน metadata ของแต่ละหน้าจะทับของ layout */}
+        <link rel="alternate" type="application/rss+xml" title="บทความ หลอมทองพัทยา" href="/blog/feed.xml" />
         {/* หมายเหตุ: ไม่ต้องใส่ <link rel="icon"> เองแล้ว เพราะ Next.js ดึง app/favicon.ico
             มาสร้าง tag นี้ให้อัตโนมัติอยู่แล้ว (ใส่ซ้ำจะได้ favicon tag ซ้ำ 2 อัน) */}
       </head>

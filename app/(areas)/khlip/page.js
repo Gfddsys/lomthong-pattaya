@@ -52,7 +52,7 @@ export default function KhlipIndexPage() {
           <figure className="short-card" key={v.id}>
             <Link href={`/khlip/${v.slug}`} className="short-card-frame" aria-label={`ดูคลิป${v.headline}`}>
               {/* eslint-disable-next-line @next/next/no-img-element -- รูปปกจาก YouTube โหลดตรงเร็วกว่าผ่าน image optimizer */}
-              <img src={`https://i.ytimg.com/vi/${v.id}/oar2.jpg`} alt="" loading="lazy" width={405} height={720} />
+              <img src={`https://i.ytimg.com/vi/${v.id}/oar2.jpg`} alt={`คลิป ${v.headline}`} loading="lazy" width={405} height={720} />
             </Link>
             <figcaption>
               <Link href={`/khlip/${v.slug}`}>{v.headline}</Link>

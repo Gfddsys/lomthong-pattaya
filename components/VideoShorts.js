@@ -36,7 +36,7 @@ export default function VideoShorts({ page, title = 'คลิปจากหน
           ดูคลิปทั้งหมดบน YouTube →
         </a>
       </div>
-      <ShortsGrid videos={videos.map(({ id, slug, title, seconds }) => ({ id, slug, title, seconds }))} />
+      <ShortsGrid videos={videos.map(({ id, slug, title, headline, seconds }) => ({ id, slug, title, headline, seconds }))} />
     </section>
   );
 }

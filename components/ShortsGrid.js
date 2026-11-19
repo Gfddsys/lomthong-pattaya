@@ -230,7 +230,7 @@ export default function ShortsGrid({ videos }) {
           >
             <button type="button" onClick={() => choose(i)} aria-label={`เล่นคลิป: ${v.title}`}>
               {/* eslint-disable-next-line @next/next/no-img-element -- รูปปกจาก YouTube โหลดตรงเร็วกว่าผ่าน image optimizer */}
-              <img src={`https://i.ytimg.com/vi/${v.id}/oar2.jpg`} alt="" loading="lazy" width={405} height={720} />
+              <img src={`https://i.ytimg.com/vi/${v.id}/oar2.jpg`} alt={`คลิป ${v.headline}`} loading="lazy" width={405} height={720} />
             </button>
             {i === active && !fallback && <div ref={holder} className={`short-card-player${shownFor === i ? ' is-on' : ''}`} />}
             {i === active && fallback && (
