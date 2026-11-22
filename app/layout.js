@@ -141,8 +141,6 @@ const schemaData = {
       about: { "@id": BUSINESS_ID },
       description: HOME_DESCRIPTION,
       inLanguage: "th",
-      // หน้าแรกเปลี่ยนตามป้ายราคาและรีวิวทุกครั้งที่ deploy (ทุกวัน) · geo audit 19 พ.ย. 2569: ไม่มีสัญญาณวันที่อัปเดต
-      dateModified: new Date().toISOString(),
     },
   ],
 };
