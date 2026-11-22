@@ -10,7 +10,7 @@ name: บทความอัตโนมัติ
 #   ถ้าจะกลับมาใช้ระบบนี้: ใส่ secret ANTHROPIC_API_KEY แล้วเปิด schedule ด้านล่าง (และปิด routine)
 on:
   # schedule:
-  #   - cron: "0 2 */3 * *" # ทุก 3 วัน 09:00 น. เวลาไทย (02:00 UTC)
+  #   - cron: "0 2 2-30/2 * *" # วันเว้นวัน (วันคู่) 09:00 น. เวลาไทย (02:00 UTC)
   workflow_dispatch:
 
 permissions:
