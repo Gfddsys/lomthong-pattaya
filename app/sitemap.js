@@ -63,7 +63,7 @@ export default function sitemap() {
 
   const areaPages = AREAS.map((a) => ({
     url: `${baseUrl}/area/${a.slug}`,
-    lastModified: AREAS_LASTMOD,
+    lastModified: a.updated ? new Date(a.updated) : AREAS_LASTMOD,
     changeFrequency: "monthly",
     priority: 0.8,
   }));

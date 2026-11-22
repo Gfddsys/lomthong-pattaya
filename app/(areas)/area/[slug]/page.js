@@ -42,7 +42,8 @@ export async function generateMetadata({ params }) {
   // พื้นที่ที่เน้นคำค้นอื่น (เช่น "หลอมทอง ชลบุรี") ตั้ง title/description/h1/label เองใน data/areas.js
   const title = area.title ?? `รับซื้อทอง ${area.name} · ขายทอง หลอมทอง ใกล้${area.name}`;
   // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบายทุกย่าน รวมย่านที่ตั้งคำอธิบายเองใน data/areas.js
-  const description = `${MELT_BONUS_HOOK} · ${area.description ?? `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${hoursShort(nearest).replace("ทุกวัน ", "")} น. โทร ${CONTACT.phoneDisplay}`}`;
+  // สาขาใหม่ที่ยังไม่ยืนยันโปร → ไม่ขึ้นต้นด้วยโปรของสาขาพัทยา
+  const description = area.newBranch ? area.description : `${MELT_BONUS_HOOK} · ${area.description ?? `คนอยู่${area.name} ขายทองเก่า ทองหัก ทอง K นาฬิกาแบรนด์เนม ที่${nearest.shortName} ห่างประมาณ ${Math.round(nearest.km)} กม. ตรวจ XRF ฟรี จ่ายเงินสดทันที เปิดทุกวัน ${hoursShort(nearest).replace("ทุกวัน ", "")} น. โทร ${CONTACT.phoneDisplay}`}`;
   return {
     title,
     description,
@@ -63,7 +64,7 @@ export default async function AreaPage({ params }) {
   const label = area.label ?? `รับซื้อทอง ${area.name}`;
 
   // Service + areaServed — บอก Google ว่าธุรกิจหลัก (entity เดียวกับ root layout) ให้บริการคนในพื้นที่นี้
-  // ไม่ประกาศ LocalBusiness ใหม่ที่พื้นที่นี้ เพราะร้านไม่มีหน้าร้านอยู่ที่นี่จริง
+  // ไม่ประกาศ LocalBusiness ใหม่ที่พื้นที่นี้: ไม่มีหน้าร้าน หรือเป็นสาขาใหม่ที่ยังไม่มีที่อยู่ยืนยัน (area.newBranch)
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -117,18 +118,39 @@ export default async function AreaPage({ params }) {
       <header className="blog-article-header">
         <h1>{area.h1 ?? `รับซื้อทอง ${area.name} — ขายทองใกล้${area.name} ได้ราคาตามเนื้อทองจริง`}</h1>
         <div className="blog-article-meta">
-          <span>📍 ใกล้สุด: {nearest.shortName} (~{nearest.km.toFixed(1)} กม.)</span>
-          <span>🔬 ตรวจ XRF ฟรี</span>
-          <span>🕐 {hoursShort(nearest)}</span>
+          {area.newBranch ? (
+            <>
+              <span>📍 เปิด{area.newBranch}แล้ว</span>
+              <span>💬 ขอพิกัด เวลา และบริการทาง LINE</span>
+            </>
+          ) : (
+            <>
+              <span>📍 ใกล้สุด: {nearest.shortName} (~{nearest.km.toFixed(1)} กม.)</span>
+              <span>🔬 ตรวจ XRF ฟรี</span>
+              <span>🕐 {hoursShort(nearest)}</span>
+            </>
+          )}
         </div>
       </header>
+
+      {area.newBranch && (
+        <div className="blog-article-cta" id="new-branch" style={{ marginTop: 0, marginBottom: "var(--space-xl)" }}>
+          <h3>เปิด{area.newBranch}แล้ว</h3>
+          <p>ทัก LINE ขอพิกัด เวลาเปิด และบริการก่อนเดินทาง · ขั้นตอนและโปรในหน้านี้เป็นของสาขาพัทยา</p>
+          <div className="blog-article-cta-actions">
+            <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              💬 ขอพิกัด{area.newBranch}
+            </a>
+          </div>
+        </div>
+      )}
 
       <MeltPromo />
 
       <div className="blog-article-content">
         <p>{area.intro}</p>
 
-        <h2>ร้านที่ใกล้{area.name}ที่สุด</h2>
+        <h2>{area.newBranch ? "สาขาในพัทยา" : `ร้านที่ใกล้${area.name}ที่สุด`}</h2>
         <p>
           ระยะด้านล่างเป็นระยะเส้นตรงจากใจกลาง{area.name} ระยะขับรถจริงจะไกลกว่านี้{" "}
           กด &quot;นำทาง&quot; เพื่อเปิดเส้นทางจากตำแหน่งของคุณใน Google Maps
@@ -151,7 +173,7 @@ export default async function AreaPage({ params }) {
           อยู่ที่อื่นหรือกำลังเดินทาง กด <Link href="/ran-lomthong-klai-chan">หาร้านหลอมทองใกล้ฉัน</Link> ดูสาขาที่ใกล้ตำแหน่งของคุณและเปิดอยู่ตอนนี้
         </p>
 
-        <h2>เส้นทางจาก{area.name}</h2>
+        <h2>เส้นทางจาก{area.name}{area.newBranch ? "ไปสาขาพัทยา" : ""}</h2>
         <p>{area.route}</p>
 
         {area.sections.map((s) => (
@@ -180,12 +202,27 @@ export default async function AreaPage({ params }) {
       </div>
 
       <div className="blog-article-cta">
-        <h3>มาจาก{area.name} แวะ{nearest.shortName}ได้เลย</h3>
-        <p>{nearest.address} · {nearest.hours} · ใช้บัตรประชาชนตัวจริง ไม่มีใบเสร็จก็ขายได้</p>
+        {area.newBranch ? (
+          <>
+            <h3>จะไป{area.newBranch} ทักมาก่อนได้เลย</h3>
+            <p>ร้านส่งพิกัด เวลาเปิด และยืนยันบริการของสาขาให้ทาง LINE {CONTACT.lineId}</p>
+          </>
+        ) : (
+          <>
+            <h3>มาจาก{area.name} แวะ{nearest.shortName}ได้เลย</h3>
+            <p>{nearest.address} · {nearest.hours} · ใช้บัตรประชาชนตัวจริง ไม่มีใบเสร็จก็ขายได้</p>
+          </>
+        )}
         <div className="blog-article-cta-actions">
-          <a href={nearest.directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            🧭 นำทางไป{nearest.shortName}
-          </a>
+          {area.newBranch ? (
+            <a href={CONTACT.lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              💬 ขอพิกัดทาง LINE
+            </a>
+          ) : (
+            <a href={nearest.directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              🧭 นำทางไป{nearest.shortName}
+            </a>
+          )}
           <a href={CONTACT.phoneHref} className="btn btn-outline">
             📞 โทร {CONTACT.phoneDisplay}
           </a>
