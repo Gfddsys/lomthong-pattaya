@@ -41,7 +41,7 @@ export const BRANCHES = [
     addressEn: "225/136 South Pattaya Road (Pattaya Tai), Nong Prue, Bang Lamung, Chonburi 20150",
     reviews: 35, // ค่าเริ่มต้น 21 ต.ค. 2026 · ตัวเลขที่โชว์บนเว็บมาจาก data/reviewStats.js (อัปเดตทุกวัน)
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=12.9187667,100.8927284&z=17&hl=th&output=embed",
+      "https://maps.google.com/maps?cid=7851014282260906235&z=18&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/srotj15xvzwfWi9M6",
     // Place ID ของหมุดใน Google Maps ใช้เปิดหน้าเขียนรีวิวตรง (หน้า /reviews)
     placeId: "ChIJ686UVEaVAjER-wCurORn9Gw",
@@ -75,8 +75,9 @@ export const BRANCHES = [
     locality: "บางละมุง",
     region: "ชลบุรี",
     postalCode: "20150",
-    lat: 12.9317188,
-    lng: 100.906533,
+    // 24 พ.ย. 2569: เดิม 12.9317188,100.906533 คลาดจากหมุดจริง ~55 ม. แผนที่บนเว็บจึงปักไปทางร้านอื่น → ใช้พิกัดหมุด Google
+    lat: 12.9315983,
+    lng: 100.9070327,
     hours: "เปิดทุกวัน 10:00-20:00 น.",
     schedule: [{ days: [0, 1, 2, 3, 4, 5, 6], opens: "10:00", closes: "20:00" }],
     // สาขาที่ใกล้พัทยาเหนือ นาเกลือ ที่สุด (data/areas.js) · คำ "หลอมทอง" โซนเหนือของเมืองยังเป็นจุดอ่อน (วัด 29 ต.ค. 2026)
@@ -88,13 +89,13 @@ export const BRANCHES = [
     // 10 พ.ย. 2569: เดิมขึ้นต้น "ร้านทองเนินพลับหวาน · ห้างทอง" ซึ่ง Google เข้าใจว่าเป็นร้านอื่น (ห้างทองเนินพลับหวาน) ได้ 3 คลิกใน 3 เดือน
     // หมุดสาขานี้อยู่ใกล้โซนเหนือที่สุดแต่แทบไม่ขึ้นคำหลอมทอง → หน้าที่หมุดลิงก์มาให้คำหลอมทองนำ + บอกโซนที่ใกล้
     // วันที่ปรับข้อมูลหน้าสาขาครั้งล่าสุด (โชว์บนหน้า + dateModified) · แก้ข้อมูลสาขาเมื่อไหร่ อัปเดตวันที่นี้ด้วย
-    updated: "2026-11-19",
+    updated: "2026-11-24",
     seoTitle: "ร้านหลอมทอง รับซื้อทอง พัทยา สาขาเนินพลับหวาน · ใกล้พัทยาเหนือ พัทยากลาง",
     h1: "ร้านหลอมทอง เนินพลับหวาน — รับหลอมทอง รับซื้อทอง ใกล้พัทยาเหนือ พัทยากลาง นาเกลือ",
     addressEn: "13/228 Moo 5, Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
     reviews: 53, // ค่าเริ่มต้น 21 ต.ค. 2026 · ตัวเลขที่โชว์บนเว็บมาจาก data/reviewStats.js (อัปเดตทุกวัน)
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=12.9317188,100.906533&z=17&hl=th&output=embed",
+      "https://maps.google.com/maps?cid=18375488596678420709&z=18&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
     placeId: "ChIJEeEaq92VAjER5ShCa4XZAv8",
     facebookUrl: "https://www.facebook.com/hengsirinernplubwan/",
