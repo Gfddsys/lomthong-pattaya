@@ -75,9 +75,10 @@ export const BRANCHES = [
     locality: "บางละมุง",
     region: "ชลบุรี",
     postalCode: "20150",
-    // 24 พ.ย. 2569: เดิม 12.9317188,100.906533 คลาดจากหมุดจริง ~55 ม. แผนที่บนเว็บจึงปักไปทางร้านอื่น → ใช้พิกัดหมุด Google
-    lat: 12.9315983,
-    lng: 100.9070327,
+    // พิกัดหน้าร้านจริง (ร้านยืนยัน 24 พ.ย. 2569) · หมุด Google ถูกย้ายไปทางตะวันออก ~55 ม. ราว 26-27 ต.ค. ไม่ใช่ที่ร้าน
+    // ห้ามแก้ตามพิกัดหมุดจนกว่าหมุดจะถูกย้ายกลับ
+    lat: 12.9317188,
+    lng: 100.906533,
     hours: "เปิดทุกวัน 10:00-20:00 น.",
     schedule: [{ days: [0, 1, 2, 3, 4, 5, 6], opens: "10:00", closes: "20:00" }],
     // สาขาที่ใกล้พัทยาเหนือ นาเกลือ ที่สุด (data/areas.js) · คำ "หลอมทอง" โซนเหนือของเมืองยังเป็นจุดอ่อน (วัด 29 ต.ค. 2026)
@@ -95,7 +96,7 @@ export const BRANCHES = [
     addressEn: "13/228 Moo 5, Soi Noen Plap Wan, Pattaya City, Bang Lamung, Chonburi 20150",
     reviews: 53, // ค่าเริ่มต้น 21 ต.ค. 2026 · ตัวเลขที่โชว์บนเว็บมาจาก data/reviewStats.js (อัปเดตทุกวัน)
     mapEmbedUrl:
-      "https://maps.google.com/maps?cid=18375488596678420709&z=18&hl=th&output=embed",
+      "https://maps.google.com/maps?q=12.9317188,100.906533&z=18&hl=th&output=embed",
     mapUrl: "https://maps.app.goo.gl/9vx9GVm6sDBE8RGXA",
     placeId: "ChIJEeEaq92VAjER5ShCa4XZAv8",
     facebookUrl: "https://www.facebook.com/hengsirinernplubwan/",
