@@ -15,7 +15,9 @@ export default function sitemap() {
   const LASTMOD = new Date("2026-11-10"); // 10 พ.ย. ชื่อหน้า/หัวข้อหน้าสาขาให้คำหลอมทองนำ + โปร 1,500
   const AREAS_LASTMOD = new Date("2026-11-10"); // 10 พ.ย. หน้าชลบุรีครอบคลุมบางแสน หนองมน บ้านสวน บางพระ + โปร 1,500
   const EN_LASTMOD = new Date("2026-11-01"); // 1 พ.ย. เวลาเปิดสาขาพัทยาใต้ใหม่
-  const HOME_LASTMOD = new Date("2026-11-01"); // 1 พ.ย. เวลาเปิดสาขาพัทยาใต้ใหม่ (อยู่ท้ายเว็บทุกหน้า)
+  const HOME_LASTMOD = new Date("2026-11-25"); // 25 พ.ย. หน้าแรกเพิ่มสาขาชลบุรี (การ์ดสาขาที่ 3)
+  // หน้า "ร้านหลอมทองใกล้ฉัน": 25 พ.ย. เพิ่มสาขาชลบุรีในตัวหาสาขา · เดิมค้างที่ 20 ต.ค. Google จึงไม่กลับมาอ่านเลยตั้งแต่วันนั้น (เช็ก 26 พ.ย.)
+  const NEAR_LASTMOD = new Date("2026-11-25");
   // หน้าแรกภาษาไทย ↔ หน้าภาษาอังกฤษ เป็นคู่ภาษากัน (hreflang)
   const LANGS = { th: baseUrl, en: `${baseUrl}/en` };
 
@@ -54,9 +56,10 @@ export default function sitemap() {
     priority: 0.8,
   }));
 
+  // หน้าสาขา: ใช้วันที่ปรับข้อมูลสาขาจริง (updated ใน data/branches.js = วันเดียวกับที่โชว์บนหน้า)
   const branchPages = BRANCHES.map((b) => ({
     url: `${baseUrl}/branch/${b.slug}`,
-    lastModified: LASTMOD,
+    lastModified: b.updated ? new Date(b.updated) : LASTMOD,
     changeFrequency: "monthly",
     priority: 0.9,
   }));
@@ -84,8 +87,9 @@ export default function sitemap() {
       alternates: { languages: LANGS },
     },
     {
+      // หน้ารวมบทความเปลี่ยนทุกครั้งที่มีบทความใหม่ → ใช้วันที่ของบทความล่าสุด
       url: `${baseUrl}/blog`,
-      lastModified: LASTMOD,
+      lastModified: autoArticlePages.reduce((latest, p) => (p.lastModified > latest ? p.lastModified : latest), LASTMOD),
       changeFrequency: "weekly",
       priority: 0.9,
     },
@@ -98,9 +102,9 @@ export default function sitemap() {
       alternates: { languages: pairLangs("/rakha-thong-wan-nee") },
     },
     {
-      // หน้ารวม 2 สาขาสำหรับคำค้น "…ใกล้ฉัน" (เพิ่ม 20 ต.ค. 2569)
+      // หน้ารวมทุกสาขาสำหรับคำค้น "…ใกล้ฉัน" (เพิ่ม 20 ต.ค. 2569) · แก้หน้านี้เมื่อไหร่ อัปเดต NEAR_LASTMOD ด้วย
       url: `${baseUrl}/ran-lomthong-klai-chan`,
-      lastModified: new Date("2026-10-20"),
+      lastModified: NEAR_LASTMOD,
       changeFrequency: "monthly",
       priority: 0.9,
     },
