@@ -16,15 +16,18 @@ export default function BranchRatings() {
             target="_blank"
             rel="noopener noreferrer"
             className="branch-rating"
-            aria-label={rating ? `${b.shortName} คะแนน ${rating} จาก 5 ดาว ${n} รีวิวบน Google` : `${b.shortName} สาขาใหม่ ดูหมุดบน Google Maps`}
+            aria-label={rating ? `${b.shortName} คะแนน ${rating} จาก 5 ดาว ${n} รีวิวบน Google` : n > 0 ? `${b.shortName} ${n} รีวิวบน Google` : `${b.shortName} สาขาใหม่ ดูหมุดบน Google Maps`}
           >
             <span className="branch-rating-name">{b.shortName}</span>
-            {rating ? (
+            {n > 0 ? (
               <>
-                <span className="branch-rating-score">
-                  <span className="branch-rating-stars" aria-hidden="true">★★★★★</span>
-                  <b>{rating}</b>
-                </span>
+                {/* ดาวโชว์เมื่อบันทึกคะแนนจริงของหมุดแล้วเท่านั้น */}
+                {rating && (
+                  <span className="branch-rating-score">
+                    <span className="branch-rating-stars" aria-hidden="true">★★★★★</span>
+                    <b>{rating}</b>
+                  </span>
+                )}
                 <span className="branch-rating-count">
                   <b>{n}</b> รีวิวบน Google
                 </span>

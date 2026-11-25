@@ -12,9 +12,10 @@ export const REVIEW_TOTAL = Object.values(latest.branches).reduce((a, v) => a + 
 const [y, m, d] = latest.date.split("-").map(Number);
 export const REVIEW_CHECKED_AT = `${d} ${TH_MONTHS_SHORT[m - 1]} ${y + 543}`;
 
-// คะแนนดาวล่าสุดของสาขา (เช่น "5.0") — ไม่มีข้อมูลดาวให้ใช้ 5.0 ตามหมุดจริงตอนเริ่มเก็บ
-// สาขาที่ยังไม่มีรีวิว (สาขาใหม่) คืน null → ห้ามโชว์ดาวที่ยังไม่มีจริง
+// คะแนนดาวล่าสุดของสาขา (เช่น "5.0") — ใช้คะแนนที่บันทึกจากหมุดจริงเท่านั้น
+// สาขาที่ยังไม่มีรีวิว หรือมีรีวิวแต่ยังไม่ได้บันทึกคะแนน คืน null → ห้ามโชว์ดาวที่ไม่ได้อ่านมาจริง
+// (บันทึกคะแนนด้วย scripts/record-reviews.mjs --set <slug>=<จำนวน>:<คะแนน>)
 export const reviewRating = (slug) => {
   const b = latest.branches[slug];
-  return b?.count > 0 ? (b.rating ?? 5).toFixed(1) : null;
+  return b?.count > 0 && b.rating != null ? Number(b.rating).toFixed(1) : null;
 };

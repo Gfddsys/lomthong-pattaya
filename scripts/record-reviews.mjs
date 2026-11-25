@@ -39,9 +39,11 @@ let source, branches = {};
 if (setIdx >= 0) {
   source = "manual";
   for (const arg of process.argv.slice(setIdx + 1)) {
-    const [slug, n] = arg.split("=");
-    if (!BRANCHES.some((b) => b.slug === slug) || !/^\d+$/.test(n ?? "")) throw new Error(`รูปแบบผิด: ${arg} (ต้องเป็น slug=จำนวน)`);
-    branches[slug] = { count: Number(n), rating: prev?.branches[slug]?.rating ?? null };
+    // slug=จำนวน หรือ slug=จำนวน:คะแนน (เช่น chonburi=3:4.7) — คะแนนใส่เมื่ออ่านจากหมุดจริง ไม่ใส่ = ใช้คะแนนเดิมที่บันทึกไว้
+    const [slug, v] = arg.split("=");
+    const [n, r] = (v ?? "").split(":");
+    if (!BRANCHES.some((b) => b.slug === slug) || !/^\d+$/.test(n ?? "") || (r != null && !/^[1-5](\.\d)?$/.test(r))) throw new Error(`รูปแบบผิด: ${arg} (ต้องเป็น slug=จำนวน หรือ slug=จำนวน:คะแนน)`);
+    branches[slug] = { count: Number(n), rating: r != null ? Number(r) : prev?.branches[slug]?.rating ?? null };
   }
 } else if (KEY) {
   source = "places-api";
