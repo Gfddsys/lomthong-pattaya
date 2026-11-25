@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
 import { SITE_URL } from "@/data/site";
 import { BRANCHES } from "@/data/branches";
-import { BUSINESS_ID, branchId, serviceId } from "@/lib/schema";
+import { BUSINESS_ID, branchId, offersService, serviceId } from "@/lib/schema";
 import ServiceIcon from "@/components/ServiceIcon";
 import MeltPromo from "@/components/MeltPromo";
 import VideoShorts from "@/components/VideoShorts";
@@ -84,7 +84,8 @@ export default async function ServicePage({ params }) {
     "url": `${SITE_URL}/services/${service.slug}`,
     "description": service.metaDescription,
     "provider": { "@id": BUSINESS_ID },
-    "availableChannel": BRANCHES.map((b) => ({
+    // เฉพาะสาขาที่ยืนยันบริการนี้แล้ว (data/branches.js → services)
+    "availableChannel": BRANCHES.filter((b) => offersService(b, service.slug)).map((b) => ({
       "@type": "ServiceChannel",
       "serviceLocation": { "@id": branchId(b) },
     })),

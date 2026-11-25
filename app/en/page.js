@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUploadedImage } from "@/lib/getImage";
 import { CONTACT } from "@/data/contact";
-import { BRANCHES } from "@/data/branches";
+import { PATTAYA_BRANCHES as BRANCHES } from "@/data/branches"; // หน้าอังกฤษพูดถึงร้านในพัทยา ("our two shops")
 import { SITE_URL } from "@/data/site";
 import { EN_PAGES } from "@/data/enPages";
 import ArticleLineBox from "@/components/ArticleLineBox";

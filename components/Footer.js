@@ -113,6 +113,13 @@ export default function Footer() {
                   <Link href={`/area/${a.slug}`}>{a.name}</Link>
                 </span>
               ))}
+              {/* สาขานอกพัทยา: หน้าย่านเดิมย้ายไปหน้าสาขาแล้ว (ชลบุรี → /branch/chonburi) */}
+              {BRANCHES.filter((b) => b.city !== 'พัทยา').map((b) => (
+                <span key={b.slug}>
+                  {' · '}
+                  <Link href={`/branch/${b.slug}`}>{b.area}</Link>
+                </span>
+              ))}
             </p>
           </div>
         </div>

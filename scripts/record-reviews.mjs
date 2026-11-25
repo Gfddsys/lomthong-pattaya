@@ -1,5 +1,5 @@
 /* ============================================
-   บันทึกจำนวนรีวิว Google ของทั้ง 2 สาขาลง data/review-history.json (สถิติหลังบ้าน)
+   บันทึกจำนวนรีวิว Google ของทุกสาขาลง data/review-history.json (สถิติหลังบ้าน)
    ============================================
    2 วิธี:
    1) อัตโนมัติ: ตั้ง secret GOOGLE_PLACES_API_KEY ใน GitHub → .github/workflows/review-history.yml รันทุกเช้า

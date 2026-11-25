@@ -15,12 +15,17 @@ import { getUploadedImages } from "@/lib/getImage";
 import { branchSchema } from "@/lib/schema";
 
 
-// รับหลอมทองได้ทั้ง 2 สาขาในพัทยา (data/areas.js) · สาขาเมืองอื่นเปิดใหม่ยังไม่ยืนยันเรื่องหลอม → ไม่ขึ้นส่วนนี้
+// ข้อความมาตรฐาน (หลอมต่อหน้า ชั่งก่อน-หลัง ตรวจ XRF โปรหลอมทอง เงินแท้) ยืนยันแล้วเฉพาะ 2 สาขาในพัทยา
+// สาขาเมืองอื่นใช้ข้อความของตัวเองจาก data/branches.js (lead, steps, buys, melt, extra, faq, services, promo, ctaNote)
 const meltsHere = (b) => b.city === "พัทยา";
+// บริการที่สาขานี้ยืนยันแล้ว (ไม่ระบุ services = ทุกบริการ)
+const branchServices = (b) => servicesData.filter((s) => !b.services || b.services.includes(s.slug));
 
 /* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
    ใส่ชื่อพื้นที่ของสาขาในคำถาม เพื่อให้ตรงกับคำค้นแบบ "ร้านทอง <พื้นที่>" */
 function branchFaq(b) {
+  // สาขาที่มีชุดคำถามของตัวเอง (ข้อมูลยืนยันไม่เท่าสาขาพัทยา) ใช้ชุดนั้นทั้งชุด
+  if (b.faq) return b.faq;
   return [
     {
       q: `ร้านรับซื้อทอง${b.area} อยู่ตรงไหน`,
@@ -73,7 +78,7 @@ export async function generateMetadata({ params }) {
   if (!b) return {};
   const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
   // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบาย ให้เห็นบน Google ทุกครั้ง
-  const description = `${MELT_BONUS_HOOK} · ${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  const description = b.description ?? `${MELT_BONUS_HOOK} · ${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
   return {
     title,
     description,
@@ -151,12 +156,12 @@ export default async function BranchPage({ params }) {
         <h1>{b.h1 ?? `ร้านทอง ${b.area} — รับซื้อทอง หลอมทอง`}</h1>
         <div className="blog-article-meta">
           <span>📍 {b.shortName}</span>
-          <span>⭐ Google รีวิว {reviewCount(b.slug)}</span>
+          <span>{reviewCount(b.slug) > 0 ? `⭐ Google รีวิว ${reviewCount(b.slug)}` : "✨ สาขาใหม่"}</span>
           <span>🕐 {hoursShort(b)}</span>
         </div>
       </header>
 
-      <MeltPromo />
+      {b.promo !== false && <MeltPromo />}
 
       {photos.length > 0 && (
         <div className="branch-photos">
@@ -181,11 +186,17 @@ export default async function BranchPage({ params }) {
       </div>
 
       <div className="blog-article-content">
-        <p>
-          <strong>{b.name}</strong> ให้บริการ<strong>รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองชำรุด
-          ทองคำแท่ง เงินแท้ เครื่องประดับ และ<Link href="/services/watch-buying">นาฬิกาทุกยี่ห้อ</Link></strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
-          ด้วยเครื่อง XRF ต่อหน้าคุณ ให้ราคาสูงตามสมาคมค้าทองคำ จ่ายเงินสดทันที
-        </p>
+        {b.lead ? (
+          <p>
+            <strong>{b.name}</strong> {b.lead}
+          </p>
+        ) : (
+          <p>
+            <strong>{b.name}</strong> ให้บริการ<strong>รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองชำรุด
+            ทองคำแท่ง เงินแท้ เครื่องประดับ และ<Link href="/services/watch-buying">นาฬิกาทุกยี่ห้อ</Link></strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
+            ด้วยเครื่อง XRF ต่อหน้าคุณ ให้ราคาสูงตามสมาคมค้าทองคำ จ่ายเงินสดทันที
+          </p>
+        )}
         {/* ย่อหน้าเฉพาะสาขา (data/branches.js → intro): จุดสังเกต การเดินทาง คนในพื้นที่ */}
         {b.intro?.map((t) => <p key={t}>{t}</p>)}
 
@@ -203,12 +214,41 @@ export default async function BranchPage({ params }) {
           </>
         )}
 
-        <h2>รับซื้อเงินแท้ เครื่องเงินที่{b.shortName}</h2>
-        <p>
-          รับซื้อสร้อยเงิน แหวนเงิน เงิน 925 ขันเงิน พานเงิน เงินแท่ง และเศษเงิน คิดราคาตามเนื้อเงินจริงที่ตรวจต่อหน้าคุณ
-          จ่ายเงินสดทันที เครื่องเงินหลายชิ้นปนกันรับหลอมเงินได้ ไม่แน่ใจว่าเป็นเงินแท้ไหม เอามาให้ตรวจก่อนได้ ·{" "}
-          <Link href="/services/silver-buying">ดูวิธีคิดราคาเงินแท้และเครื่องเงิน</Link>
-        </p>
+        {meltsHere(b) && (
+          <>
+            <h2>รับซื้อเงินแท้ เครื่องเงินที่{b.shortName}</h2>
+            <p>
+              รับซื้อสร้อยเงิน แหวนเงิน เงิน 925 ขันเงิน พานเงิน เงินแท่ง และเศษเงิน คิดราคาตามเนื้อเงินจริงที่ตรวจต่อหน้าคุณ
+              จ่ายเงินสดทันที เครื่องเงินหลายชิ้นปนกันรับหลอมเงินได้ ไม่แน่ใจว่าเป็นเงินแท้ไหม เอามาให้ตรวจก่อนได้ ·{" "}
+              <Link href="/services/silver-buying">ดูวิธีคิดราคาเงินแท้และเครื่องเงิน</Link>
+            </p>
+          </>
+        )}
+
+        {/* สาขาที่มีข้อความของตัวเอง (data/branches.js): ทุกบรรทัดมาจากข้อมูลที่ร้านยืนยันกับสาขานั้น */}
+        {b.melt && (
+          <>
+            <h2>หลอมทองที่{b.shortName}</h2>
+            <p>{b.melt}</p>
+          </>
+        )}
+        {b.steps?.length > 0 && (
+          <>
+            <h2>ขั้นตอนขายทองที่{b.shortName}</h2>
+            <ol>
+              {b.steps.map((t) => <li key={t}>{t}</li>)}
+            </ol>
+          </>
+        )}
+        {b.buys?.length > 0 && (
+          <>
+            <h2>{b.shortName}รับซื้ออะไรบ้าง</h2>
+            <ul>
+              {b.buys.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+            {b.extra && <p>{b.extra}</p>}
+          </>
+        )}
 
         <h2>ข้อมูลติดต่อ {b.shortName}</h2>
         <ul>
@@ -229,7 +269,7 @@ export default async function BranchPage({ params }) {
           <>
             <h2>สถานที่ใกล้{b.shortName}</h2>
             <p>
-              รอบ{b.shortName}มีสถานที่ที่คนพัทยารู้จัก ใช้เป็นจุดสังเกตตอนมาร้านได้
+              รอบ{b.shortName}มีสถานที่ที่คน{b.city}รู้จัก ใช้เป็นจุดสังเกตตอนมาร้านได้
               (ระยะเส้นตรงโดยประมาณ ขับรถจริงอาจไกลกว่านี้)
             </p>
             <ul>
@@ -241,8 +281,11 @@ export default async function BranchPage({ params }) {
         )}
 
         <h2>บริการที่ {b.shortName}</h2>
+        {b.services && (
+          <p>หน้าบริการด้านล่างอธิบายขั้นตอนและโปรของสาขาในพัทยา รายละเอียดของ{b.shortName} ทัก LINE {CONTACT.lineId} ถามก่อนมาได้</p>
+        )}
         <ul>
-          {servicesData.map((s) => (
+          {branchServices(b).map((s) => (
             <li key={s.slug}>
               <Link href={`/services/${s.slug}`}>{s.title}</Link>
             </li>
@@ -273,7 +316,7 @@ export default async function BranchPage({ params }) {
 
       <div className="blog-article-cta">
         <h3>แวะมาที่ {b.shortName} ได้เลย</h3>
-        <p>{b.address} · {b.hours} · ตรวจทองต่อหน้าคุณ จ่ายเงินสดทันที</p>
+        <p>{b.address} · {b.hours} · {b.ctaNote ?? "ตรวจทองต่อหน้าคุณ จ่ายเงินสดทันที"}</p>
         <div className="blog-article-cta-actions">
           <a href={b.mapUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             🧭 นำทางมาสาขานี้

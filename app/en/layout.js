@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import FloatingContact from "@/components/FloatingContact";
 import { CONTACT } from "@/data/contact";
-import { BRANCHES } from "@/data/branches";
+import { PATTAYA_BRANCHES as BRANCHES } from "@/data/branches"; // หน้าอังกฤษพูดถึงร้านในพัทยา
 
 /* หน้าภาษาอังกฤษ (/en) สำหรับชาวต่างชาติในพัทยา
    root layout ตั้ง <html lang="th"> ไว้ทั้งเว็บ จึงครอบเนื้อหาด้วย lang="en"

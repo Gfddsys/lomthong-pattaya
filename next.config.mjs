@@ -50,6 +50,8 @@ const MOVED_PAGES = {
   "/blog/rap-sue-thong-jomtien-naklua-banglamung": "/area/jomtien",
   // หน้ารับหลอมทองพัทยาซ้ำกับหน้าบริการรับหลอมทอง (แย่งคำค้นกันเอง) รวมเนื้อหาเข้าหน้าบริการแล้ว
   "/rap-lomthong-pattaya": "/services/gold-melting",
+  // หน้า "หลอมทอง ชลบุรี" เดิม (เขียนตอนสาขายังไม่มีที่อยู่) → หน้าสาขาชลบุรีที่มีหมุดจริง 25 พ.ย. 2569 ไม่ให้ 2 หน้าแย่งคำเดียวกัน
+  "/area/chonburi": "/branch/chonburi",
   // หน้าขายนาฬิกาทางไปรษณีย์ (เปิด 25 ต.ค. 2569) ข้อความซ้ำกับเว็บนาฬิกาของร้านเกือบทั้งหน้า
   // 6 พ.ย. 2569 ผู้ใช้ให้เว็บนาฬิกาเป็นเจ้าของเรื่องส่งนาฬิกาทางไปรษณีย์ทั่วประเทศ จึงปิดหน้านี้
   "/khai-nalika-song-praisani": "/services/watch-buying",
@@ -61,8 +63,9 @@ const REVIEW_LINKS = {
   "/review": "/reviews",
   "/review/pattaya-tai": "/reviews/pattaya-tai",
   "/review/noen-plap-wan": "/reviews/noen-plap-wan",
-  // 10 พ.ย. 2569 ไม่มีหน้าร้านที่ชลบุรี หน้ารีวิว "กำลังจะเปิด" ถูกเอาออก
-  "/reviews/mueang-mai-chonburi": "/reviews",
+  "/review/chonburi": "/reviews/chonburi",
+  // ลิงก์รีวิวสาขาชลบุรีชื่อเดิม (เตรียมไว้ ต.ค. 2569) → หน้ารีวิวสาขาชลบุรีที่เปิดจริง 25 พ.ย. 2569
+  "/reviews/mueang-mai-chonburi": "/reviews/chonburi",
 };
 
 /** @type {import('next').NextConfig} */

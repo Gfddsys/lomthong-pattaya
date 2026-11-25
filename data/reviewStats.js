@@ -13,4 +13,8 @@ const [y, m, d] = latest.date.split("-").map(Number);
 export const REVIEW_CHECKED_AT = `${d} ${TH_MONTHS_SHORT[m - 1]} ${y + 543}`;
 
 // คะแนนดาวล่าสุดของสาขา (เช่น "5.0") — ไม่มีข้อมูลดาวให้ใช้ 5.0 ตามหมุดจริงตอนเริ่มเก็บ
-export const reviewRating = (slug) => (latest.branches[slug]?.rating ?? 5).toFixed(1);
+// สาขาที่ยังไม่มีรีวิว (สาขาใหม่) คืน null → ห้ามโชว์ดาวที่ยังไม่มีจริง
+export const reviewRating = (slug) => {
+  const b = latest.branches[slug];
+  return b?.count > 0 ? (b.rating ?? 5).toFixed(1) : null;
+};

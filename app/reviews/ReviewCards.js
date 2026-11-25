@@ -63,10 +63,12 @@ function BranchCard({ b }) {
       <h2 className={styles.branchName}>{b.shortName}</h2>
       <p className={styles.address}>{b.address}</p>
       {/* ดาวอย่างเดียว ไม่โชว์จำนวนรีวิว (ตามบรีฟ: จำนวนดูที่หน้าแรก) */}
-      <p className={styles.rating}>
-        <span className={styles.ratingStars} aria-hidden="true">★★★★★</span>
-        <b>{reviewRating(b.slug)}</b>
-      </p>
+      {reviewRating(b.slug) && (
+        <p className={styles.rating}>
+          <span className={styles.ratingStars} aria-hidden="true">★★★★★</span>
+          <b>{reviewRating(b.slug)}</b>
+        </p>
+      )}
 
       <div className={styles.option}>
         <a href={reviewUrl(b)} className={styles.primary} rel="noopener">

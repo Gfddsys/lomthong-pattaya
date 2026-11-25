@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/ContentBlocks";
 import { EN_PAGES, getEnPage } from "@/data/enPages";
 import { CONTACT } from "@/data/contact";
-import { BRANCHES } from "@/data/branches";
+import { PATTAYA_BRANCHES as BRANCHES } from "@/data/branches"; // หน้าอังกฤษพูดถึงร้านในพัทยา
 import { SITE_URL } from "@/data/site";
 
 /* หน้าภาษาอังกฤษเพิ่มเติม — เนื้อหาอยู่ใน data/enPages.js ใช้ layout ภาษาอังกฤษของ app/en/layout.js */

@@ -55,11 +55,12 @@ export default function StoreLocation() {
         <div className="section-header animate-on-scroll">
           <span className="section-label">ที่ตั้งร้าน</span>
           <h2 className="section-title">
-            แวะมาที่ร้าน <span className="gold">หลอมทองพัทยา</span> ทั้ง 2 สาขา
+            แวะมาที่ร้าน <span className="gold">หลอมทองพัทยา</span> ทั้ง 3 สาขา
           </h2>
           <p className="section-subtitle">
             มีหน้าร้านจริง 2 สาขาในพัทยา จอดรถสะดวก เดินทางง่าย{" "}
-            <span style={{ whiteSpace: "nowrap" }}>ตรวจทองต่อหน้าคุณทุกขั้นตอน</span>
+            <span style={{ whiteSpace: "nowrap" }}>ตรวจทองต่อหน้าคุณทุกขั้นตอน</span>{" "}
+            และสาขาชลบุรีที่แยกคีรี <span style={{ whiteSpace: "nowrap" }}>เปิดทุกวันถึง 22:00 น.</span>
           </p>
           <div className="gold-divider"></div>
         </div>
@@ -80,7 +81,8 @@ export default function StoreLocation() {
               <div className="store-info">
                 <h3>
                   {b.shortName}
-                  <span className="store-review-badge">★ Google รีวิว {reviewCount(b.slug)}</span>
+                  {/* สาขาใหม่ยังไม่มีรีวิว → ไม่โชว์ "0 รีวิว" */}
+                  <span className="store-review-badge">{reviewCount(b.slug) > 0 ? `★ Google รีวิว ${reviewCount(b.slug)}` : "สาขาใหม่"}</span>
                 </h3>
 
                 <ul className="store-details">
@@ -138,6 +140,12 @@ export default function StoreLocation() {
             {AREAS.map((a) => (
               <Link key={a.slug} href={`/area/${a.slug}`}>
                 {a.label ?? `รับซื้อทอง ${a.name}`}
+              </Link>
+            ))}
+            {/* สาขานอกพัทยา: หน้าย่านเดิม (/area/chonburi "หลอมทอง ชลบุรี") ย้ายไปหน้าสาขาแล้ว → ลิงก์คำเดิมชี้หน้าสาขา */}
+            {BRANCHES.filter((b) => b.city !== "พัทยา").map((b) => (
+              <Link key={b.slug} href={`/branch/${b.slug}`}>
+                หลอมทอง {b.area}
               </Link>
             ))}
           </div>
