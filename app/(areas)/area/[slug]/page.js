@@ -38,8 +38,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const area = getArea(slug);
   if (!area) return {};
-  // คำอธิบายเขียนจากบริการของสาขาพัทยา → ใช้สาขาพัทยาที่ใกล้ที่สุด
-  const nearest = branchesByDistance(area).find((b) => b.city === "พัทยา");
+  const [nearest] = branchesByDistance(area);
   // พื้นที่ที่เน้นคำค้นอื่น (เช่น "หลอมทอง ชลบุรี") ตั้ง title/description/h1/label เองใน data/areas.js
   const title = area.title ?? `รับซื้อทอง ${area.name} · ขายทอง หลอมทอง ใกล้${area.name}`;
   // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบายทุกย่าน รวมย่านที่ตั้งคำอธิบายเองใน data/areas.js
@@ -59,11 +58,12 @@ export default async function AreaPage({ params }) {
   if (!area) notFound();
 
   const all = branchesByDistance(area);
-  // เนื้อหาหน้าย่าน (ตรวจ XRF โปรหลอมทอง เอกสาร) เขียนจากบริการของสาขาพัทยา → สาขาหลักของหน้า = สาขาพัทยาที่ใกล้ที่สุด
-  const nearest = all.find((b) => b.city === "พัทยา");
-  // โชว์สาขาพัทยาทุกสาขา + สาขาเมืองอื่นเฉพาะที่ใกล้ย่านนี้กว่าสาขาพัทยา (ศรีราชา → สาขาชลบุรี)
-  const branches = all.filter((b) => b.city === "พัทยา" || b.km < nearest.km);
-  const top = branches[0];
+  // ทุกสาขาให้บริการเหมือนกัน (ร้านยืนยัน 25 พ.ย. 2569) → สาขาหลักของหน้า = สาขาที่ใกล้ย่านนี้ที่สุด
+  const nearest = all[0];
+  // รายการสาขา: สาขาพัทยาทุกสาขา + สาขาเมืองอื่นเฉพาะที่ใกล้ย่านนี้กว่าสาขาพัทยา (ศรีราชา → สาขาชลบุรี)
+  // หน้าย่านในพัทยาจึงไม่ขึ้นสาขาที่อยู่ไกล 40-50 กม.
+  const nearestPattaya = all.find((b) => b.city === "พัทยา");
+  const branches = all.filter((b) => b.city === "พัทยา" || b.km < nearestPattaya.km);
   const pageUrl = `${SITE_URL}/area/${area.slug}`;
   const label = area.label ?? `รับซื้อทอง ${area.name}`;
 
@@ -122,10 +122,9 @@ export default async function AreaPage({ params }) {
       <header className="blog-article-header">
         <h1>{area.h1 ?? `รับซื้อทอง ${area.name} — ขายทองใกล้${area.name} ได้ราคาตามเนื้อทองจริง`}</h1>
         <div className="blog-article-meta">
-          <span>📍 ใกล้สุด: {top.shortName} (~{top.km.toFixed(1)} กม.)</span>
-          {/* สาขานอกพัทยา: ใช้คำตามที่ร้านยืนยันกับสาขานั้น (data/branches.js) */}
-          <span>{top.city === "พัทยา" ? "🔬 ตรวจ XRF ฟรี" : "🔬 ตรวจเปอร์เซ็นต์ทองฟรี"}</span>
-          <span>🕐 {hoursShort(top)}</span>
+          <span>📍 ใกล้สุด: {nearest.shortName} (~{nearest.km.toFixed(1)} กม.)</span>
+          <span>🔬 ตรวจ XRF ฟรี</span>
+          <span>🕐 {hoursShort(nearest)}</span>
         </div>
       </header>
 
@@ -186,11 +185,11 @@ export default async function AreaPage({ params }) {
       </div>
 
       <div className="blog-article-cta">
-        <h3>มาจาก{area.name} แวะ{top.shortName}ได้เลย</h3>
-        <p>{top.address} · {top.hours} · {top.ctaNote ?? "ใช้บัตรประชาชนตัวจริง ไม่มีใบเสร็จก็ขายได้"}</p>
+        <h3>มาจาก{area.name} แวะ{nearest.shortName}ได้เลย</h3>
+        <p>{nearest.address} · {nearest.hours} · ใช้บัตรประชาชนตัวจริง ไม่มีใบเสร็จก็ขายได้</p>
         <div className="blog-article-cta-actions">
-          <a href={top.directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            🧭 นำทางไป{top.shortName}
+          <a href={nearest.directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            🧭 นำทางไป{nearest.shortName}
           </a>
           <a href={CONTACT.phoneHref} className="btn btn-outline">
             📞 โทร {CONTACT.phoneDisplay}

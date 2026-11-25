@@ -35,8 +35,8 @@ const STATIC_BLOG_DIR = path.join(ROOT, "app", "blog");
 const MAX_ATTEMPTS = 3;
 // เวลาที่บทความพูดถึงได้ = เวลาเปิด/ปิดของทุกสาขา (data/branches.js)
 const SHOP_TIMES = new Set(BRANCHES.flatMap((b) => b.schedule.flatMap((s) => [s.opens, s.closes])));
-// สาขาที่ข้อมูลยืนยันยังไม่เท่าสาขาพัทยา (data/branches.js promo: false = สาขาชลบุรี) → บทความพูดได้เฉพาะเรื่องที่หมุดของสาขายืนยัน
-const LIMITED_BRANCH = BRANCHES.find((b) => b.promo === false);
+// สาขานอกพัทยา (สาขาชลบุรี) — ร้านยืนยัน 25 พ.ย. 2569 ว่าทำทุกอย่างเหมือนสาขาอื่น · ด่านยังตรวจชื่อ ที่ตั้ง เวลาเปิด และลิงก์หน้าสาขา
+const OTHER_BRANCH = BRANCHES.find((b) => b.city !== "พัทยา");
 const PATTAYA_BRANCHES = BRANCHES.filter((b) => b.city === "พัทยา");
 // หัวข้อที่คล้ายบทความเดิมเกินค่านี้ = ซ้ำ (วัดจากตัวอักษรคู่ที่ซ้ำกันในชื่อบทความ 0-1)
 // ตั้งจากการเทียบบทความเดิม: คู่ที่ซ้ำจริง (วันอาทิตย์ / เงินสด / ใบเสร็จ / บัตรประชาชน) ได้ 0.34-0.68
@@ -235,7 +235,7 @@ export function validate(a, existing) {
     if (m[2] === "พัทยา" ? said === inPattaya : said === BRANCHES.length) continue;
     problems.push(`จำนวนสาขา "${m[0]}" ไม่ถูก — เขียนว่า "${inPattaya} สาขาในพัทยา" (ทั้งร้านมี ${BRANCHES.length} สาขา รวมสาขาชลบุรี)`);
   }
-  if (LIMITED_BRANCH) problems.push(...limitedBranchProblems(a, text));
+  if (OTHER_BRANCH) problems.push(...otherBranchProblems(a, text));
 
   // 4) สำนวน AI
   for (const h of findSlopHits(a)) problems.push(`สำนวน AI [${h.category}] "${h.word}" ×${h.count} — เขียนใหม่ให้เป็นภาษาพูดธรรมดา`);
@@ -243,11 +243,11 @@ export function validate(a, existing) {
   return problems;
 }
 
-/* ---------- สาขาชลบุรี: พูดได้เฉพาะข้อมูลที่ร้านยืนยันในหมุด Google (data/branches.js) ----------
-   ยืนยันแล้ว (25 พ.ย. 2569): ที่อยู่ แยกคีรี ต.เสม็ด · เปิดทุกวัน 10:00-22:00 · รับหลอมทอง (หลอมหน้าร้าน) · รับซื้อทอง เงิน เพชร พลอย
-     แพลตินัม นาฬิกามือสอง ของแบรนด์เนม · ไถ่ถอนตั๋วจำนำ · ตรวจเปอร์เซ็นต์ทองฟรีด้วยเครื่องตรวจโลหะมีค่า · แจ้งราคาตามเกรดและน้ำหนักจริง · เงินสดทันที
-   ยังไม่ยืนยัน → ห้ามเขียนให้สาขาชลบุรี: โปรหลอมทอง · XRF · ชั่งก่อน-หลังหลอม / หลอมต่อหน้า · ขายฝาก รับจำนำ · โอน · ที่จอดรถ · ค่าบริการ · รับก้อนทองกลับ */
-function limitedBranchProblems(a, text) {
+/* ---------- สาขานอกพัทยา (สาขาชลบุรี) ----------
+   25 พ.ย. 2569 ร้านยืนยันว่าสาขาชลบุรีทำทุกอย่างเหมือนสาขาอื่น → ข้อเท็จจริง บริการ และโปรใช้ได้กับทุกสาขา เขียน "ทุกสาขา" ได้
+   ที่ยังตรวจ: ชื่อเรียกสาขา · ที่ตั้ง (แยกคีรี ต.เสม็ด) · เวลาเปิดที่ต่างจากพัทยา · ลิงก์ไปหน้าสาขา
+   ถ้าสาขาไหนตั้ง promo: false ใน data/branches.js ด่านจะกันข้อความโปรของสาขานั้นด้วย */
+function otherBranchProblems(a, text) {
   const out = [];
   const plain = text
     .replace(/\*\*/g, "")
@@ -256,42 +256,34 @@ function limitedBranchProblems(a, text) {
     .replace(/สาขา\s*(?:ใหม่|ที่\s*(?:3|สาม)|(?:ที่|ใน)?\s*(?:ตัว)?(?:เมือง)?\s*ชลบุรี|(?:ที่|ใน)?\s*เมืองชล(?!บุรี))|(?:ร้านเรา|ร้านของเรา|เฮงศิริ)\s*(?:ที่|ใน)?\s*ชลบุรี/g, "สาขาชลบุรี");
   const rules = [
     [/ไม่มีสาขา\s*(?:ใน|ที่)?\s*(?:เมือง|ตัวเมือง)?\s*ชลบุรี/, "ร้านเปิดสาขาชลบุรีแล้ว ห้ามบอกว่าไม่มี"],
-    [/ทุกสาขา|ทั้งสามสาขา|ทั้ง\s*3\s*สาขา|ทุกที่ของ(?:ร้าน|เรา)/, "ขั้นตอน XRF และโปรเป็นของสาขาในพัทยา ให้เขียน 'สาขาในพัทยา' แทน 'ทุกสาขา'"],
     [/สาขาชลบุรี[^\n]{0,30}?(?:อยู่|ตั้ง|ตรงข้าม|ติดกับ)\s*(?:ที่|แถว|ย่าน|กับ)?\s*(?:เมืองใหม่|บางแสน|หนองมน|ป้อมเก่า|ถนน|ถ\.|ซอย)/, "ที่ตั้งสาขาชลบุรีคือแยกคีรี ต.เสม็ด อ.เมืองชลบุรี ห้ามแต่งที่ตั้งอื่น"],
     [/สาขา\s*(?:แยกคีรี|เมืองใหม่|เสม็ด|บางแสน|ป้อมเก่า)/, "ห้ามตั้งชื่อสาขาตามย่าน ให้เรียก 'สาขาชลบุรี'"],
+    [/สาขาชลบุรี[^\n]{0,40}?(?:ที่จอดรถ|จอดรถ(?:ได้|สะดวก|ฟรี))/, "ยังไม่มีข้อมูลที่จอดรถของสาขาชลบุรี ห้ามเขียน"],
   ];
   for (const [re, msg] of rules) {
     const m = plain.match(re);
     if (m) out.push(`${msg}: "${m[0]}"`);
   }
-  // ตรวจทีละประโยค: เรื่องที่ยังไม่ยืนยันกับสาขาชลบุรี ห้ามเขียนเป็นข้อเท็จจริงของสาขาชลบุรี (เขียนเป็นของสาขาในพัทยา หรือให้ถามสาขาก่อน)
-  const UNCONFIRMED = /โปร|บวกเพิ่ม|XRF|เอ็กซ์เรย์|ชั่งก่อน|ชั่งหลัง|ก่อน(?:และ|-)?หลังหลอม|หลอม(?:ให้ดู)?ต่อหน้า|ขายฝาก|รับจำนำ|โอน(?:เงิน|เข้า)|จอดรถ|รับก้อนทองกลับ|ค่าบริการ|ค่าหลอม|ไม่มีใบเสร็จ/;
   const ASK = /ถาม|เช็กว่า|เช็คว่า|เช็กกับ|เช็คกับ|ยืนยันกับ|ยืนยันว่า|ไหม|หรือไม่|หรือเปล่า|ยังไม่|ก่อน(?:ออก)?เดินทาง/;
-  const BRANCH_TIMES = new Set(LIMITED_BRANCH.schedule.flatMap((x) => [x.opens, x.closes]));
-  const PATTAYA_TIMES = new Set(BRANCHES.filter((b) => b.city === "พัทยา").flatMap((b) => b.schedule.flatMap((x) => [x.opens, x.closes])));
+  const NO_PROMO = OTHER_BRANCH.promo === false; // สาขานี้ไม่มีโปรหลอมทอง → ห้ามเขียนโปรให้สาขานี้
+  const BRANCH_TIMES = new Set(OTHER_BRANCH.schedule.flatMap((x) => [x.opens, x.closes]));
+  const PATTAYA_TIMES = new Set(PATTAYA_BRANCHES.flatMap((b) => b.schedule.flatMap((x) => [x.opens, x.closes])));
+  // ตรวจทีละประโยค: เวลาเปิดของแต่ละเมืองต้องไม่สลับกัน
   for (const part of plain.split(/\n|[.!?](?:\s|$)| · /)) {
-    if (/บริการถึงที่/.test(part)) continue; // บริการถึงที่ในพัทยาและชลบุรี เจ้าของยืนยันแล้ว
     const times = [...part.matchAll(/(\d{1,2})[:.](\d{2})\s*น/g)].map((m) => `${m[1].padStart(2, "0")}:${m[2]}`);
     const saysChon = part.includes("สาขาชลบุรี");
     const saysPattaya = /สาขา\s*(?:ใน)?\s*พัทยา|สาขาเนินพลับหวาน|สาขาพัทยาใต้/.test(part);
-    // เวลา: 22:00 เป็นของสาขาชลบุรีเท่านั้น · ประโยคของสาขาชลบุรีอย่างเดียวห้ามใช้เวลาของสาขาพัทยา
     for (const t of times) {
       if (!PATTAYA_TIMES.has(t) && BRANCH_TIMES.has(t) && !/ชลบุรี/.test(part)) out.push(`เวลา ${t} น. เป็นเวลาของสาขาชลบุรีเท่านั้น: "${part.trim().slice(0, 90)}"`);
-      if (saysChon && !saysPattaya && !BRANCH_TIMES.has(t)) out.push(`สาขาชลบุรี${LIMITED_BRANCH.hours} ห้ามใช้เวลา ${t} น.: "${part.trim().slice(0, 90)}"`);
+      if (saysChon && !saysPattaya && !BRANCH_TIMES.has(t)) out.push(`สาขาชลบุรี${OTHER_BRANCH.hours} ห้ามใช้เวลา ${t} น.: "${part.trim().slice(0, 90)}"`);
     }
-    let bad = false;
-    if (saysChon) {
-      const sameAsPattaya = /(?:เหมือน|เช่นเดียว)\s*(?:กัน|กับ)?[^\n]{0,15}พัทยา/.test(part);
-      const paired = /พัทยา[^\n]{0,15}(?:และ|กับ|รวมถึง)\s*สาขาชลบุรี|สาขาชลบุรี\s*(?:และ|กับ|รวมถึง)[^\n]{0,15}พัทยา/.test(part);
-      bad = !ASK.test(part) && (sameAsPattaya || (UNCONFIRMED.test(part) && (!saysPattaya || paired)));
+    if (NO_PROMO && saysChon && /โปร|บวกเพิ่ม/.test(part) && !ASK.test(part) && !saysPattaya) {
+      out.push(`สาขาชลบุรีไม่มีโปรหลอมทอง ห้ามเขียนโปรให้สาขานี้: "${part.trim().slice(0, 90)}"`);
     }
-    // ไม่เอ่ยคำว่าสาขา แต่บอกว่าเรื่องที่ยังไม่ยืนยันทำได้ที่ชลบุรี
-    bad ||= /(?:ที่|ใน)\s*(?:ตัว)?(?:เมือง)?\s*ชลบุรี\s*(?:เรา|ทางร้าน)?\s*(?:ก็)?\s*(?:มีโปร|ได้โปร|บวกเพิ่ม|ตรวจ\s*XRF|ขายฝากได้|รับขายฝาก)/.test(part) && !ASK.test(part);
-    if (bad) out.push(`ยังไม่ยืนยันกับสาขาชลบุรี (เขียนเป็นของสาขาในพัทยา หรือให้ทัก LINE ถามสาขาชลบุรีก่อน): "${part.trim().slice(0, 90)}"`);
   }
   // บทความของชลบุรีต้องส่งคนและน้ำหนักลิงก์ไปหน้าสาขาชลบุรี
   if (/ชลบุรี/.test(a.keywords[0] || "")) {
-    const p = `/branch/${LIMITED_BRANCH.slug}`;
+    const p = `/branch/${OTHER_BRANCH.slug}`;
     if (!text.includes(`](${p})`)) out.push(`บทความชลบุรีต้องมีลิงก์ในเนื้อหาไปหน้าสาขาชลบุรี ${p}`);
   }
   return out;
@@ -317,7 +309,7 @@ function buildPrompt(existing) {
   const queue = remainingTopics(existing)
     .map((t, i) => `${i + 1}. คีย์เวิร์ดหลัก "${t.keyword}"${t.exactOnly ? " (ใช้คำนี้ตรงตัว ห้ามปรับคำ)" : ""} — ${t.angle} (ที่มา: ${t.evidence})`)
     .join("\n");
-  const branches = PATTAYA_BRANCHES.map((b) => `- ${b.name}: ${b.address} (${b.hours})`).join("\n");
+  const branches = BRANCHES.map((b) => `- ${b.name}: ${b.address} (${b.hours})`).join("\n");
   const services = servicesData.map((s) => `- ${s.title}`).join("\n");
   const titles = existing.map((e) => `- ${e.title}`).join("\n");
   return `คุณเป็นนักเขียนคอนเทนต์ SEO ให้ร้านรับซื้อทองและหลอมทองในพัทยาและชลบุรี
@@ -326,18 +318,14 @@ function buildPrompt(existing) {
 ใช้เป็นข้อเท็จจริงเท่านั้น ห้ามแต่งเพิ่ม
 ชื่อ: หลอมทองพัทยา (ชื่อหน้าร้าน "เฮงศิริ")
 โทร: ${CONTACT.phoneDisplay} · LINE: ${CONTACT.lineId}
-สาขาในพัทยา (${PATTAYA_BRANCHES.length} สาขา ข้อมูลยืนยันแล้ว):
+สาขา (${BRANCHES.length} สาขา ข้อมูลยืนยันแล้ว · ${PATTAYA_BRANCHES.length} สาขาในพัทยา):
 ${branches}
-${LIMITED_BRANCH ? `${LIMITED_BRANCH.shortName} (เปิดแล้ว ข้อมูลจากหมุด Google ของร้าน 25 พ.ย. 2569 · หน้า /branch/${LIMITED_BRANCH.slug}):
-- ${LIMITED_BRANCH.name}: ${LIMITED_BRANCH.address} (${LIMITED_BRANCH.hours}) โทรและ LINE เดียวกับร้าน
-- จุดสังเกต (ระยะเส้นตรง): ${LIMITED_BRANCH.nearby.slice(0, 5).map((n) => `${n.name} ${n.km < 1 ? Math.round(n.km * 20) * 50 + " ม." : n.km.toFixed(1) + " กม."}`).join(" · ")}
-- ที่ยืนยันแล้ว เขียนได้: ${LIMITED_BRANCH.melt.split(" ขั้นตอนหลอม")[0]} · รับซื้อ ${LIMITED_BRANCH.buys.join(" · ")} · รับไถ่ถอนตั๋วจำนำทุกชนิด · ตกลงราคาแล้วรับเงินสดทันที
-กติกาสาขาชลบุรี (ใช้กับทุกบทความ ระบบตรวจ):
-- เรียกว่า "สาขาชลบุรี" เท่านั้น ที่ตั้งคือแยกคีรี ต.เสม็ด อ.เมืองชลบุรี ห้ามแต่งที่ตั้ง ถนน หรือระยะทางอื่น
-- ยังไม่ยืนยันกับสาขาชลบุรี ห้ามเขียนเป็นข้อเท็จจริงของสาขานี้: โปรหลอมทองบวกเพิ่ม · คำว่า XRF · ชั่งก่อน-หลังหลอมหรือหลอมต่อหน้า · ขายฝาก รับจำนำ · รับโอน · ที่จอดรถ · ค่าบริการ → เรื่องพวกนี้ให้บอกว่าทัก LINE ${CONTACT.lineId} ถามสาขาชลบุรีก่อน
-- ข้อเท็จจริง ขั้นตอน และโปรทั้งหมดด้านล่างเป็นของ ${PATTAYA_BRANCHES.length} สาขาในพัทยา ถ้าเล่าให้ระบุว่า "สาขาในพัทยา" ห้ามเขียนว่า "ทุกสาขา" · จำนวนสาขาเขียนว่า "${PATTAYA_BRANCHES.length} สาขาในพัทยา" หรือ "${BRANCHES.length} สาขา" (รวมสาขาชลบุรี)
-- เวลา 22:00 น. ใช้กับสาขาชลบุรีเท่านั้น
-- บทความที่คีย์เวิร์ดหลักมีคำว่าชลบุรี ต้องมีลิงก์ในเนื้อหาไป /branch/${LIMITED_BRANCH.slug} และบอกที่อยู่กับเวลาเปิดของสาขาชลบุรี · บทความต้องมีประโยชน์ได้เองโดยไม่พึ่งข้อมูลสาขา และห้ามเอ่ยชื่อร้านอื่น` : ""}
+${OTHER_BRANCH ? `กติกา${OTHER_BRANCH.shortName} (ใช้กับทุกบทความ ระบบตรวจ):
+- ${OTHER_BRANCH.shortName}ให้บริการเหมือนสาขาในพัทยาทุกอย่าง (ร้านยืนยัน 25 พ.ย. 2569) ข้อเท็จจริง บริการ และโปรด้านล่างใช้ได้กับทุกสาขา
+- เรียกว่า "${OTHER_BRANCH.shortName}" เท่านั้น ที่ตั้งคือแยกคีรี ต.เสม็ด อ.เมืองชลบุรี ห้ามแต่งที่ตั้ง ถนน ระยะทาง หรือที่จอดรถ · จุดสังเกต (ระยะเส้นตรง): ${OTHER_BRANCH.nearby.slice(0, 5).map((n) => `${n.name} ${n.km < 1 ? Math.round(n.km * 20) * 50 + " ม." : n.km.toFixed(1) + " กม."}`).join(" · ")}
+- เวลาเปิดต่างจากพัทยา: ${OTHER_BRANCH.shortName}${OTHER_BRANCH.hours} · เวลา 22:00 น. ใช้กับ${OTHER_BRANCH.shortName}เท่านั้น
+- จำนวนสาขาเขียนว่า "${PATTAYA_BRANCHES.length} สาขาในพัทยา" หรือ "${BRANCHES.length} สาขา" (รวม${OTHER_BRANCH.shortName})
+- บทความที่คีย์เวิร์ดหลักมีคำว่าชลบุรี ต้องมีลิงก์ในเนื้อหาไป /branch/${OTHER_BRANCH.slug} และบอกที่อยู่กับเวลาเปิดของ${OTHER_BRANCH.shortName} · ห้ามเอ่ยชื่อร้านอื่น` : ""}
 บริการ:
 ${services}
 ข้อเท็จจริงที่ใช้ได้: ตรวจเปอร์เซ็นต์ทองด้วยเครื่อง XRF ต่อหน้าลูกค้าฟรี · คิดราคาตามเนื้อทองจริงอ้างอิงราคาสมาคมค้าทองคำของวันนั้น · จ่ายเงินสดทันทีหรือโอนเข้าบัญชีได้ · ไม่มีใบเสร็จก็ขายได้ · ผู้ขายต้องใช้บัตรประชาชนตัวจริง (สำเนาไม่ได้) · ส่งรูปทองมาประเมินราคาเบื้องต้นทาง LINE ได้

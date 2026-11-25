@@ -15,29 +15,26 @@ import { getUploadedImages } from "@/lib/getImage";
 import { branchSchema } from "@/lib/schema";
 
 
-// ข้อความมาตรฐาน (หลอมต่อหน้า ชั่งก่อน-หลัง ตรวจ XRF โปรหลอมทอง เงินแท้) ยืนยันแล้วเฉพาะ 2 สาขาในพัทยา
-// สาขาเมืองอื่นใช้ข้อความของตัวเองจาก data/branches.js (lead, steps, buys, melt, extra, faq, services, promo, ctaNote)
-const meltsHere = (b) => b.city === "พัทยา";
-// บริการที่สาขานี้ยืนยันแล้ว (ไม่ระบุ services = ทุกบริการ)
+// ทุกสาขาใช้ข้อความมาตรฐานชุดเดียวกัน (หลอมต่อหน้า ชั่งก่อน-หลัง ตรวจ XRF โปรหลอมทอง เงินแท้ นาฬิกา)
+// 25 พ.ย. 2569 ร้านยืนยันว่าสาขาชลบุรีทำทุกอย่างเหมือนสาขาอื่น
+// ช่องเสริมต่อสาขาใน data/branches.js: description, intro, steps, buys, extra, faqExtra
+// ถ้าวันหนึ่งมีสาขาที่ทำไม่ครบ: services: [...] = จำกัดรายการบริการ · promo: false = สาขานั้นไม่มีโปรหลอมทอง (ซ่อนป้ายและข้อความโปรทุกจุดในหน้านี้)
+const hasPromo = (b) => b.promo !== false;
 const branchServices = (b) => servicesData.filter((s) => !b.services || b.services.includes(s.slug));
 
 /* คำถามที่พบบ่อยของแต่ละสาขา — ข้อมูลตรงกับบทความในเว็บ (ใช้บัตร ปชช.ตัวจริง, ไม่มีใบเสร็จก็ขายได้, ตรวจ XRF ฟรี)
    ใส่ชื่อพื้นที่ของสาขาในคำถาม เพื่อให้ตรงกับคำค้นแบบ "ร้านทอง <พื้นที่>" */
 function branchFaq(b) {
-  // สาขาที่มีชุดคำถามของตัวเอง (ข้อมูลยืนยันไม่เท่าสาขาพัทยา) ใช้ชุดนั้นทั้งชุด
-  if (b.faq) return b.faq;
   return [
     {
       q: `ร้านรับซื้อทอง${b.area} อยู่ตรงไหน`,
       a: `${b.name} ตั้งอยู่ที่ ${b.address} กดปุ่ม "นำทางมาสาขานี้" เพื่อเปิด Google Maps ได้ทันที หรือโทร ${CONTACT.phoneDisplay} สอบถามเส้นทาง`,
     },
     // หมุดเนินพลับหวานแทบไม่ติดคำ "หลอมทอง" (วัด 29 ต.ค. 2026) → หน้าที่หมุดลิงก์มาต้องบอกชัดว่าสาขานี้รับหลอม
-    ...(meltsHere(b)
-      ? [{
-          q: `${b.shortName} รับหลอมทองไหม`,
-          a: `รับ หลอมต่อหน้าคุณที่${b.shortName} ชั่งก่อนหลอม หลอม เทแม่พิมพ์ ชั่งหลังหลอม แล้วตรวจเปอร์เซ็นต์ด้วยเครื่อง XRF ไม่ต้องจองคิว หลอมแล้วเลือกได้ว่าจะขายรับเงินสดทันที (${MELT_BONUS_LINE}) หรือรับก้อนทองกลับ`,
-        }]
-      : []),
+    {
+      q: `${b.shortName} รับหลอมทองไหม`,
+      a: `รับ หลอมต่อหน้าคุณที่${b.shortName} ชั่งก่อนหลอม หลอม เทแม่พิมพ์ ชั่งหลังหลอม แล้วตรวจเปอร์เซ็นต์ด้วยเครื่อง XRF ไม่ต้องจองคิว หลอมแล้วเลือกได้ว่าจะขายรับเงินสดทันที${hasPromo(b) ? ` (${MELT_BONUS_LINE})` : ""} หรือรับก้อนทองกลับ`,
+    },
     // หมุดทั้ง 2 สาขาไม่ขึ้นเลยในแผนที่คำ "รับซื้อเงินแท้" (81 จุด 31 ต.ค. 2026) ทั้งที่รับจริง → หน้าสาขาบอกให้ชัด
     {
       q: `${b.shortName} รับซื้อเงินแท้ไหม`,
@@ -78,7 +75,9 @@ export async function generateMetadata({ params }) {
   if (!b) return {};
   const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
   // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบาย ให้เห็นบน Google ทุกครั้ง
-  const description = b.description ?? `${MELT_BONUS_HOOK} · ${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  // สาขาที่เขียนคำอธิบายเอง (b.description) ก็ขึ้นต้นด้วยโปรเหมือนกัน เว้นแต่สาขานั้นไม่มีโปร
+  const body = b.description ?? `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
+  const description = hasPromo(b) ? `${MELT_BONUS_HOOK} · ${body}` : body;
   return {
     title,
     description,
@@ -161,7 +160,7 @@ export default async function BranchPage({ params }) {
         </div>
       </header>
 
-      {b.promo !== false && <MeltPromo />}
+      {hasPromo(b) && <MeltPromo />}
 
       {photos.length > 0 && (
         <div className="branch-photos">
@@ -186,52 +185,38 @@ export default async function BranchPage({ params }) {
       </div>
 
       <div className="blog-article-content">
-        {b.lead ? (
-          <p>
-            <strong>{b.name}</strong> {b.lead}
-          </p>
-        ) : (
-          <p>
-            <strong>{b.name}</strong> ให้บริการ<strong>รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองชำรุด
-            ทองคำแท่ง เงินแท้ เครื่องประดับ และ<Link href="/services/watch-buying">นาฬิกาทุกยี่ห้อ</Link></strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
-            ด้วยเครื่อง XRF ต่อหน้าคุณ ให้ราคาสูงตามสมาคมค้าทองคำ จ่ายเงินสดทันที
-          </p>
-        )}
+        <p>
+          <strong>{b.name}</strong> ให้บริการ<strong>รับหลอมทอง รับซื้อทองเก่า ทองหัก ทองชำรุด
+          ทองคำแท่ง เงินแท้ เครื่องประดับ และ<Link href="/services/watch-buying">นาฬิกาทุกยี่ห้อ</Link></strong> ด้วยเครื่องมือมาตรฐาน ตรวจเปอร์เซ็นต์ทอง
+          ด้วยเครื่อง XRF ต่อหน้าคุณ ให้ราคาสูงตามสมาคมค้าทองคำ จ่ายเงินสดทันที
+        </p>
         {/* ย่อหน้าเฉพาะสาขา (data/branches.js → intro): จุดสังเกต การเดินทาง คนในพื้นที่ */}
         {b.intro?.map((t) => <p key={t}>{t}</p>)}
 
-        {meltsHere(b) && (
-          <>
-            <h2>หลอมทองที่{b.shortName}</h2>
-            <p>
-              หลอมต่อหน้าคุณ ยืนดูได้ทุกขั้นตอน: ชั่งก่อนหลอม → หลอม → เทแม่พิมพ์ → ชั่งหลังหลอม → ตรวจเปอร์เซ็นต์ทองด้วยเครื่อง XRF
-              เห็นทุกตัวเลขที่ใช้คิดราคา แล้วเลือกได้ว่าจะขายรับเงินสดทันที หรือรับก้อนทองกลับ ไม่ต้องจองคิว
-            </p>
-            <p>
-              <strong>{MELT_BONUS_LINE}</strong> {MELT_BONUS_TERMS} ·{" "}
-              <Link href="/services/gold-melting">ดูขั้นตอนและเงื่อนไขหลอมทอง</Link>
-            </p>
-          </>
+        <h2>หลอมทองที่{b.shortName}</h2>
+        <p>
+          หลอมต่อหน้าคุณ ยืนดูได้ทุกขั้นตอน: ชั่งก่อนหลอม → หลอม → เทแม่พิมพ์ → ชั่งหลังหลอม → ตรวจเปอร์เซ็นต์ทองด้วยเครื่อง XRF
+          เห็นทุกตัวเลขที่ใช้คิดราคา แล้วเลือกได้ว่าจะขายรับเงินสดทันที หรือรับก้อนทองกลับ ไม่ต้องจองคิว
+        </p>
+        {hasPromo(b) ? (
+          <p>
+            <strong>{MELT_BONUS_LINE}</strong> {MELT_BONUS_TERMS} ·{" "}
+            <Link href="/services/gold-melting">ดูขั้นตอนและเงื่อนไขหลอมทอง</Link>
+          </p>
+        ) : (
+          <p>
+            <Link href="/services/gold-melting">ดูขั้นตอนหลอมทอง</Link>
+          </p>
         )}
 
-        {meltsHere(b) && (
-          <>
-            <h2>รับซื้อเงินแท้ เครื่องเงินที่{b.shortName}</h2>
-            <p>
-              รับซื้อสร้อยเงิน แหวนเงิน เงิน 925 ขันเงิน พานเงิน เงินแท่ง และเศษเงิน คิดราคาตามเนื้อเงินจริงที่ตรวจต่อหน้าคุณ
-              จ่ายเงินสดทันที เครื่องเงินหลายชิ้นปนกันรับหลอมเงินได้ ไม่แน่ใจว่าเป็นเงินแท้ไหม เอามาให้ตรวจก่อนได้ ·{" "}
-              <Link href="/services/silver-buying">ดูวิธีคิดราคาเงินแท้และเครื่องเงิน</Link>
-            </p>
-          </>
-        )}
+        <h2>รับซื้อเงินแท้ เครื่องเงินที่{b.shortName}</h2>
+        <p>
+          รับซื้อสร้อยเงิน แหวนเงิน เงิน 925 ขันเงิน พานเงิน เงินแท่ง และเศษเงิน คิดราคาตามเนื้อเงินจริงที่ตรวจต่อหน้าคุณ
+          จ่ายเงินสดทันที เครื่องเงินหลายชิ้นปนกันรับหลอมเงินได้ ไม่แน่ใจว่าเป็นเงินแท้ไหม เอามาให้ตรวจก่อนได้ ·{" "}
+          <Link href="/services/silver-buying">ดูวิธีคิดราคาเงินแท้และเครื่องเงิน</Link>
+        </p>
 
-        {/* สาขาที่มีข้อความของตัวเอง (data/branches.js): ทุกบรรทัดมาจากข้อมูลที่ร้านยืนยันกับสาขานั้น */}
-        {b.melt && (
-          <>
-            <h2>หลอมทองที่{b.shortName}</h2>
-            <p>{b.melt}</p>
-          </>
-        )}
+        {/* ส่วนเสริมเฉพาะสาขา (data/branches.js → steps, buys, extra) เช่นสาขาชลบุรี ตามที่ร้านเขียนไว้ในหมุด Google */}
         {b.steps?.length > 0 && (
           <>
             <h2>ขั้นตอนขายทองที่{b.shortName}</h2>
@@ -281,9 +266,6 @@ export default async function BranchPage({ params }) {
         )}
 
         <h2>บริการที่ {b.shortName}</h2>
-        {b.services && (
-          <p>หน้าบริการด้านล่างอธิบายขั้นตอนและโปรของสาขาในพัทยา รายละเอียดของ{b.shortName} ทัก LINE {CONTACT.lineId} ถามก่อนมาได้</p>
-        )}
         <ul>
           {branchServices(b).map((s) => (
             <li key={s.slug}>
@@ -316,7 +298,7 @@ export default async function BranchPage({ params }) {
 
       <div className="blog-article-cta">
         <h3>แวะมาที่ {b.shortName} ได้เลย</h3>
-        <p>{b.address} · {b.hours} · {b.ctaNote ?? "ตรวจทองต่อหน้าคุณ จ่ายเงินสดทันที"}</p>
+        <p>{b.address} · {b.hours} · ตรวจทองต่อหน้าคุณ จ่ายเงินสดทันที</p>
         <div className="blog-article-cta-actions">
           <a href={b.mapUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             🧭 นำทางมาสาขานี้
