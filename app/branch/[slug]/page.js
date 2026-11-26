@@ -69,11 +69,14 @@ export function generateStaticParams() {
   return BRANCHES.map((b) => ({ slug: b.slug }));
 }
 
+// ชื่อหน้า ใช้ทั้ง <title> และ name ของ WebPage schema (geo audit 27 พ.ย. 2569: WebPage ไม่มี name)
+const pageTitle = (b) => b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const b = getBranch(slug);
   if (!b) return {};
-  const title = b.seoTitle || `ร้านทอง ${b.area} · รับซื้อทอง หลอมทอง ${b.area}`;
+  const title = pageTitle(b);
   // โปรหลอมทอง (data/meltBonus.js) ต้นคำอธิบาย ให้เห็นบน Google ทุกครั้ง
   // สาขาที่เขียนคำอธิบายเอง (b.description) ก็ขึ้นต้นด้วยโปรเหมือนกัน เว้นแต่สาขานั้นไม่มีโปร
   const body = b.description ?? `${b.name} รับหลอมทอง รับซื้อทองเก่า ทองหัก เครื่องประดับ นาฬิกาทุกยี่ห้อ ${b.address} โทร ${CONTACT.phoneDisplay} เปิดทุกวัน ${hoursShort(b).replace("ทุกวัน ", "")} น. ตรวจ XRF ฟรี จ่ายเงินสดทันที`;
@@ -106,6 +109,7 @@ export default async function BranchPage({ params }) {
     "@type": "WebPage",
     "@id": `${SITE_URL}/branch/${b.slug}#webpage`,
     url: `${SITE_URL}/branch/${b.slug}`,
+    name: pageTitle(b),
     about: { "@id": `${SITE_URL}/branch/${b.slug}#business` },
     inLanguage: "th",
     ...(b.updated ? { dateModified: b.updated } : {}),
