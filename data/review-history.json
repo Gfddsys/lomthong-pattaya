@@ -283,5 +283,24 @@
         "rating": 5
       }
     }
+  },
+  {
+    "date": "2026-11-27",
+    "time": "00:36",
+    "source": "manual",
+    "branches": {
+      "pattaya-tai": {
+        "count": 70,
+        "rating": 5
+      },
+      "noen-plap-wan": {
+        "count": 98,
+        "rating": 5
+      },
+      "chonburi": {
+        "count": 1,
+        "rating": 5
+      }
+    }
   }
 ]
